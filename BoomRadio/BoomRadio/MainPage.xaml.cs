@@ -5,11 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace BoomRadio
 {
     public partial class MainPage : ContentPage
     {
+
+
         bool IsPlaying;
         string coverImageUri;
         Track trackInfo;
@@ -17,6 +20,7 @@ namespace BoomRadio
         public MainPage()
         {
             InitializeComponent();
+            On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
             IsPlaying = false;
             trackInfo = new Track();
             StatusLabel.Text = "Not yet playing";
