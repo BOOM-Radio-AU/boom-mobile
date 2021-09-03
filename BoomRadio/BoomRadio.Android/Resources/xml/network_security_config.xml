@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Based on: https://devblogs.microsoft.com/xamarin/cleartext-http-android-network-security/ -->
+<network-security-config>
+  <domain-config cleartextTrafficPermitted="true">
+    <domain includeSubdomains="true">10.0.2.2</domain>
+    <domain includeSubdomains="true">shoutca.st</domain>
+  </domain-config>
+</network-security-config>
