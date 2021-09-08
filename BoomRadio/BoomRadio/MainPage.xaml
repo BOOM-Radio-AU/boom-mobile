@@ -8,7 +8,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         
         <!-- Top bar -->
@@ -24,20 +24,20 @@
         </Grid>
 
         <!-- Content area. Loaded from separate pages -->
-        <ScrollView Grid.Row="1">
+        <ScrollView Grid.Row="1" x:Name="ContentAreaScrollView">
             <view:HomeView/>
         </ScrollView>
 
         <!-- Bottom bar -->
-        <Grid Grid.Row="2" BackgroundColor="DarkSeaGreen" Padding="10">
+        <Grid Grid.Row="2" BackgroundColor="Gray" Padding="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Text="Home"/>
-            <Label Grid.Column="1" Text="Shows"/>
-            <Label Grid.Column="2" Text="News"/>
+            <Button x:Name="HomeTab"  Text="Home" Clicked="HomeTab_Clicked" Background="Transparent"/>
+            <Button x:Name="ShowsTab" Grid.Column="1" Text="Shows" Clicked="ShowsTab_Clicked" Background="Transparent"/>
+            <Button x:Name="NewsTab"  Grid.Column="2" Text="News" Clicked="NewsTab_Clicked" Background="Transparent"/>
         </Grid>
 
     </Grid>

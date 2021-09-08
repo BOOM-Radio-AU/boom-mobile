@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BoomRadio.View;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -12,68 +13,52 @@ namespace BoomRadio
     public partial class MainPage : ContentPage
     {
 
-
-        //bool IsPlaying;
-        //string coverImageUri;
-        //Track trackInfo;
+        Dictionary<string, StackLayout> Views = new Dictionary<string, StackLayout>();
+        string CurrentView;
 
         public MainPage()
         {
             InitializeComponent();
             On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
-            //IsPlaying = false;
-            //trackInfo = new Track();
-            //StatusLabel.Text = "Not yet playing";
+            Views["home"] = new HomeView();
+            Views["shows"] = new ShowsView();
+            Views["news"] = new NewsView();
+            CurrentView = "home";
         }
+
+        public void Navigate(string target)
+        {
+            if (!Views.ContainsKey(target))
+            {
+                throw new Exception($"[Navigation error] View not found for '{target}'");
+            }
+            ContentAreaScrollView.Content = Views[target];
+            CurrentView = target;
+            UpdateUI();
+        }
+
         private void UpdateUI()
         {
-            //StatusLabel.Text = IsPlaying ? "Now playing" : "Stopped playing";
-            //ArtistLabel.Text = trackInfo.Artist;
-            //SongTitleLabel.Text = trackInfo.Title;
-            //if (coverImageUri != trackInfo.ImageUri)
-            //{
-            //    coverImageUri = trackInfo.ImageUri;
-            //    CoverImage.Source = ImageSource.FromUri(new Uri(coverImageUri));
-            //}
+            // Update tabs
+            HomeTab.TextColor = CurrentView == "home" ? Color.Orange : Color.Black;
+            ShowsTab.TextColor = CurrentView == "shows" ? Color.Orange : Color.Black;
+            NewsTab.TextColor = CurrentView == "news" ? Color.Orange : Color.Black;
+
         }
-        //private async void UpdateTrackInfo()
-        //{
-        //    await trackInfo.Update();
-        //    Device.BeginInvokeOnMainThread(() => UpdateUI()); // The UI can only be updated from the main thread
-        //}
 
-        //private void KeepTrackInfoUpdated()
-        //{
-        //    UpdateTrackInfo();
-        //    Device.StartTimer(TimeSpan.FromSeconds(15), () =>
-        //    {
-        //        UpdateTrackInfo();
-        //        return IsPlaying;
-        //    });
-        //}
+        private void HomeTab_Clicked(object sender, EventArgs e)
+        {
+            Navigate("home");
+        }
 
-        //private void PlayButton_Clicked(object sender, EventArgs e)
-        //{
-        //    DependencyService.Get<IStreaming>().Play();
-        //    IsPlaying = true;
-        //    UpdateUI();
-        //    KeepTrackInfoUpdated();
-        //}
+        private void ShowsTab_Clicked(object sender, EventArgs e)
+        {
+            Navigate("shows");
+        }
 
-
-
-        //private void PauseButton_Clicked(object sender, EventArgs e)
-        //{
-        //    DependencyService.Get<IStreaming>().Pause();
-        //    IsPlaying = false;
-        //    UpdateUI();
-        //}
-
-        //private void StopButton_Clicked(object sender, EventArgs e)
-        //{
-        //    DependencyService.Get<IStreaming>().Stop();
-        //    IsPlaying = false;
-        //    UpdateUI();
-        //}
+        private void NewsTab_Clicked(object sender, EventArgs e)
+        {
+            Navigate("news");
+        }
     }
 }
