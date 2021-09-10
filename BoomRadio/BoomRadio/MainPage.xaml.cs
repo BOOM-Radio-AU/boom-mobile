@@ -16,6 +16,7 @@ namespace BoomRadio
         Dictionary<string, StackLayout> Views = new Dictionary<string, StackLayout>();
         string CurrentView;
         bool MenuShown = false;
+        bool PlayerExpanded = false;
 
         public MainPage()
         {
@@ -122,5 +123,35 @@ namespace BoomRadio
         {
             Navigate("settings");
         }
+
+        private void ExpandPlayer()
+        {
+            if (!PlayerExpanded)
+            {
+                PlayerFrame.TranslateTo(0, 0, 200, Easing.Linear);
+                PlayerExpanded = true;
+            }
+        }
+
+        private void CollapsePlayer()
+        {
+            if (PlayerExpanded)
+            {
+                PlayerFrame.TranslateTo(0, 430, 200, Easing.Linear);
+                PlayerExpanded = false;
+            }
+        }
+
+        private void OnPlayerSwipedUp(object sender, SwipedEventArgs e)
+        {
+            ExpandPlayer();
+        }
+        private void OnPlayerSwipedDown(object sender, SwipedEventArgs e)
+        {
+            CollapsePlayer();
+        }
+
+
+
     }
 }

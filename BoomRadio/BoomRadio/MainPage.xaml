@@ -4,15 +4,16 @@
              x:Class="BoomRadio.MainPage"
              BackgroundColor="Orange">
 
-    <Grid VerticalOptions="FillAndExpand" Margin="0" Padding="0">
+    <Grid VerticalOptions="FillAndExpand" Margin="0" Padding="0" RowSpacing="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="80"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         
         <!-- Top bar -->
-        <Grid Grid.Row="0" BackgroundColor="Bisque" Margin="0">
+        <Grid Grid.Row="0" BackgroundColor="Bisque" Margin="0" Padding="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="3*"/>
@@ -29,8 +30,8 @@
         </Grid>
 
         <!-- Content area. Loaded from separate pages -->
-        <ScrollView Grid.Row="1" x:Name="ContentAreaScrollView">
-            <view:HomeView/>
+        <ScrollView Grid.Row="1" x:Name="ContentAreaScrollView" BackgroundColor="LightCoral">
+            <view:HomeView Margin="0"/>
         </ScrollView>
 
 
@@ -59,10 +60,48 @@
             </Frame.GestureRecognizers>
         </Frame>
 
+        <!-- Frame included to ensure space is reserved for player -->
+        <Frame Grid.Row="2" BackgroundColor="Gainsboro"/>
 
+        <!-- Player -->
+        <Frame
+            Grid.Row="1" Grid.RowSpan="2" VerticalOptions="EndAndExpand"
+            x:Name="PlayerFrame"
+            BackgroundColor="DarkCyan"
+            HeightRequest="500"
+            TranslationY="430"
+            Margin="0"
+            Padding="0,5"
+            HasShadow="False">
+
+            <StackLayout Orientation="Vertical">
+                <!-- Swipe indicator -->
+                <BoxView
+                BackgroundColor="LightGray"
+                HorizontalOptions="Center"
+                WidthRequest="100"
+                Margin="0"
+                CornerRadius="5"
+                HeightRequest="10" />
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    <Image x:Name="CoverImage" Margin="10,5" VerticalOptions="CenterAndExpand"
+                   Source="https://cdn-radiotime-logos.tunein.com/s195836q.png" Aspect="AspectFit"/>
+                    <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                        <Label Text="Artist" x:Name="ArtistLabel" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" Padding="0,5,0,0"/>
+                        <Label Text="Somesong" x:Name="SongTitleLabel" HorizontalOptions="StartAndExpand"/>
+                    </StackLayout>
+                    <Button Text="Play" Padding="0" VerticalOptions="CenterAndExpand"/>
+                </StackLayout>
+            </StackLayout>
+
+            <Frame.GestureRecognizers>
+                <SwipeGestureRecognizer Direction="Up" Swiped="OnPlayerSwipedUp" />
+                <SwipeGestureRecognizer Direction="Down" Swiped="OnPlayerSwipedDown" />
+            </Frame.GestureRecognizers>
+        </Frame>
 
         <!-- Bottom bar -->
-        <Grid Grid.Row="2" BackgroundColor="Gray" Padding="10">
+        <Grid Grid.Row="3" BackgroundColor="Gray" Padding="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
