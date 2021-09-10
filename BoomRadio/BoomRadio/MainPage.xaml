@@ -19,13 +19,14 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Frame Padding="0" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" Background="Transparent">
-                <Label Text="Menu" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label FontFamily="FA-S" Text="&#xf0c9;" FontSize="19" HorizontalOptions="Center" VerticalOptions="Center"/>
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="MenuIcon_Tapped"/>
                 </Frame.GestureRecognizers>
             </Frame>
-            <Label Grid.Column="1" Text="BOOM Radio"/>
-            <Label Grid.Column="2" Text="Live"/>
+            <Label Grid.Column="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="BOOM"/>
+            <Label Grid.Column="2" FontFamily="FA-S" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="&#xf111;" FontSize="12" TextColor="LightGray"/>
+            <Label Grid.Column="2" VerticalTextAlignment="End" HorizontalTextAlignment="Center" Text="Live" FontSize="12" TextColor="LightGray"/>
         </Grid>
 
         <!-- Content area. Loaded from separate pages -->

@@ -17,6 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Fonts\Font Awesome 5 Brands.otf" />
+    <EmbeddedResource Include="Resources\Fonts\Font Awesome 5 Regular.otf" />
+    <EmbeddedResource Include="Resources\Fonts\Font Awesome 5 Solid.otf" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Update="View\AboutView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -39,5 +44,11 @@
 
   <ItemGroup>
     <Folder Include="Model\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Resources\Fonts\Font Awesome 5 Brands.otf" />
+    <None Remove="Resources\Fonts\Font Awesome 5 Brands.otf" />
+    <None Remove="Resources\Fonts\Font Awesome 5 Regular.otf" />
+    <None Remove="Resources\Fonts\Font Awesome 5 Solid.otf" />
   </ItemGroup>
 </Project>
