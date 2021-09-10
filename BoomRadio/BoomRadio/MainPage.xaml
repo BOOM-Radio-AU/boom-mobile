@@ -83,7 +83,7 @@
                 Margin="0"
                 CornerRadius="5"
                 HeightRequest="10" />
-                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                <StackLayout x:Name="PlayerStackLayout" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                     <Image x:Name="CoverImage" Margin="10,5" VerticalOptions="CenterAndExpand"
                    Source="https://cdn-radiotime-logos.tunein.com/s195836q.png" Aspect="AspectFit"/>
                     <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
