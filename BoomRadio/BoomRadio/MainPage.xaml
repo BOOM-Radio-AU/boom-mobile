@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:view="clr-namespace:BoomRadio.View"
              x:Class="BoomRadio.MainPage"
-             BackgroundColor="Orange">
+             BackgroundImageSource="background.jpg">
 
     <Grid VerticalOptions="FillAndExpand" Margin="0" Padding="0">
         <Grid.RowDefinitions>
@@ -24,7 +24,7 @@
                     <TapGestureRecognizer Tapped="MenuIcon_Tapped"/>
                 </Frame.GestureRecognizers>
             </Frame>
-            <Label Grid.Column="1" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="BOOM"/>
+            <Image Grid.Column="1" Source="boomlogo.png"/>
             <Label Grid.Column="2" FontFamily="FA-S" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="&#xf111;" FontSize="12" TextColor="LightGray"/>
             <Label Grid.Column="2" VerticalTextAlignment="End" HorizontalTextAlignment="Center" Text="Live" FontSize="12" TextColor="LightGray"/>
         </Grid>

@@ -44,11 +44,13 @@
 
   <ItemGroup>
     <Folder Include="Model\" />
+    <Folder Include="Resources\Images\" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Resources\Fonts\Font Awesome 5 Brands.otf" />
     <None Remove="Resources\Fonts\Font Awesome 5 Brands.otf" />
     <None Remove="Resources\Fonts\Font Awesome 5 Regular.otf" />
     <None Remove="Resources\Fonts\Font Awesome 5 Solid.otf" />
+    <None Remove="Resources\Images\" />
   </ItemGroup>
 </Project>
