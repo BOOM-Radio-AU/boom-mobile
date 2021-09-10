@@ -16,7 +16,6 @@ namespace BoomRadio
         Dictionary<string, StackLayout> Views = new Dictionary<string, StackLayout>();
         string CurrentView;
         bool MenuShown = false;
-        bool PlayerExpanded = false;
 
         public MainPage()
         {
@@ -58,17 +57,6 @@ namespace BoomRadio
             HomeTab.TextColor = CurrentView == "home" ? Color.Orange : Color.Black;
             ShowsTab.TextColor = CurrentView == "shows" ? Color.Orange : Color.Black;
             NewsTab.TextColor = CurrentView == "news" ? Color.Orange : Color.Black;
-
-            // Update player
-            PlayerStackLayout.Orientation = PlayerExpanded ? StackOrientation.Vertical : StackOrientation.Horizontal;
-            CoverImage.ScaleTo(PlayerExpanded ? 1.5 : 1, 100, Easing.Linear);
-            CoverImage.WidthRequest = PlayerExpanded ? 150 : 60;
-            CoverImage.HeightRequest = PlayerExpanded ? 150 : 60;
-            CoverImage.Margin = PlayerExpanded ? new Thickness(10, 50, 10, 50) : new Thickness(10, 5);
-            ArtistLabel.HorizontalOptions = PlayerExpanded ? LayoutOptions.CenterAndExpand : LayoutOptions.StartAndExpand;
-            ArtistLabel.FontSize = PlayerExpanded ? 20 : 15;
-            SongTitleLabel.HorizontalOptions = PlayerExpanded ? LayoutOptions.CenterAndExpand : LayoutOptions.StartAndExpand;
-            SongTitleLabel.FontSize = PlayerExpanded ? 20 : 15;
         }
 
         private void HomeTab_Clicked(object sender, EventArgs e)
@@ -134,43 +122,6 @@ namespace BoomRadio
         {
             Navigate("settings");
         }
-
-        private void ExpandPlayer()
-        {
-            if (!PlayerExpanded)
-            {
-                PlayerFrame.TranslateTo(0, 0, 200, Easing.Linear);
-                PlayerExpanded = true;
-                Task.Delay(100).ContinueWith(_ =>
-                {
-                    Device.BeginInvokeOnMainThread(() => UpdateUI()); // The UI can only be updated from the main thread
-                });
-            }
-        }
-
-        private void CollapsePlayer()
-        {
-            if (PlayerExpanded)
-            {
-                PlayerFrame.TranslateTo(0, 430, 200, Easing.Linear);
-                PlayerExpanded = false;
-                Task.Delay(100).ContinueWith(_ =>
-                {
-                    Device.BeginInvokeOnMainThread(() => UpdateUI()); // The UI can only be updated from the main thread
-                });
-            }
-        }
-
-        private void OnPlayerSwipedUp(object sender, SwipedEventArgs e)
-        {
-            ExpandPlayer();
-        }
-        private void OnPlayerSwipedDown(object sender, SwipedEventArgs e)
-        {
-            CollapsePlayer();
-        }
-
-
 
     }
 }

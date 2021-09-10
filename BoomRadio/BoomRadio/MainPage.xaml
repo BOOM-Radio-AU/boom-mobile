@@ -64,41 +64,7 @@
         <Frame Grid.Row="2" BackgroundColor="Gainsboro"/>
 
         <!-- Player -->
-        <Frame
-            Grid.Row="1" Grid.RowSpan="2" VerticalOptions="EndAndExpand"
-            x:Name="PlayerFrame"
-            BackgroundColor="DarkCyan"
-            HeightRequest="500"
-            TranslationY="430"
-            Margin="0"
-            Padding="0,5"
-            HasShadow="False">
-
-            <StackLayout Orientation="Vertical">
-                <!-- Swipe indicator -->
-                <BoxView
-                BackgroundColor="LightGray"
-                HorizontalOptions="Center"
-                WidthRequest="100"
-                Margin="0"
-                CornerRadius="5"
-                HeightRequest="10" />
-                <StackLayout x:Name="PlayerStackLayout" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                    <Image x:Name="CoverImage" Margin="10,5" VerticalOptions="CenterAndExpand"
-                   Source="https://cdn-radiotime-logos.tunein.com/s195836q.png" Aspect="AspectFit"/>
-                    <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                        <Label Text="Artist" x:Name="ArtistLabel" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" Padding="0,5,0,0"/>
-                        <Label Text="Somesong" x:Name="SongTitleLabel" HorizontalOptions="StartAndExpand"/>
-                    </StackLayout>
-                    <Button Text="Play" Padding="0" VerticalOptions="CenterAndExpand"/>
-                </StackLayout>
-            </StackLayout>
-
-            <Frame.GestureRecognizers>
-                <SwipeGestureRecognizer Direction="Up" Swiped="OnPlayerSwipedUp" />
-                <SwipeGestureRecognizer Direction="Down" Swiped="OnPlayerSwipedDown" />
-            </Frame.GestureRecognizers>
-        </Frame>
+        <view:MediaPlayerView Grid.Row="1" Grid.RowSpan="2" VerticalOptions="EndAndExpand"/>
 
         <!-- Bottom bar -->
         <Grid Grid.Row="3" BackgroundColor="Gray" Padding="10">
