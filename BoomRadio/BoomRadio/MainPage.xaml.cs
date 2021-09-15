@@ -41,6 +41,17 @@ namespace BoomRadio
         {
             MediaPlayerView.UpdateUI();
             if (CurrentView == "home") ((HomeView)Views["home"]).UpdateUI();
+            if (MediaPlayer.IsLive)
+            {
+                LiveIcon.TextColor = Color.Red;
+                LiveText.TextColor = Color.Red;
+
+            }
+            else
+            {
+                LiveIcon.TextColor = Color.Gray;
+                LiveText.TextColor = Color.Gray;
+            }
         }
 
         /// <summary>
@@ -65,9 +76,12 @@ namespace BoomRadio
         private void UpdateUI()
         {
             // Update tabs
-            HomeTab.TextColor = CurrentView == "home" ? Color.Orange : Color.Black;
-            ShowsTab.TextColor = CurrentView == "shows" ? Color.Orange : Color.Black;
-            NewsTab.TextColor = CurrentView == "news" ? Color.Orange : Color.Black;
+            HomeText.TextColor = CurrentView == "home" ? Color.Orange : Color.Black;
+            HomeIcon.TextColor = CurrentView == "home" ? Color.Orange : Color.Black;
+            ShowsText.TextColor = CurrentView == "shows" ? Color.Orange : Color.Black;
+            ShowsIcon.TextColor = CurrentView == "shows" ? Color.Orange : Color.Black;
+            NewsText.TextColor = CurrentView == "news" ? Color.Orange : Color.Black;
+            NewsIcon.TextColor = CurrentView == "news" ? Color.Orange : Color.Black;
         }
 
         private void HomeTab_Clicked(object sender, EventArgs e)

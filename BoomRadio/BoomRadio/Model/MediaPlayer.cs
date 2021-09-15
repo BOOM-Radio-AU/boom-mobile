@@ -41,6 +41,7 @@ namespace BoomRadio.Model
             NativePlayer.Play();
             IsPlaying = true;
             IsPaused = false;
+            IsLive = true;
         }
 
         public void PlayPodcast(string artist, string trackTitle, string audioUrl, string imageUrl)
@@ -51,6 +52,7 @@ namespace BoomRadio.Model
             NativePlayer.PlayFromUri(audioUrl);
             NativePlayer.Play();
             IsPlaying = true;
+            IsLive = false;
         }
 
         /// <summary>
@@ -72,6 +74,7 @@ namespace BoomRadio.Model
             NativePlayer.Pause();
             IsPlaying = false;
             IsPaused = true;
+            IsLive = false;
         }
 
     }

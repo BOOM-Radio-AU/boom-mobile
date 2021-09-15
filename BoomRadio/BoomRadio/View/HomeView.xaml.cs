@@ -61,12 +61,18 @@ namespace BoomRadio.View
         {
             MediaPlayer.Play();
             MainPage.UpdatePlayerUIs();
+            PlayButton.IsVisible = false;
+            PauseButton.IsVisible = true;
+            
+
         }
 
         private void PauseButton_Clicked(object sender, EventArgs e)
         {
             MediaPlayer.Pause();
             MainPage.UpdatePlayerUIs();
+            PlayButton.IsVisible = true;
+            PauseButton.IsVisible = false;
         }
 
     }
