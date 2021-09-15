@@ -17,6 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Fonts\Cocogoose Bold.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Cocogoose Italic.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\Cocogoose light.ttf" />
     <EmbeddedResource Include="Resources\Fonts\Font Awesome 5 Brands.otf" />
     <EmbeddedResource Include="Resources\Fonts\Font Awesome 5 Regular.otf" />
     <EmbeddedResource Include="Resources\Fonts\Font Awesome 5 Solid.otf" />
@@ -47,6 +50,9 @@
     <Folder Include="Resources\Images\" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Resources\Fonts\Cocogoose Bold.ttf" />
+    <None Remove="Resources\Fonts\Cocogoose Italic.ttf" />
+    <None Remove="Resources\Fonts\Cocogoose light.ttf" />
     <None Remove="Resources\Fonts\Font Awesome 5 Brands.otf" />
     <None Remove="Resources\Fonts\Font Awesome 5 Brands.otf" />
     <None Remove="Resources\Fonts\Font Awesome 5 Regular.otf" />
