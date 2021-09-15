@@ -9,7 +9,7 @@
     TranslationY="430"
     Margin="0"
     Padding="0,5"
-    HasShadow="False">
+    HasShadow="True">
 
     <StackLayout Orientation="Vertical">
         <!-- Swipe indicator -->
