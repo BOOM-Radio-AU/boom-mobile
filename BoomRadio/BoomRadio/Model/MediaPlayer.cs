@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace BoomRadio.Model
@@ -10,6 +11,8 @@ namespace BoomRadio.Model
         readonly string defaultArtist = "BOOM Radio";
         readonly string defaultTrack = "Not Just Noise";
         readonly string defaultCoverURI = "https://cdn-radiotime-logos.tunein.com/s195836q.png";
+
+        readonly LiveStreamTrack liveStreamTrack = new LiveStreamTrack();
 
         private IStreaming NativePlayer { get; set; }
         private string LiveStreamURI = "http://pollux.shoutca.st:8132/stream";
@@ -38,7 +41,6 @@ namespace BoomRadio.Model
             Track = defaultTrack;
             CoverURI = defaultCoverURI;
             NativePlayer.PlayFromUri(LiveStreamURI);
-            NativePlayer.Play();
             IsPlaying = true;
             IsPaused = false;
             IsLive = true;
@@ -50,7 +52,6 @@ namespace BoomRadio.Model
             Track = trackTitle;
             CoverURI = imageUrl;
             NativePlayer.PlayFromUri(audioUrl);
-            NativePlayer.Play();
             IsPlaying = true;
             IsLive = false;
         }
@@ -76,6 +77,18 @@ namespace BoomRadio.Model
             IsPaused = true;
             IsLive = false;
         }
+
+        public async Task UpdateLiveTrackInfo()
+        {
+            if (IsLive && IsPlaying)
+            {
+                await liveStreamTrack.Update();
+                Artist = liveStreamTrack.Artist;
+                Track = liveStreamTrack.Title;
+                CoverURI = liveStreamTrack.ImageUri;
+            }
+        }
+
 
     }
 }

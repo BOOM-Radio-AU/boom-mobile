@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BoomRadio
 {
-    public class Track
+    public class LiveStreamTrack
     {
         public string Artist { get; private set; } = "BOOM Radio";
         public string Title { get; private set; } = "Not Just Noise";
@@ -19,6 +19,7 @@ namespace BoomRadio
 
         private async Task<string> Fetch()
         {
+            Console.WriteLine(">>> Fetching track api");
             // Fetch data from server's api
             var response = await client.GetAsync(url);
 

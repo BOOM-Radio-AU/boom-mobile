@@ -15,7 +15,7 @@ namespace BoomRadio.View
     {
         // TODO: These should be properties of a model object, rather than this view
         bool IsPlaying;
-        Track trackInfo;
+        LiveStreamTrack trackInfo;
         string coverImageUri;
         MainPage MainPage;
         MediaPlayer MediaPlayer { get; set; }
@@ -27,7 +27,7 @@ namespace BoomRadio.View
             MediaPlayer = mediaPlayer;
             MainPage = mainPage;
             IsPlaying = false;
-            trackInfo = new Track();
+            trackInfo = new LiveStreamTrack();
             //StatusLabel.Text = "Not yet playing";
         }
 
@@ -40,21 +40,6 @@ namespace BoomRadio.View
                 coverImageUri = MediaPlayer.CoverURI;
                 CoverArtImage.Source = ImageSource.FromUri(new Uri(coverImageUri));
             }
-        }
-        private async void UpdateTrackInfo()
-        {
-            await trackInfo.Update();
-            Device.BeginInvokeOnMainThread(() => UpdateUI()); // The UI can only be updated from the main thread
-        }
-
-        private void KeepTrackInfoUpdated()
-        {
-            UpdateTrackInfo();
-            Device.StartTimer(TimeSpan.FromSeconds(15), () =>
-            {
-                UpdateTrackInfo();
-                return IsPlaying;
-            });
         }
 
         private void PlayButton_Clicked(object sender, EventArgs e)

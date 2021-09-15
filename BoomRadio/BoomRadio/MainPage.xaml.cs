@@ -18,6 +18,8 @@ namespace BoomRadio
         string CurrentView;
         bool MenuShown = false;
         MediaPlayer MediaPlayer = new MediaPlayer();
+        bool UpdateTrackTimerRunning = false;
+
 
         public MainPage()
         {
@@ -39,6 +41,10 @@ namespace BoomRadio
 
         public void UpdatePlayerUIs()
         {
+            if (!UpdateTrackTimerRunning && MediaPlayer.IsLive)
+            {
+                StartUpdateTrackTimer();
+            }
             MediaPlayerView.UpdateUI();
             if (CurrentView == "home") ((HomeView)Views["home"]).UpdateUI();
             if (MediaPlayer.IsLive)
@@ -52,6 +58,37 @@ namespace BoomRadio
                 LiveIcon.TextColor = Color.Gray;
                 LiveText.TextColor = Color.Gray;
             }
+        }
+
+        /// <summary>
+        /// Runs a timer to keep track information updated, as long as the media player
+        /// is playing live
+        /// </summary>
+        private void StartUpdateTrackTimer()
+        {
+            UpdateTrackTimerRunning = true;
+            Device.StartTimer(TimeSpan.FromSeconds(15), () =>
+            {
+                // Check if player is still playing live
+                if (!MediaPlayer.IsLive)
+                {
+                    UpdateTrackTimerRunning = false;
+                    return false; // ends timer
+                }
+
+                UpdateLiveTrackInfo();
+                return true; // continues timer
+            });
+        }
+
+        /// <summary>
+        /// Updates the media player's live track info, then updates the UI
+        /// </summary>
+        private async void UpdateLiveTrackInfo()
+        {
+            await MediaPlayer.UpdateLiveTrackInfo();
+            Device.BeginInvokeOnMainThread(() => UpdatePlayerUIs());
+
         }
 
         /// <summary>
