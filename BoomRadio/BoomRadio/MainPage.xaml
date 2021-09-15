@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:view="clr-namespace:BoomRadio.View"
              x:Class="BoomRadio.MainPage"
-             BackgroundColor="Orange">
+             BackgroundColor="LightGray">
+             
 
     <Grid VerticalOptions="FillAndExpand" Margin="0" Padding="0" RowSpacing="0">
         <Grid.RowDefinitions>
@@ -13,33 +14,37 @@
         </Grid.RowDefinitions>
         
         <!-- Top bar -->
-        <Grid Grid.Row="0" BackgroundColor="Bisque" Margin="0" Padding="0">
+        <Grid Grid.Row="0" Margin="0" BackgroundColor="LightGray">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Frame Padding="0" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" Background="Transparent">
-                <Label Text="Menu" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label FontFamily="FA-S" Text="&#xf0c9;" FontSize="19" HorizontalOptions="Center" VerticalOptions="Center"/>
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="MenuIcon_Tapped"/>
                 </Frame.GestureRecognizers>
             </Frame>
-            <Label Grid.Column="1" Text="BOOM Radio"/>
-            <Label Grid.Column="2" Text="Live"/>
+            <Image Grid.Column="1" Source="boomlogo.png"/>
+            <Label Grid.Column="2" FontFamily="FA-S" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="&#xf111;" FontSize="12" TextColor="LightGray"/>
+            <Label Grid.Column="2" VerticalTextAlignment="End" HorizontalTextAlignment="Center" Text="Live" FontSize="12" TextColor="LightGray"/>
         </Grid>
 
         <!-- Content area. Loaded from separate pages -->
-        <ScrollView Grid.Row="1" x:Name="ContentAreaScrollView" BackgroundColor="LightCoral">
-            <!--<view:HomeView Margin="0"/>-->
-        </ScrollView>
+        <Grid Grid.Row="1" >
+            <Image Source="background.jpg" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="AspectFill"/>
+            <ScrollView x:Name="ContentAreaScrollView">
+                <!-- Views loaded dynamically -->
+            </ScrollView>
+         </Grid>
 
 
         <!-- Menu, overlaps content area when shown -->
         <Frame
             Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Start"
             x:Name="MenuFrame"
-            BackgroundColor="Honeydew"
+            BackgroundColor="White"
             WidthRequest="200"
             TranslationX="-200"
             Margin="0"
@@ -47,11 +52,11 @@
             HasShadow="False">
 
             <StackLayout>
-                <Button x:Name="AboutMenuItem" Text="About" Clicked="AboutMenuItem_Clicked"
+                <Button x:Name="AboutMenuItem" Font="CG-R" Text="About" Clicked="AboutMenuItem_Clicked"
                     HorizontalOptions="FillAndExpand" Background="Transparent" />
-                <Button x:Name="ContactMenuItem" Text="Contact Us" Clicked="ContactMenuItem_Clicked"
+                <Button x:Name="ContactMenuItem" Font="CG-R" Text="Contact Us" Clicked="ContactMenuItem_Clicked"
                     HorizontalOptions="FillAndExpand" Background="Transparent" />
-                <Button x:Name="SettingsMenuItem" Text="Settings" Clicked="SettingsMenuItem_Clicked"
+                <Button x:Name="SettingsMenuItem" Font="CG-R" Text="Settings" Clicked="SettingsMenuItem_Clicked"
                     HorizontalOptions="FillAndExpand" Background="Transparent" />
             </StackLayout>
 
@@ -67,15 +72,24 @@
         <view:MediaPlayerView x:Name="MediaPlayerView" Grid.Row="1" Grid.RowSpan="2" VerticalOptions="EndAndExpand"/>
 
         <!-- Bottom bar -->
-        <Grid Grid.Row="3" BackgroundColor="Gray" Padding="10">
+        <Grid Grid.Row="3" BackgroundColor="LightGray">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="HomeTab"  Text="Home" Clicked="HomeTab_Clicked" Background="Transparent"/>
-            <Button x:Name="ShowsTab" Grid.Column="1" Text="Shows" Clicked="ShowsTab_Clicked" Background="Transparent"/>
-            <Button x:Name="NewsTab"  Grid.Column="2" Text="News" Clicked="NewsTab_Clicked" Background="Transparent"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Button x:Name="HomeTab"  Grid.Row="0" Font="FA-S" FontSize="17" Text="Home" Clicked="HomeTab_Clicked" Background="gray"/>
+            <Label FontFamily="CG-R" Text="Home" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>
+            <Button x:Name="ShowsTab" Font="FA-S" FontSize="17" Grid.Column="1" Text="Podcast" Clicked="ShowsTab_Clicked" Background="gray"/>
+            <Label FontFamily="CG-R" Text="Shows" Grid.Column="1" Grid.Row="1" HorizontalTextAlignment="Center"/>
+
+            <Button x:Name="NewsTab" Font="FA-S" FontSize="17" Grid.Column="2" Text="Newspaper" Clicked="NewsTab_Clicked" Background="gray"/>
+            <Label FontFamily="CG-R" Text="News" Grid.Column="2" Grid.Row="1" HorizontalTextAlignment="Center" />
+
         </Grid>
 
     </Grid>
