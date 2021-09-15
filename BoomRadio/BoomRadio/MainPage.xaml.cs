@@ -1,4 +1,5 @@
-﻿using BoomRadio.View;
+﻿using BoomRadio.Model;
+using BoomRadio.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,20 +17,30 @@ namespace BoomRadio
         Dictionary<string, StackLayout> Views = new Dictionary<string, StackLayout>();
         string CurrentView;
         bool MenuShown = false;
+        MediaPlayer MediaPlayer = new MediaPlayer();
 
         public MainPage()
         {
             InitializeComponent();
             On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
+            MediaPlayerView.MediaPlayer = MediaPlayer;
+            MediaPlayerView.MainPage = this;
             // Initialise views to load into content area
-            Views["home"] = new HomeView();
+            Views["home"] = new HomeView(MediaPlayer, this);
             Views["shows"] = new ShowsView();
             Views["news"] = new NewsView();
             Views["about"] = new AboutView();
             Views["contact"] = new ContactView();
             Views["settings"] = new SettingsView();
             CurrentView = "home";
-            UpdateUI();
+            Navigate("home");
+            UpdatePlayerUIs();
+        }
+
+        public void UpdatePlayerUIs()
+        {
+            MediaPlayerView.UpdateUI();
+            if (CurrentView == "home") ((HomeView)Views["home"]).UpdateUI();
         }
 
         /// <summary>
@@ -122,5 +133,6 @@ namespace BoomRadio
         {
             Navigate("settings");
         }
+
     }
 }

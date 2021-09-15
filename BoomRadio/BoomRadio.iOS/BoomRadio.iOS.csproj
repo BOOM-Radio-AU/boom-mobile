@@ -114,13 +114,27 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\background.imageset\background.jpg" />
-    <ImageAsset Include="Assets.xcassets\background.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\boomlogo.png.imageset\boomlogo.png" />
-    <ImageAsset Include="Assets.xcassets\boomlogo.png.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\boomlogo.png.imageset\boomlogo-1.png" />
-    <ImageAsset Include="Assets.xcassets\background.imageset\background-2.jpg" />
-    <ImageAsset Include="Assets.xcassets\background.imageset\background-1.jpg" />
+    <ImageAsset Include="Assets.xcassets\background.imageset\background.jpg">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\background.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\boomlogo.png.imageset\boomlogo.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\boomlogo.png.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\boomlogo.png.imageset\boomlogo-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\background.imageset\background-2.jpg">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\background.imageset\background-1.jpg">
+      <Visible>false</Visible>
+    </ImageAsset>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

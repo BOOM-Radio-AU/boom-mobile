@@ -69,5 +69,11 @@ namespace BoomRadio.Droid
             player.Stop();
             IsPrepared = false;
         }
+        public void PlayFromUri(string uri)
+        {
+            if (player != null) Stop();
+            dataSource = uri;
+            Play();
+        }
     }
 }

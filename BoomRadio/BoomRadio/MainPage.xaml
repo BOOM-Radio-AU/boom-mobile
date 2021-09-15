@@ -5,10 +5,11 @@
              BackgroundColor="LightGray">
              
 
-    <Grid VerticalOptions="FillAndExpand" Margin="0" Padding="0">
+    <Grid VerticalOptions="FillAndExpand" Margin="0" Padding="0" RowSpacing="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="80"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         
@@ -34,8 +35,7 @@
         <Grid Grid.Row="1" >
             <Image Source="background.jpg" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="AspectFill"/>
             <ScrollView x:Name="ContentAreaScrollView">
-
-                <view:HomeView/>
+                <!-- Views loaded dynamically -->
             </ScrollView>
          </Grid>
 
@@ -65,10 +65,14 @@
             </Frame.GestureRecognizers>
         </Frame>
 
+        <!-- Frame included to ensure space is reserved for player -->
+        <Frame Grid.Row="2" BackgroundColor="Gainsboro"/>
 
+        <!-- Player -->
+        <view:MediaPlayerView x:Name="MediaPlayerView" Grid.Row="1" Grid.RowSpan="2" VerticalOptions="EndAndExpand"/>
 
         <!-- Bottom bar -->
-        <Grid Grid.Row="2" BackgroundColor="LightGray">
+        <Grid Grid.Row="3" BackgroundColor="LightGray">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>

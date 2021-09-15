@@ -41,5 +41,15 @@ namespace BoomRadio.iOS
             player.Dispose();
             isPrepared = false;
         }
+
+        public void PlayFromUri(string uri)
+        {
+            if (isPrepared || player != null)
+            {
+                Stop();
+            }
+            dataSource = uri;
+            Play();
+        }
     }
 }
