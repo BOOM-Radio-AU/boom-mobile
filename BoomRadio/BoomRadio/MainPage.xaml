@@ -31,7 +31,7 @@
 
         <!-- Content area. Loaded from separate pages -->
         <ScrollView Grid.Row="1" x:Name="ContentAreaScrollView" BackgroundColor="LightCoral">
-            <view:HomeView Margin="0"/>
+            <!--<view:HomeView Margin="0"/>-->
         </ScrollView>
 
 
@@ -64,7 +64,7 @@
         <Frame Grid.Row="2" BackgroundColor="Gainsboro"/>
 
         <!-- Player -->
-        <view:MediaPlayerView Grid.Row="1" Grid.RowSpan="2" VerticalOptions="EndAndExpand"/>
+        <view:MediaPlayerView x:Name="MediaPlayerView" Grid.Row="1" Grid.RowSpan="2" VerticalOptions="EndAndExpand"/>
 
         <!-- Bottom bar -->
         <Grid Grid.Row="3" BackgroundColor="Gray" Padding="10">

@@ -13,5 +13,6 @@ namespace BoomRadio
         void Play();
         void Pause();
         void Stop();
+        void PlayFromUri(string uri);
     }
 }

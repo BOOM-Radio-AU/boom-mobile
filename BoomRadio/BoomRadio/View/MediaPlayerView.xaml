@@ -24,10 +24,11 @@
             <Image x:Name="CoverImage" Margin="10,5" VerticalOptions="CenterAndExpand"
                    Source="https://cdn-radiotime-logos.tunein.com/s195836q.png" Aspect="AspectFit"/>
             <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Label Text="Artist" x:Name="ArtistLabel" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" Padding="0,5,0,0"/>
-                <Label Text="Somesong" x:Name="SongTitleLabel" HorizontalOptions="StartAndExpand"/>
+                <Label x:Name="ArtistLabel" Text="Artist" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" Padding="0,5,0,0"/>
+                <Label x:Name="TrackTitleLabel" Text="Somesong" HorizontalOptions="StartAndExpand"/>
             </StackLayout>
-            <Button Text="Play" Padding="0" VerticalOptions="CenterAndExpand"/>
+            <Button x:Name="PlayButton" Text="Play" Padding="0" VerticalOptions="CenterAndExpand" Clicked="PlayButton_Clicked"/>
+            <Button x:Name="PauseButton" Text="Pause" Padding="0" VerticalOptions="CenterAndExpand" Clicked="PauseButton_Clicked"/>
         </StackLayout>
     </StackLayout>
 
