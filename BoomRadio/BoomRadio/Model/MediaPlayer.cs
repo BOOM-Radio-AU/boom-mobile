@@ -53,6 +53,7 @@ namespace BoomRadio.Model
             CoverURI = imageUrl;
             NativePlayer.PlayFromUri(audioUrl);
             IsPlaying = true;
+            IsPaused = false;
             IsLive = false;
         }
 
@@ -66,8 +67,12 @@ namespace BoomRadio.Model
                 NativePlayer.Play();
                 IsPlaying = true;
                 IsPaused = false;
+                IsLive = false;
             }
-            PlayLive();
+            else
+            {
+                PlayLive();
+            }
         }
 
         public void Pause()

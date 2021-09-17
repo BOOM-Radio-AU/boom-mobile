@@ -13,9 +13,6 @@ namespace BoomRadio.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HomeView : StackLayout
     {
-        // TODO: These should be properties of a model object, rather than this view
-        bool IsPlaying;
-        LiveStreamTrack trackInfo;
         string coverImageUri;
         MainPage MainPage;
         MediaPlayer MediaPlayer { get; set; }
@@ -26,11 +23,13 @@ namespace BoomRadio.View
             InitializeComponent();
             MediaPlayer = mediaPlayer;
             MainPage = mainPage;
-            IsPlaying = false;
-            trackInfo = new LiveStreamTrack();
-            //StatusLabel.Text = "Not yet playing";
         }
 
+        /// <summary>
+        /// Updates the state of UI elements. Should not be called directly, rather call
+        /// MainPage.UpdatePlayerUIs (and that method will call this, as well as updating
+        /// the UI of the MediaPlayerView)
+        /// </summary>
         public void UpdateUI()
         {
             ArtistLabel.Text = MediaPlayer.Artist;
@@ -40,24 +39,20 @@ namespace BoomRadio.View
                 coverImageUri = MediaPlayer.CoverURI;
                 CoverArtImage.Source = ImageSource.FromUri(new Uri(coverImageUri));
             }
+            PlayButton.IsVisible = !MediaPlayer.IsPlaying;
+            PauseButton.IsVisible = MediaPlayer.IsPlaying;
         }
 
         private void PlayButton_Clicked(object sender, EventArgs e)
         {
             MediaPlayer.Play();
             MainPage.UpdatePlayerUIs();
-            PlayButton.IsVisible = false;
-            PauseButton.IsVisible = true;
-            
-
         }
 
         private void PauseButton_Clicked(object sender, EventArgs e)
         {
             MediaPlayer.Pause();
             MainPage.UpdatePlayerUIs();
-            PlayButton.IsVisible = true;
-            PauseButton.IsVisible = false;
         }
 
     }
