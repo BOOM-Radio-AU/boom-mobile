@@ -46,6 +46,11 @@ namespace BoomRadio.Model
             IsLive = true;
         }
 
+        public bool CanGoLive()
+        {
+            return !IsLive && (IsPaused || IsPlaying);
+        }
+
         public void PlayPodcast(string artist, string trackTitle, string audioUrl, string imageUrl)
         {
             Artist = artist;

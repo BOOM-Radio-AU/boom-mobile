@@ -41,6 +41,9 @@ namespace BoomRadio.View
             }
             PlayButton.IsVisible = !MediaPlayer.IsPlaying;
             PauseButton.IsVisible = MediaPlayer.IsPlaying;
+            bool showLiveButton = MediaPlayer.CanGoLive();
+            LiveButton.Opacity = showLiveButton ? 1 : 0;
+            LiveButton.IsEnabled = showLiveButton;
         }
 
         private void PlayButton_Clicked(object sender, EventArgs e)
@@ -55,5 +58,10 @@ namespace BoomRadio.View
             MainPage.UpdatePlayerUIs();
         }
 
+        private void LiveButton_Clicked(object sender, EventArgs e)
+        {
+            MediaPlayer.PlayLive();
+            MainPage.UpdatePlayerUIs();
+        }
     }
 }
