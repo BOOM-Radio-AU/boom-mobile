@@ -45,9 +45,14 @@ namespace BoomRadio.View
             TrackTitleLabel.HorizontalOptions = PlayerExpanded ? LayoutOptions.CenterAndExpand : LayoutOptions.StartAndExpand;
             TrackTitleLabel.FontSize = PlayerExpanded ? 20 : 15;
 
+            //Resize Buttons
+            PlayButton.FontSize = PlayerExpanded ? 50 : 25;
+            PauseButton.FontSize = PlayerExpanded ? 50 : 25;
+
             // Show or hide buttons
             PlayButton.IsVisible = !MediaPlayer.IsPlaying;
             PauseButton.IsVisible = MediaPlayer.IsPlaying;
+
             if (PlayerExpanded) // Live button is for expanded view only}
             {
                 LiveButton.IsVisible = MediaPlayer.CanGoLive();
@@ -56,6 +61,7 @@ namespace BoomRadio.View
             {
                 LiveButton.IsVisible = false;
             }
+
         }
 
         /// <summary>
@@ -70,6 +76,7 @@ namespace BoomRadio.View
                 PlayerExpanded = true;
                 PauseButton.Margin = 0;
                 PlayButton.Margin = 0;
+                
                 Task.Delay(100).ContinueWith(_ =>
                 {
                     Device.BeginInvokeOnMainThread(() => MainPage.UpdatePlayerUIs()); // The UI can only be updated from the main thread
@@ -89,6 +96,8 @@ namespace BoomRadio.View
                 PlayerExpanded = false;
                 PauseButton.Margin = spacing;
                 PlayButton.Margin = spacing;
+           
+
                 Task.Delay(100).ContinueWith(_ =>
                 {
                     Device.BeginInvokeOnMainThread(() => MainPage.UpdatePlayerUIs()); // The UI can only be updated from the main thread

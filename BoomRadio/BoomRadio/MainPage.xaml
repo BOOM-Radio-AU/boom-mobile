@@ -46,10 +46,12 @@
             x:Name="MenuFrame"
             BackgroundColor="White"
             WidthRequest="200"
+            HeightRequest="400"
             TranslationX="-200"
             Margin="0"
             Padding="0"
-            HasShadow="False">
+            HasShadow="False"
+            >
 
             <StackLayout>
                 <Button x:Name="AboutMenuItem" Font="CG-R" Text="About" Clicked="AboutMenuItem_Clicked"
