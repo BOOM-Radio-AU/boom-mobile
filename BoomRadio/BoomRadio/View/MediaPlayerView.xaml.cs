@@ -116,8 +116,11 @@ namespace BoomRadio.View
 
         private void PlayButton_Clicked(object sender, EventArgs e)
         {
-            MediaPlayer.Play();
-            MainPage.UpdatePlayerUIs();
+            if (MainPage.HasInternet())
+            {
+                MediaPlayer.Play();
+                MainPage.UpdatePlayerUIs();
+            }
         }
         private void PauseButton_Clicked(object sender, EventArgs e)
         {
@@ -127,8 +130,11 @@ namespace BoomRadio.View
 
         private void LiveButton_Clicked(object sender, EventArgs e)
         {
-            MediaPlayer.PlayLive();
-            MainPage.UpdatePlayerUIs();
+            if (MainPage.HasInternet())
+            {
+                MediaPlayer.PlayLive();
+                MainPage.UpdatePlayerUIs();
+            }
         }
     }
 }
