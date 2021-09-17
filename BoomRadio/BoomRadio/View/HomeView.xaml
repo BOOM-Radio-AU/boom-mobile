@@ -25,9 +25,14 @@
                     <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Grid.Row="1" >
                         <Label x:Name="ArtistLabel" Text="Artist" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" Padding="0,5,0,0"/>
                         <Label x:Name="TrackTitleLabel" Text="Some song" HorizontalOptions="CenterAndExpand"/>
-                        <Button x:Name="PlayButton" MinimumHeightRequest="20" MinimumWidthRequest="20" TextColor="Orange" IsVisible="True" FontSize="50" Font="FA-S" Text="Play" VerticalOptions="CenterAndExpand" Clicked="PlayButton_Clicked"/>
-                        <Button x:Name="PauseButton" MinimumHeightRequest="20" MinimumWidthRequest="20"  TextColor="Orange" IsVisible="False" FontSize="50" Font="FA-S" Text="Pause" VerticalOptions="CenterAndExpand" Clicked="PauseButton_Clicked"/>
-                        <Button Text="Go Live" x:Name="GoLiveButton"/>
+
+                        <Button x:Name="PlayButton" BackgroundColor="Transparent" TextColor="Orange" IsVisible="True"
+                                FontSize="35" Font="FA-S" Text="Play" VerticalOptions="CenterAndExpand" Clicked="PlayButton_Clicked"/>
+
+                        <Button x:Name="PauseButton" BackgroundColor="Transparent" TextColor="Orange" IsVisible="False"
+                                FontSize="35" Font="FA-S" Text="Pause" VerticalOptions="CenterAndExpand" Clicked="PauseButton_Clicked"/>
+
+                        <Button x:Name="LiveButton" BackgroundColor="Transparent" TextColor="Orange"  Text="Go Live" />
                     </StackLayout>
                 </Grid>
             </StackLayout>

@@ -69,8 +69,11 @@ namespace BoomRadio.View
         {
             if (!PlayerExpanded)
             {
+
                 PlayerFrame.TranslateTo(0, 0, 200, Easing.Linear);
                 PlayerExpanded = true;
+                PauseButton.Margin = 0;
+                PlayButton.Margin = 0;
                 Task.Delay(100).ContinueWith(_ =>
                 {
                     Device.BeginInvokeOnMainThread(() => MainPage.UpdatePlayerUIs()); // The UI can only be updated from the main thread
@@ -85,8 +88,11 @@ namespace BoomRadio.View
         {
             if (PlayerExpanded)
             {
+                Thickness spacing = new Thickness(0, 0, 60, 0);
                 PlayerFrame.TranslateTo(0, 420, 200, Easing.Linear);
                 PlayerExpanded = false;
+                PauseButton.Margin = spacing;
+                PlayButton.Margin = spacing;
                 Task.Delay(100).ContinueWith(_ =>
                 {
                     Device.BeginInvokeOnMainThread(() => MainPage.UpdatePlayerUIs()); // The UI can only be updated from the main thread
