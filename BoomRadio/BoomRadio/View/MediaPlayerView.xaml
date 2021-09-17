@@ -4,9 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="BoomRadio.View.MediaPlayerView"
     x:Name="PlayerFrame"
-    BackgroundColor="DarkCyan"
+    BackgroundColor="Gray"
     HeightRequest="500"
-    TranslationY="430"
+    TranslationY="420"
     Margin="0"
     Padding="0,5"
     HasShadow="True">
