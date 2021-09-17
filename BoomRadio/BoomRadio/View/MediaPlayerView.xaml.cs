@@ -85,7 +85,7 @@ namespace BoomRadio.View
         {
             if (PlayerExpanded)
             {
-                PlayerFrame.TranslateTo(0, 430, 200, Easing.Linear);
+                PlayerFrame.TranslateTo(0, 420, 200, Easing.Linear);
                 PlayerExpanded = false;
                 Task.Delay(100).ContinueWith(_ =>
                 {
