@@ -41,6 +41,8 @@ namespace BoomRadio.View
             }
             PlayButton.IsVisible = !MediaPlayer.IsPlaying;
             PauseButton.IsVisible = MediaPlayer.IsPlaying;
+            PlayButton.FontSize = 35;
+            PauseButton.FontSize = 35;
         }
 
         private void PlayButton_Clicked(object sender, EventArgs e)

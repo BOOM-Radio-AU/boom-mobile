@@ -136,6 +136,7 @@ namespace BoomRadio
             ShowsIcon.TextColor = CurrentView == "shows" ? Color.Orange : Color.Black;
             NewsText.TextColor = CurrentView == "news" ? Color.Orange : Color.Black;
             NewsIcon.TextColor = CurrentView == "news" ? Color.Orange : Color.Black;
+           
         }
 
         private void HomeTab_Clicked(object sender, EventArgs e)
@@ -159,6 +160,7 @@ namespace BoomRadio
             {
                 MenuFrame.TranslateTo(0, 0, 400, Easing.Linear);
                 MenuShown = true;
+                MenuFrame.HasShadow = true;
             }
         }
         private void CloseMenu()
@@ -167,6 +169,7 @@ namespace BoomRadio
             {
                 MenuFrame.TranslateTo(-200, 0, 200, Easing.Linear);
                 MenuShown = false;
+                MenuFrame.HasShadow = false;
             }
         }
 
