@@ -38,6 +38,11 @@
                     TextColor="Orange" IsVisible="True" FontSize="30" Font="FA-S"
                     Text="Pause" VerticalOptions="CenterAndExpand" Clicked="PauseButton_Clicked"
                     Margin="0, 0, 60, 0"/>
+
+            <Button x:Name="LiveButton" BackgroundColor="Transparent"
+                    TextColor="Orange" IsVisible="True" FontSize="30" Font="CG-R"
+                    Text="Go live" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Clicked="LiveButton_Clicked"/>
+            
         </StackLayout>
     </StackLayout>
 

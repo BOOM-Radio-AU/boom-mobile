@@ -52,7 +52,15 @@ namespace BoomRadio.View
             // Show or hide buttons
             PlayButton.IsVisible = !MediaPlayer.IsPlaying;
             PauseButton.IsVisible = MediaPlayer.IsPlaying;
-            
+
+            if (PlayerExpanded) // Live button is for expanded view only}
+            {
+                LiveButton.IsVisible = MediaPlayer.CanGoLive();
+            }
+            else
+            {
+                LiveButton.IsVisible = false;
+            }
 
         }
 
@@ -114,6 +122,12 @@ namespace BoomRadio.View
         private void PauseButton_Clicked(object sender, EventArgs e)
         {
             MediaPlayer.Pause();
+            MainPage.UpdatePlayerUIs();
+        }
+
+        private void LiveButton_Clicked(object sender, EventArgs e)
+        {
+            MediaPlayer.PlayLive();
             MainPage.UpdatePlayerUIs();
         }
     }
