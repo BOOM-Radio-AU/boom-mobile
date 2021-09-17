@@ -32,7 +32,7 @@
                         <Button x:Name="PauseButton" BackgroundColor="Transparent" TextColor="Orange" IsVisible="False"
                                 FontSize="35" Font="FA-S" Text="Pause" VerticalOptions="CenterAndExpand" Clicked="PauseButton_Clicked"/>
 
-                        <Button x:Name="LiveButton" BackgroundColor="Transparent" TextColor="Orange"  Text="Go Live" />
+                        <Button x:Name="LiveButton" BackgroundColor="Transparent" TextColor="Orange"  Text="Go Live" Clicked="LiveButton_Clicked"/>
                     </StackLayout>
                 </Grid>
             </StackLayout>

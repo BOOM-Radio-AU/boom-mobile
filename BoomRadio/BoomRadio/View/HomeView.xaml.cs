@@ -58,5 +58,10 @@ namespace BoomRadio.View
             MainPage.UpdatePlayerUIs();
         }
 
+        private void LiveButton_Clicked(object sender, EventArgs e)
+        {
+            MediaPlayer.PlayLive();
+            MainPage.UpdatePlayerUIs();
+        }
     }
 }

@@ -115,5 +115,11 @@ namespace BoomRadio.View
             MediaPlayer.Pause();
             MainPage.UpdatePlayerUIs();
         }
+
+        private void LiveButton_Clicked(object sender, EventArgs e)
+        {
+            MediaPlayer.PlayLive();
+            MainPage.UpdatePlayerUIs();
+        }
     }
 }
