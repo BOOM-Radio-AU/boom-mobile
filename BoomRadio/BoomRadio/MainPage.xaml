@@ -66,13 +66,13 @@
         </Frame>
 
         <!-- Frame included to ensure space is reserved for player -->
-        <Frame Grid.Row="2" BackgroundColor="Gainsboro"/>
+        <Frame Grid.Row="2" BackgroundColor="Transparent"/>
 
         <!-- Player -->
         <view:MediaPlayerView x:Name="MediaPlayerView" Grid.Row="1" Grid.RowSpan="2" VerticalOptions="EndAndExpand"/>
-
+                
         <!-- Bottom bar -->
-        <Grid Grid.Row="3" BackgroundColor="LightGray">
+        <Grid x:Name="BottomBarGrid" Grid.Row="3" BackgroundColor="LightGray">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -80,7 +80,8 @@
             </Grid.ColumnDefinitions>
 
 
-            <Frame Padding="0" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" Background="gray" Grid.Column="0">
+
+            <Frame Padding="0" Margin="0,10,0,0" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" HasShadow="False" Background="transparent" Grid.Column="0">
                 <StackLayout >
                     <Label x:Name="HomeIcon" FontFamily="FA-S" FontSize="20" Text="Home" HorizontalTextAlignment="Center"/>
                     <Label x:Name="HomeText" FontFamily="CG-R" Text="Home" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>
@@ -91,7 +92,7 @@
 
             </Frame>
 
-            <Frame Padding="0" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" Background="gray" Grid.Column="1">
+            <Frame Padding="0" Margin="0,10,0,0" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" HasShadow="False" Background="transparent" Grid.Column="1">
                 <StackLayout>
                     <Label x:Name="ShowsIcon" FontFamily="FA-S" FontSize="20" Text="Podcast" HorizontalTextAlignment="Center"/>
                     <Label x:Name="ShowsText" FontFamily="CG-R" Text="Shows" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>
@@ -104,7 +105,7 @@
 
 
 
-            <Frame Padding="0" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" Background="gray" Grid.Column="2">
+            <Frame Padding="0" Margin="0,10,0,0" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" HasShadow="False" Background="transparent" Grid.Column="2">
                 <StackLayout>
                     <Label x:Name="NewsIcon" FontFamily="FA-S" FontSize="20" Text="Newspaper" HorizontalTextAlignment="Center"/>
                     <Label x:Name="NewsText" FontFamily="CG-R" Text="News" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>

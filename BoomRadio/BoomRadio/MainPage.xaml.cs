@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace BoomRadio
@@ -24,7 +25,7 @@ namespace BoomRadio
         public MainPage()
         {
             InitializeComponent();
-            On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
+            On<iOS>().SetUseSafeArea(true);
             MediaPlayerView.MediaPlayer = MediaPlayer;
             MediaPlayerView.MainPage = this;
             // Initialise views to load into content area
@@ -37,6 +38,22 @@ namespace BoomRadio
             CurrentView = "home";
             Navigate("home");
             UpdatePlayerUIs();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            var safeinsets = On<iOS>().SafeAreaInsets();
+
+            if (safeinsets.Bottom > 0)
+            {
+                Thickness Thick = new Thickness(10, 0, 10, 20);
+                BottomBarGrid.Padding = Thick;
+            }
+
+            safeinsets.Bottom = 0;
+            Padding = safeinsets;
         }
 
         public void UpdatePlayerUIs()
