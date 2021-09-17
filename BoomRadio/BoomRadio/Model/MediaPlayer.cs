@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Xamarin.Essentials;
 
 namespace BoomRadio.Model
 {
@@ -86,6 +87,14 @@ namespace BoomRadio.Model
             IsPlaying = false;
             IsPaused = true;
             IsLive = false;
+        }
+
+        public void SetNotConnected()
+        {
+            //NativePlayer.Stop();
+            Artist = "No connection";
+            Track = "";
+            //CoverURI = "";
         }
 
         public async Task UpdateLiveTrackInfo()

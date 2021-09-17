@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
@@ -56,6 +57,37 @@ namespace BoomRadio
             Padding = safeinsets;
         }
 
+        /// <summary>
+        /// Checks for an internet connection, and shows a popup message if not connected
+        /// (unless supressed)
+        /// </summary>
+        /// <param name="supressPopup">Set to true to supress showing the popup</param>
+        /// <returns></returns>
+        public bool HasInternet(bool supressPopup = false)
+        {
+            // Check for internet
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+            {
+                return true;
+            }
+
+            // No internet - show a popup (if not supressed)
+            if (!supressPopup)
+            {
+                DisplayAlertAsync("No Internet", "Connect to the internet and try again", "OK");
+            }
+            // Set Media player information
+            MediaPlayer.SetNotConnected();
+            UpdatePlayerUIs();
+
+            return false;
+        }
+        
+        public async Task DisplayAlertAsync(string title, string message, string cancel)
+        {
+            await DisplayAlert(title, message, cancel);
+        }
+
         public void UpdatePlayerUIs()
         {
             if (!UpdateTrackTimerRunning && MediaPlayer.IsLive)
@@ -93,7 +125,11 @@ namespace BoomRadio
                     return false; // ends timer
                 }
 
-                UpdateLiveTrackInfo();
+
+                if (HasInternet(false))
+                {
+                    UpdateLiveTrackInfo();
+                }
                 return true; // continues timer
             });
         }
