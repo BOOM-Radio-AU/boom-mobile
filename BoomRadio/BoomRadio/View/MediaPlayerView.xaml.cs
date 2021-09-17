@@ -17,26 +17,14 @@ namespace BoomRadio.View
         bool PlayerExpanded = false;
         public MediaPlayer MediaPlayer { get; set; }
         public MainPage MainPage;
-        private Action updateSecondPlayerUI;
-        public Action UpdateSecondPlayerUI
-        {
-            get => updateSecondPlayerUI;
-            set
-            {
-                updateSecondPlayerUI = value;
-                UpdateUI();
-            }
-        }
+
         public MediaPlayerView()
         {
             InitializeComponent();
-            //MediaPlayer = new MediaPlayer();
-            //UpdateUI();
         }
 
         public void UpdateUI()
         {
-
             // Update orientation
             PlayerStackLayout.Orientation = PlayerExpanded ? StackOrientation.Vertical : StackOrientation.Horizontal;
 
