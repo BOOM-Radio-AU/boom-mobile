@@ -54,8 +54,9 @@ namespace BoomRadio.Model
                     string excerpt = item.Value<JObject>("excerpt").Value<string>("rendered");
                     string published = item.Value<string>("date");
                     string modified = item.Value<string>("modified");
+                    string mediaId = item.Value<int>("featured_media").ToString();
 
-                    NewsArticle article = new NewsArticle(title, content, excerpt, published, modified);
+                    NewsArticle article = new NewsArticle(title, content, excerpt, published, modified, mediaId);
                     freshArticles.Add(article);
                 }
                 articles = freshArticles;

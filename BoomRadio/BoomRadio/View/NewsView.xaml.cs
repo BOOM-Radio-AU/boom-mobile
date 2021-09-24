@@ -1,4 +1,5 @@
-﻿using BoomRadio.Model;
+﻿using BoomRadio.Components;
+using BoomRadio.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,8 +28,7 @@ namespace BoomRadio.View
                 NewsStacklayout.Children.Clear();
                 foreach (NewsArticle article in News.articles)
                 {
-                    Label item = new Label();
-                    item.Text = article.Title;
+                    NewsSnippet item = new NewsSnippet(article);
                     NewsStacklayout.Children.Add(item);
                 }
             });
