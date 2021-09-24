@@ -23,15 +23,19 @@ namespace BoomRadio.View
 
         public async void UpdateUI()
         {
-            await News.UpdateAsync();
-            Device.BeginInvokeOnMainThread(() => {
-                NewsStacklayout.Children.Clear();
-                foreach (NewsArticle article in News.articles)
+            bool shouldUpdate = await News.UpdateAsync();
+            if (shouldUpdate)
+            {
+                Device.BeginInvokeOnMainThread(() =>
                 {
-                    NewsSnippet item = new NewsSnippet(article);
-                    NewsStacklayout.Children.Add(item);
-                }
-            });
+                    NewsStacklayout.Children.Clear();
+                    foreach (NewsArticle article in News.articles)
+                    {
+                        NewsSnippet item = new NewsSnippet(article);
+                        NewsStacklayout.Children.Add(item);
+                    }
+                });
+            }
         }
     }
 }

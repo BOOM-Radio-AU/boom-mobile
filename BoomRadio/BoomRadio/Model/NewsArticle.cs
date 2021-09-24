@@ -11,6 +11,7 @@ namespace BoomRadio.Model
 {
     public class NewsArticle
     {
+        public int ID { get; private set; }
         public DateTime DatePublished { get; private set; }
         public DateTime DateModified { get; private set; }
         public string Title { get; private set; }
@@ -35,8 +36,9 @@ namespace BoomRadio.Model
         }
 
 
-        public NewsArticle(string title, string content, string excerpt, string published, string modified, string mediaId)
+        public NewsArticle(int id, string title, string content, string excerpt, string published, string modified, string mediaId)
         {
+            ID = id;
             Title = title;
             ContentHTML = content;
             Excerpt = TextFromHTML(excerpt);
