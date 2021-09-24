@@ -21,7 +21,7 @@ namespace BoomRadio
         bool MenuShown = false;
         MediaPlayer MediaPlayer = new MediaPlayer();
         bool UpdateTrackTimerRunning = false;
-
+        NewsCollection News = new NewsCollection();
 
         public MainPage()
         {
@@ -32,7 +32,7 @@ namespace BoomRadio
             // Initialise views to load into content area
             Views["home"] = new HomeView(MediaPlayer, this);
             Views["shows"] = new ShowsView();
-            Views["news"] = new NewsView();
+            Views["news"] = new NewsView(News);
             Views["about"] = new AboutView();
             Views["contact"] = new ContactView();
             Views["settings"] = new SettingsView();
@@ -160,6 +160,7 @@ namespace BoomRadio
             }
             ContentAreaScrollView.Content = Views[target];
             CurrentView = target;
+            (Views[target] as IUpdatableUI)?.UpdateUI();
             UpdateUI();
         }
 
