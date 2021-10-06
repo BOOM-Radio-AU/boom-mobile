@@ -23,6 +23,11 @@ namespace BoomRadio.Model
         private readonly HttpClient client = new HttpClient();
         public string MediaApiPrefix = "https://boomradio.com.au/wp-json/wp/v2/media/";
 
+        /// <summary>
+        /// Extracts text content from a HTML string
+        /// </summary>
+        /// <param name="html">HTML string</param>
+        /// <returns>Text content</returns>
         public string TextFromHTML(string html)
         {
             // Regex to match any character between '<' and '>', even when end tag is missing
@@ -47,7 +52,10 @@ namespace BoomRadio.Model
             MediaID = mediaId;
         }
 
-
+        /// <summary>
+        /// Fetches data for the image associated with the news article
+        /// </summary>
+        /// <returns>Image data</returns>
         public async Task<string> FetchImage()
         {
             // Fetch data from api
@@ -65,12 +73,20 @@ namespace BoomRadio.Model
             return responseString;
         }
 
+        /// <summary>
+        /// Sets the image url by parsing an api response of image data 
+        /// </summary>
+        /// <param name="apiResponse">image data from <see cref="FetchImage"/></param>
         public void ParseImageUrl(string apiResponse)
         {
             JObject response = JsonConvert.DeserializeObject<JObject>(apiResponse);
             ImageUrl = response.Value<string>("source_url");
         }
 
+        /// <summary>
+        /// Fetches and parses image data from the server, and sets the image url
+        /// </summary>
+        /// <returns>image url</returns>
         public async Task<string> UpdateImageUrl()
         {
             try

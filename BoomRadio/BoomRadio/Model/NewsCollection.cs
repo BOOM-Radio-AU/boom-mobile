@@ -39,7 +39,10 @@ namespace BoomRadio.Model
             return responseString;
         }
 
-
+        /// <summary>
+        /// Parses JSON from the server, adding new stories to the list of articles
+        /// </summary>
+        /// <param name="responseString">API response from <see cref="Fetch"/></param>
         public void Parse(string responseString)
         {
             List<NewsArticle> freshArticles = new List<NewsArticle>();

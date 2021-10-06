@@ -10,27 +10,43 @@ using Xamarin.Forms.Xaml;
 
 namespace BoomRadio.Components
 {
+    /// <summary>
+    /// A snippet view of a news story, including image and headline
+    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NewsSnippet : Frame
     {
+        /// <summary>
+        /// News article for the snippet view
+        /// </summary>
         NewsArticle Article;
+
+        /// <summary>
+        /// Initialises a new instance
+        /// </summary>
+        /// <param name="article">News article for the snippet view</param>
         public NewsSnippet(NewsArticle article)
         {
             InitializeComponent();
             Article = article;
             TitleLabel.Text = Article.Title;
             ExcertLabel.Text = Article.Excerpt;
-            GetImage();
+            GetImageAsync();
         }
 
-        private async void GetImage()
+        /// <summary>
+        /// Sets the image source from the news article
+        /// </summary>
+        private async void GetImageAsync()
         {
+            // If the article already has an image url specified, just use that
             if (Article.ImageUrl != null)
             {
                 NewsImage.Source = ImageSource.FromUri(new Uri(Article.ImageUrl));
                 return;
             }
 
+            // Otherwise, wait for the url to be fetched and then use it
             try
             {
                 string imageUrl = await Article.UpdateImageUrl();
