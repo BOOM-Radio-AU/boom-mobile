@@ -20,14 +20,16 @@ namespace BoomRadio.Components
         /// News article for the snippet view
         /// </summary>
         NewsArticle Article;
+        MainPage MainPage;
 
         /// <summary>
         /// Initialises a new instance
         /// </summary>
         /// <param name="article">News article for the snippet view</param>
-        public NewsSnippet(NewsArticle article)
+        public NewsSnippet(NewsArticle article, MainPage mainPage)
         {
             InitializeComponent();
+            MainPage = mainPage;
             Article = article;
             TitleLabel.Text = Article.Title;
             ExcertLabel.Text = Article.Excerpt;
@@ -64,5 +66,14 @@ namespace BoomRadio.Components
             }
         }
 
+        /// <summary>
+        /// Handles tap events to open the news article 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            MainPage.NavigateToNewsArticle(Article);
+        }
     }
 }

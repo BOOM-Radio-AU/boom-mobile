@@ -15,10 +15,12 @@ namespace BoomRadio.View
     public partial class NewsView : StackLayout, IUpdatableUI
     {
         public NewsCollection News;
-        public NewsView(NewsCollection news)
+        MainPage MainPage;
+        public NewsView(NewsCollection news, MainPage mainPage)
         {
             InitializeComponent();
             News = news;
+            MainPage = mainPage;
         }
 
         public async void UpdateUI()
@@ -31,7 +33,8 @@ namespace BoomRadio.View
                     NewsStacklayout.Children.Clear();
                     foreach (NewsArticle article in News.articles)
                     {
-                        NewsSnippet item = new NewsSnippet(article);
+                        NewsSnippet item = new NewsSnippet(article, MainPage);
+
                         NewsStacklayout.Children.Add(item);
                     }
                 });
