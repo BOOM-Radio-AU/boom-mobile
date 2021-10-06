@@ -6,5 +6,6 @@
     <Label Text="News" FontSize="18" FontFamily="CG-B"
            VerticalOptions="CenterAndExpand" 
            HorizontalOptions="CenterAndExpand" />
+    <ActivityIndicator x:Name="NewsLoadingIndicator" IsVisible="False"/>
     <StackLayout x:Name="NewsStacklayout"/>
 </StackLayout>

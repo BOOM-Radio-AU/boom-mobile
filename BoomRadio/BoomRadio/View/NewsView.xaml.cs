@@ -25,8 +25,12 @@ namespace BoomRadio.View
 
         public async void UpdateUI()
         {
-            bool shouldUpdate = await News.UpdateAsync();
-            if (shouldUpdate)
+            // Show the loading indicator
+            NewsLoadingIndicator.IsVisible = true;
+            NewsLoadingIndicator.IsRunning = true;
+            // Update the News collection, and then the UI if needed
+            bool shouldUpdateUI = await News.UpdateAsync();
+            if (shouldUpdateUI)
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
@@ -39,6 +43,9 @@ namespace BoomRadio.View
                     }
                 });
             }
+            // Hide the loading indicator
+            NewsLoadingIndicator.IsVisible = false;
+            NewsLoadingIndicator.IsRunning = false;
         }
     }
 }
