@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BoomRadio.Components;
+using BoomRadio.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,11 +12,45 @@ using Xamarin.Forms.Xaml;
 namespace BoomRadio.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class NewsView : StackLayout
+    public partial class NewsView : StackLayout, IUpdatableUI
     {
-        public NewsView()
+        public NewsCollection News;
+        MainPage MainPage;
+        public NewsView(NewsCollection news, MainPage mainPage)
         {
             InitializeComponent();
+            News = news;
+            MainPage = mainPage;
+        }
+
+        public async void UpdateUI()
+        {
+            // Don't try to update without internet connection
+            if (!MainPage.HasInternet())
+            {
+                return;
+            }
+            // Show the loading indicator
+            NewsLoadingIndicator.IsVisible = true;
+            NewsLoadingIndicator.IsRunning = true;
+            // Update the News collection, and then the UI if needed
+            bool shouldUpdateUI = await News.UpdateAsync();
+            if (shouldUpdateUI)
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    NewsStacklayout.Children.Clear();
+                    foreach (NewsArticle article in News.articles)
+                    {
+                        NewsSnippet item = new NewsSnippet(article, MainPage);
+
+                        NewsStacklayout.Children.Add(item);
+                    }
+                });
+            }
+            // Hide the loading indicator
+            NewsLoadingIndicator.IsVisible = false;
+            NewsLoadingIndicator.IsRunning = false;
         }
     }
 }

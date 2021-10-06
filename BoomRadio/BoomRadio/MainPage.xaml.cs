@@ -16,12 +16,12 @@ namespace BoomRadio
     public partial class MainPage : ContentPage
     {
 
-        Dictionary<string, StackLayout> Views = new Dictionary<string, StackLayout>();
+        Dictionary<string, Layout> Views = new Dictionary<string, Layout>();
         string CurrentView;
         bool MenuShown = false;
         MediaPlayer MediaPlayer = new MediaPlayer();
         bool UpdateTrackTimerRunning = false;
-
+        NewsCollection News = new NewsCollection();
 
         public MainPage()
         {
@@ -32,7 +32,8 @@ namespace BoomRadio
             // Initialise views to load into content area
             Views["home"] = new HomeView(MediaPlayer, this);
             Views["shows"] = new ShowsView();
-            Views["news"] = new NewsView();
+            Views["news"] = new NewsView(News, this);
+            Views["news_article"] = new NewsArticleView(this);
             Views["about"] = new AboutView();
             Views["contact"] = new ContactView();
             Views["settings"] = new SettingsView();
@@ -82,7 +83,8 @@ namespace BoomRadio
 
             return false;
         }
-        
+
+
         public async Task DisplayAlertAsync(string title, string message, string cancel)
         {
             await DisplayAlert(title, message, cancel);
@@ -160,7 +162,18 @@ namespace BoomRadio
             }
             ContentAreaScrollView.Content = Views[target];
             CurrentView = target;
+            (Views[target] as IUpdatableUI)?.UpdateUI();
             UpdateUI();
+        }
+
+        /// <summary>
+        /// Sets the article for the news article view, and navigates to that view
+        /// </summary>
+        /// <param name="article">Article to be shown</param>
+        public void NavigateToNewsArticle(NewsArticle article)
+        {
+            ((NewsArticleView)Views["news_article"]).Article = article;
+            Navigate("news_article");
         }
 
         private void UpdateUI()

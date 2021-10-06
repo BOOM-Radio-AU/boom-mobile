@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Frame xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BoomRadio.Components.NewsSnippet"
+       Padding="5">
+    <Frame.Content>
+        <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+            <Image x:Name="NewsImage" WidthRequest="120" Aspect="AspectFill"/>
+            <StackLayout Orientation="Vertical">
+                <Label x:Name="TitleLabel" Text="Headline goes here" FontSize="18" FontFamily="CG-B"
+                    VerticalOptions="StartAndExpand" 
+                    HorizontalOptions="StartAndExpand" />
+                <Label x:Name="ExcertLabel" Text="Headline goes here" FontSize="15" FontFamily="CG-L"
+                    VerticalOptions="StartAndExpand" 
+                    HorizontalOptions="StartAndExpand" />
+            </StackLayout>
+        </StackLayout>
+    </Frame.Content>
+    <Frame.GestureRecognizers>
+        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+    </Frame.GestureRecognizers>
+</Frame>
