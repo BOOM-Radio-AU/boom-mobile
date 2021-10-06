@@ -25,6 +25,11 @@ namespace BoomRadio.View
 
         public async void UpdateUI()
         {
+            // Don't try to update without internet connection
+            if (!MainPage.HasInternet())
+            {
+                return;
+            }
             // Show the loading indicator
             NewsLoadingIndicator.IsVisible = true;
             NewsLoadingIndicator.IsRunning = true;

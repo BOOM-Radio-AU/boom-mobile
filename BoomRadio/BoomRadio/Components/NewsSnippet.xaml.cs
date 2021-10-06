@@ -41,10 +41,18 @@ namespace BoomRadio.Components
         /// </summary>
         private async void GetImageAsync()
         {
+
             // If the article already has an image url specified, just use that
             if (Article.ImageUrl != null)
             {
                 NewsImage.Source = ImageSource.FromUri(new Uri(Article.ImageUrl));
+                return;
+            }
+
+            // If the internet is not connected, silently skip trying to show the image
+            if (!MainPage.HasInternet(true))
+            {
+                NewsImage.IsVisible = false;
                 return;
             }
 
