@@ -33,7 +33,15 @@ namespace BoomRadio.Components
             Article = article;
             TitleLabel.Text = Article.Title;
             ExcertLabel.Text = Article.Excerpt;
+            UpdateColours();
             GetImageAsync();
+        }
+
+        public void UpdateColours()
+        {
+            this.BackgroundColor = Theme.GetColour("background");
+            TitleLabel.TextColor = Theme.GetColour("text");
+            ExcertLabel.TextColor = Theme.GetColour("text");
         }
 
         /// <summary>
