@@ -1,8 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BoomRadio.View.SettingsView">
+             x:Class="BoomRadio.View.SettingsView"
+             Padding="10">
     <Label Text="Settings"
-                VerticalOptions="CenterAndExpand" 
+                VerticalOptions="Start" 
                 HorizontalOptions="CenterAndExpand" />
+    
+    <Grid VerticalOptions="StartAndExpand" RowSpacing="20" BackgroundColor="White" Padding="10,15" Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        
+        <Label x:Name="DarkModeLable" Text="Dark mode"/>
+        <Switch x:Name="DarkModeSwitch" Grid.Column="1" IsToggled="False" Toggled="DarkModeSwitch_Toggled"/>
+
+        <Label x:Name="DeviceDarkModeLabel" Grid.Row="1" Text="Use device setting for dark mode"/>
+        <Switch x:Name="DeviceDarkModeSwitch" Grid.Row="1" Grid.Column="1" IsToggled="False" HorizontalOptions="Start" Toggled="DeviceDarkModeSwitch_Toggled"/>
+
+        <Label x:Name="AutoplayLabel" Grid.Row="2" Text="Autoplay radio when app opens"/>
+        <Switch x:Name="AutoplaySwitch" Grid.Row="2" Grid.Column="1" IsToggled="False" Toggled="AutoplaySwitch_Toggled"/>
+    </Grid>
 </StackLayout>
