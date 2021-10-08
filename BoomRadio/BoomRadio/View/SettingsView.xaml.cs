@@ -17,8 +17,28 @@ namespace BoomRadio.View
         public SettingsView(MainPage mainPage)
         {
             InitializeComponent();
-            Theme.UseDarkMode = Preferences.Get(darkModeKey, false);
             MainPage = mainPage;
+            UpdateTheme();
+            Application.Current.RequestedThemeChanged += (sender, args) => UpdateTheme();
+            
+        }
+
+        /// <summary>
+        /// Updates the Theme (and UIs) to use dark/light mode based on the saved preference
+        /// </summary>
+        public void UpdateTheme()
+        {
+            if (Preferences.Get(deviceDarkModeKey, false))
+            {
+                Theme.UseDarkMode = Application.Current.RequestedTheme == OSAppTheme.Dark;
+            }
+            else
+            {
+                Theme.UseDarkMode = Preferences.Get(darkModeKey, false);
+            }
+            UpdateUI();
+            MainPage.UpdateUI();
+            MainPage.UpdatePlayerColours();
         }
 
         /// <summary>
@@ -30,6 +50,17 @@ namespace BoomRadio.View
             DarkModeSwitch.IsToggled = Preferences.Get(darkModeKey, false);
             DeviceDarkModeSwitch.IsToggled = Preferences.Get(deviceDarkModeKey, false);
             AutoplaySwitch.IsToggled = Preferences.Get(autoplayKey, false);
+            // Disable darm mode toggle if using device mode
+            if (DeviceDarkModeSwitch.IsToggled)
+            {
+                DarkModeSwitch.IsEnabled = false;
+                DarkModeLabel.Opacity = 0.6;
+            }
+            else
+            {
+                DarkModeSwitch.IsEnabled = true;
+                DarkModeLabel.Opacity = 1;
+            }
             // Update colors
             ContainerGrid.BackgroundColor = Theme.GetColour("background");
             DarkModeLabel.TextColor = Theme.GetColour("text");
@@ -45,10 +76,7 @@ namespace BoomRadio.View
         private void DarkModeSwitch_Toggled(object sender, ToggledEventArgs e)
         {
             Preferences.Set(darkModeKey, e.Value);
-            Theme.UseDarkMode = e.Value;
-            UpdateUI();
-            MainPage.UpdateUI();
-            MainPage.UpdatePlayerColours();
+            UpdateTheme();
         }
 
         /// <summary>
@@ -56,7 +84,11 @@ namespace BoomRadio.View
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DeviceDarkModeSwitch_Toggled(object sender, ToggledEventArgs e) => Preferences.Set(deviceDarkModeKey, e.Value);
+        private void DeviceDarkModeSwitch_Toggled(object sender, ToggledEventArgs e)
+        {
+            Preferences.Set(deviceDarkModeKey, e.Value);
+            UpdateTheme();
+        }
 
         /// <summary>
         /// Handles the autoplay switch being toggled
