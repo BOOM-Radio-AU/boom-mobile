@@ -17,6 +17,7 @@ namespace BoomRadio.Model
             // Initialise colours for each mode
             lightModeColors["text"] = Color.Black;
             lightModeColors["background"] = Color.White;
+            lightModeColors["player-bg"] = Color.FromHex("889191");
             lightModeColors["nav-bg"] = Color.LightGray;
             lightModeColors["not-live"] = Color.Gray;
             lightModeColors["is-live"] = Color.Red;
@@ -25,6 +26,7 @@ namespace BoomRadio.Model
 
             darkModeColors["text"] = Color.White;
             darkModeColors["background"] = Color.FromHex("474747");
+            darkModeColors["player-bg"] = Color.FromHex("3F4F4F");
             darkModeColors["nav-bg"] = Color.FromHex("5b5b5b");
             darkModeColors["not-live"] = Color.LightGray;
             darkModeColors["is-live"] = Color.FromHex("f95454");

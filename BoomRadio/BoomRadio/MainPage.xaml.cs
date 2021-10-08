@@ -59,6 +59,11 @@ namespace BoomRadio
             Padding = safeinsets;
         }
 
+        internal void UpdatePlayerColours()
+        {
+            MediaPlayerView.UpdateColours();
+        }
+
         /// <summary>
         /// Checks for an internet connection, and shows a popup message if not connected
         /// (unless supressed)

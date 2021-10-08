@@ -10,8 +10,8 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Frame HasShadow="True" MinimumWidthRequest="100" MinimumHeightRequest="50">
-            <StackLayout x:Name="PlayerStackLayout" Padding="0" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="White">
+        <Frame x:Name="PlayerFrame" HasShadow="True" MinimumWidthRequest="100" MinimumHeightRequest="50">
+            <StackLayout x:Name="PlayerStackLayout" Padding="0" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
                 <Grid>
                     <Image x:Name="CoverArtImage" VerticalOptions="CenterAndExpand"
                            Scale="3.5"

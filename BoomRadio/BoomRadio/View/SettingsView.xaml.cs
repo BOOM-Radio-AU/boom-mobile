@@ -48,6 +48,7 @@ namespace BoomRadio.View
             Theme.UseDarkMode = e.Value;
             UpdateUI();
             MainPage.UpdateUI();
+            MainPage.UpdatePlayerColours();
         }
 
         /// <summary>
