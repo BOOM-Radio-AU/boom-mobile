@@ -3,7 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BoomRadio.View.ShowsView"
              VerticalOptions="StartAndExpand">
-    <Label Text="This is the shows page"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+    <Label Text="Shows" FontSize="18" FontFamily="CG-B"
+           VerticalOptions="CenterAndExpand" 
+           HorizontalOptions="CenterAndExpand"
+           Padding="10"/>
+    <ActivityIndicator x:Name="ShowsLoadingIndicator" IsVisible="False"/>
+    <CarouselView x:Name="ShowsCarousel"/>
 </StackLayout>
