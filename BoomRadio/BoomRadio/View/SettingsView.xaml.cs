@@ -1,6 +1,7 @@
 ﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
+using BoomRadio.Model;
 
 namespace BoomRadio.View
 {
@@ -11,10 +12,13 @@ namespace BoomRadio.View
         readonly string darkModeKey = "darkMode";
         readonly string deviceDarkModeKey = "deviceDarkMode";
         readonly string autoplayKey = "autoplay";
+        MainPage MainPage;
 
-        public SettingsView()
+        public SettingsView(MainPage mainPage)
         {
             InitializeComponent();
+            Theme.UseDarkMode = Preferences.Get(darkModeKey, false);
+            MainPage = mainPage;
         }
 
         /// <summary>
@@ -26,6 +30,11 @@ namespace BoomRadio.View
             DarkModeSwitch.IsToggled = Preferences.Get(darkModeKey, false);
             DeviceDarkModeSwitch.IsToggled = Preferences.Get(deviceDarkModeKey, false);
             AutoplaySwitch.IsToggled = Preferences.Get(autoplayKey, false);
+            // Update colors
+            ContainerGrid.BackgroundColor = Theme.GetColour("background");
+            DarkModeLabel.TextColor = Theme.GetColour("text");
+            DeviceDarkModeLabel.TextColor = Theme.GetColour("text");
+            AutoplayLabel.TextColor = Theme.GetColour("text");
         }
 
         /// <summary>
@@ -33,7 +42,13 @@ namespace BoomRadio.View
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DarkModeSwitch_Toggled(object sender, ToggledEventArgs e) => Preferences.Set(darkModeKey, e.Value);
+        private void DarkModeSwitch_Toggled(object sender, ToggledEventArgs e)
+        {
+            Preferences.Set(darkModeKey, e.Value);
+            Theme.UseDarkMode = e.Value;
+            UpdateUI();
+            MainPage.UpdateUI();
+        }
 
         /// <summary>
         /// Handles the device dark mode switch being toggled

@@ -7,7 +7,7 @@
                 VerticalOptions="Start" 
                 HorizontalOptions="CenterAndExpand" />
     
-    <Grid VerticalOptions="StartAndExpand" RowSpacing="20" BackgroundColor="White" Padding="10,15" Margin="5">
+    <Grid x:Name="ContainerGrid" VerticalOptions="StartAndExpand" RowSpacing="20" BackgroundColor="White" Padding="10,15" Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -18,7 +18,7 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         
-        <Label x:Name="DarkModeLable" Text="Dark mode"/>
+        <Label x:Name="DarkModeLabel" Text="Dark mode"/>
         <Switch x:Name="DarkModeSwitch" Grid.Column="1" IsToggled="False" Toggled="DarkModeSwitch_Toggled"/>
 
         <Label x:Name="DeviceDarkModeLabel" Grid.Row="1" Text="Use device setting for dark mode"/>
