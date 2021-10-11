@@ -19,7 +19,7 @@ namespace BoomRadio
         Dictionary<string, Layout> Views = new Dictionary<string, Layout>();
         string CurrentView;
         bool MenuShown = false;
-        MediaPlayer MediaPlayer = new MediaPlayer();
+        public readonly MediaPlayer MediaPlayer = new MediaPlayer();
         bool UpdateTrackTimerRunning = false;
         NewsCollection News = new NewsCollection();
 
