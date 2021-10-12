@@ -47,8 +47,14 @@ namespace BoomRadio.Model
             Title = title;
             ContentHTML = content;
             Excerpt = TextFromHTML(excerpt);
-            DatePublished = DateTime.Parse(published);
-            DateModified = DateTime.Parse(modified);
+            DateTime dPub;
+            if (DateTime.TryParse(published, out dPub)) {
+                DatePublished = dPub;
+            }
+            DateTime dMod;
+            if (DateTime.TryParse(modified, out dMod)) {
+                DatePublished = dMod;
+            }
             MediaID = mediaId;
         }
 
@@ -99,6 +105,33 @@ namespace BoomRadio.Model
                 Console.WriteLine("Error updating articles\n" + e.Message);
             }
             return ImageUrl;
+        }
+
+        /// <summary>
+        /// Splits the content html into chunks of text (non-image) content, removing image tags
+        /// </summary>
+        /// <returns>text (non-image) content chunks</returns>
+        public Queue<string> ContentTextChunks()
+        {
+            Regex imagesRegex = new Regex(@"<img[^>]*>", RegexOptions.IgnoreCase);
+            return new Queue<string>(imagesRegex.Split(ContentHTML));
+            
+        }
+        /// <summary>
+        /// Parses the content for image source urls
+        /// </summary>
+        /// <returns>Image source urls</returns>
+        public Queue<string> ContentImageUrls()
+        {
+            Queue<string> imgUrls = new Queue<string>();
+            Regex imagesRegex = new Regex(@"<img[^>]*>", RegexOptions.IgnoreCase);
+            MatchCollection imgTags = imagesRegex.Matches(ContentHTML);
+            foreach (Match imgTagMatch in imgTags) {
+                // Parse url from src attribute. Based on https://stackoverflow.com/questions/4257359/regular-expression-to-get-the-src-of-images-in-c-sharp
+                string srcUrl = Regex.Match(imgTagMatch.Value, "<img.+?src=[\"'](.+?)[\"'][^>]*>", RegexOptions.IgnoreCase).Groups[1].Value;
+                imgUrls.Enqueue(srcUrl);
+            }
+            return imgUrls;
         }
     }
 }

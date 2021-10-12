@@ -7,5 +7,5 @@
     <Button x:Name="BackButton" Text="&lt; Back" BackgroundColor="Transparent" TextColor="Black" HorizontalOptions="Start" Clicked="BackButton_Clicked"/>
     <Image x:Name="NewsImage" MinimumHeightRequest="200" Aspect="AspectFit"/>
     <Label x:Name="HeadlineLabel" Text="Headline goes here" FontSize="22" FontFamily="CG-B" TextColor="Black"/>
-    <Label x:Name="ContentLabel" TextType="Html" BackgroundColor="White" Padding="8" FontSize="18" Margin="0,5,0,20"/>
+    <StackLayout Orientation="Vertical" x:Name="ContentStackLayout" BackgroundColor="White" Padding="8" Margin="0,5,0,20"/>
 </StackLayout>
