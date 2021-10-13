@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:BoomRadio.Components"
              x:Class="BoomRadio.View.ShowsView"
              VerticalOptions="StartAndExpand">
     <Label Text="Shows" FontSize="18" FontFamily="CG-B"
@@ -8,5 +9,22 @@
            HorizontalOptions="CenterAndExpand"
            Padding="10"/>
     <ActivityIndicator x:Name="ShowsLoadingIndicator" IsVisible="False"/>
-    <CarouselView x:Name="ShowsCarousel"/>
+    <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <Frame x:Name="ShowContent" BackgroundColor="White" MinimumHeightRequest="100" MinimumWidthRequest="70">
+            <StackLayout x:Name="ShowCarousel" BackgroundColor="White" MinimumHeightRequest="100" MinimumWidthRequest="70">
+                <View.GestureRecognizers>
+                    <PanGestureRecognizer PanUpdated="PanGestureRecognizer_PanUpdated"/>
+                </View.GestureRecognizers>
+
+
+            </StackLayout>
+
+
+        </Frame>
+
+    </StackLayout>
+
+
+
+
 </StackLayout>

@@ -50,8 +50,8 @@ namespace BoomRadio.Model
                     int id = item.Value<int>("id");
                     string title = item.Value<JObject>("title").Value<string>("rendered"); ;
                     string time = item.Value<JObject>("content").Value<string>("rendered");
-                    string description = item.Value<JObject>("excerpt").Value<string>("rendered");
-                    string imageURL = item.Value<string>("date");
+                    string description = item.Value<JObject>("excerpt")?.Value<string>("rendered");
+                    string imageURL = (item.Value<JObject>("_links").Value<JArray>("wp:featuredmedia")[0] as JObject).Value<string>("href");
 
                     Shows show = new Shows(id, title, time, description, imageURL);
 

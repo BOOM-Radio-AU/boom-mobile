@@ -1,29 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Frame xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              x:Class="BoomRadio.Components.ShowFrame"
-       HasShadow="True"
        MinimumWidthRequest="100"
        MinimumHeightRequest="50">
 
-    <Frame.Content>
-        <StackLayout x:Name="ShowStackLayout" Padding="0" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="White">
-            <Image x:Name="ShowImage" WidthRequest="120" Aspect="AspectFill"/>
-            <StackLayout Orientation="Horizontal">
-                <Label x:Name="TitleLabel" Text="Show Title goes here" FontSize="18" FontFamily="CG-B"
-                    VerticalOptions="StartAndExpand" 
-                    HorizontalOptions="StartAndExpand" />
-                <Label x:Name="Description" Text="Description goes here" FontSize="15" FontFamily="CG-L"
-                    VerticalOptions="StartAndExpand" 
-                    HorizontalOptions="StartAndExpand" />
+    <ContentView.Content>
+        <Frame MinimumHeightRequest="500" MinimumWidthRequest="100">
 
-                <Button x:Name="SnippetButton" Text="Play Snippet"/>
-            </StackLayout>
-        </StackLayout>
-    </Frame.Content>
-    <Frame.GestureRecognizers>
+            <StackLayout x:Name="ShowStackLayout" Padding="0" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="White" MinimumHeightRequest="200" MinimumWidthRequest="60">
+                
+                <Image x:Name="ShowImage" MinimumWidthRequest="120" MinimumHeightRequest="120"  Aspect="AspectFill"/>
+                <StackLayout Orientation="Horizontal">
+                    <Label x:Name="TitleLabel" Text="Title" FontSize="18" FontFamily="CG-B"
+                        VerticalOptions="StartAndExpand" 
+                        HorizontalOptions="StartAndExpand" />
+                    <Label x:Name="TimeLabel" Text="Schedule" FontSize="18" FontFamily="CG-B"
+                        VerticalOptions="StartAndExpand" 
+                        HorizontalOptions="StartAndExpand" />
+                    <Label x:Name="Description" Text="Description" FontSize="15" FontFamily="CG-L"
+                        VerticalOptions="StartAndExpand" 
+                        HorizontalOptions="StartAndExpand" />
 
-    </Frame.GestureRecognizers>
+                </StackLayout>
+             </StackLayout>
 
-</Frame>
+         </Frame>
+    </ContentView.Content>
+    
+
+</ContentView>
             
