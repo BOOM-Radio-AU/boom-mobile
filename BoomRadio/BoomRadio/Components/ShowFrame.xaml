@@ -12,16 +12,19 @@
             <StackLayout x:Name="ShowStackLayout" Padding="0" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="White" MinimumHeightRequest="200" MinimumWidthRequest="60">
                 
                 <Image x:Name="ShowImage" MinimumWidthRequest="120" MinimumHeightRequest="120"  Aspect="AspectFill"/>
-                <StackLayout Orientation="Horizontal">
+                <StackLayout Orientation="Vertical">
                     <Label x:Name="TitleLabel" Text="Title" FontSize="18" FontFamily="CG-B"
                         VerticalOptions="StartAndExpand" 
-                        HorizontalOptions="StartAndExpand" />
-                    <Label x:Name="TimeLabel" Text="Schedule" FontSize="18" FontFamily="CG-B"
+                        HorizontalOptions="CenterAndExpand"
+                        TextType="Html" />
+                    <Label x:Name="TimeLabel" Text="Schedule" FontSize="18" FontFamily="CG-R"
                         VerticalOptions="StartAndExpand" 
-                        HorizontalOptions="StartAndExpand" />
-                    <Label x:Name="Description" Text="Description" FontSize="15" FontFamily="CG-L"
+                        HorizontalOptions="StartAndExpand"
+                        TextType="Html" />
+                    <Label x:Name="Description" Text="Description" FontSize="15" FontFamily="CG-R"
                         VerticalOptions="StartAndExpand" 
-                        HorizontalOptions="StartAndExpand" />
+                        HorizontalOptions="StartAndExpand"
+                        TextType="Html" />
 
                 </StackLayout>
              </StackLayout>

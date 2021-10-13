@@ -95,19 +95,19 @@ namespace BoomRadio.View
 
             if (e.StatusType == GestureStatus.Completed && ShowCarousel.TranslationX > (ShowCarousel.Width / 4))
             {
-                if (Index == frameList.Count - 1)
+                if (Index == 0)
                 {
                     await ShowCarousel.TranslateTo(0, 0, 250);
                     return;
                 }
 
-                SwipeRight();
-                await ShowCarousel.TranslateTo(ShowCarousel.Width, 0, 250);
+                SwipeLeft();
+                await ShowCarousel.TranslateTo(0, 0, 250);
                 ShowCarousel.IsVisible = false;
                 ShowCarousel.Children.Clear();
                 ShowCarousel.Children.Add(frameList[Index]);
-                ShowCarousel.TranslationX = -ShowCarousel.Width;
                 ShowCarousel.IsVisible = true;
+                ShowCarousel.TranslationX = -ShowCarousel.Width;
                 await ShowCarousel.TranslateTo(0, 0, 250);
 
 
@@ -116,18 +116,20 @@ namespace BoomRadio.View
 
             if (e.StatusType == GestureStatus.Completed && ShowCarousel.TranslationX < -(ShowCarousel.Width / 4))
             {
-                if (Index == 0)
+                if (Index == frameList.Count - 1)
                 {
-                    await ShowCarousel.TranslateTo(0, 0, 250);
+                    await ShowCarousel.TranslateTo(ShowCarousel.Width, 0, 250);
                     return;
                 }
-                SwipeLeft();
+                SwipeRight();
                 await ShowCarousel.TranslateTo(0, 0, 250);
                 ShowCarousel.IsVisible = false;
                 ShowCarousel.Children.Clear();
+
                 ShowCarousel.Children.Add(frameList[Index]);
-                ShowCarousel.TranslationX = -ShowCarousel.Width;
                 ShowCarousel.IsVisible = true;
+
+                ShowCarousel.TranslationX = -ShowCarousel.Width;
                 await ShowCarousel.TranslateTo(0, 0, 250);
             }
 

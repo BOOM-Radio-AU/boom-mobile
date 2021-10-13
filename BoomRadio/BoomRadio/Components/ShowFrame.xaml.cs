@@ -75,13 +75,5 @@ namespace BoomRadio.Components
             }
         }
 
-        public void SetShow(Shows S)
-        {
-            
-            TitleLabel.Text = S.ShowTitle;
-            Description.Text = S.ShowDescription;
-            TimeLabel.Text = S.ShowSchedule;
-        }
-
     }
 }

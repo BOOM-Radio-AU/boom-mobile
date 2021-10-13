@@ -10,8 +10,8 @@
            Padding="10"/>
     <ActivityIndicator x:Name="ShowsLoadingIndicator" IsVisible="False"/>
     <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-        <Frame x:Name="ShowContent" BackgroundColor="White" MinimumHeightRequest="100" MinimumWidthRequest="70">
-            <StackLayout x:Name="ShowCarousel" BackgroundColor="White" MinimumHeightRequest="100" MinimumWidthRequest="70">
+        <Frame x:Name="ShowContent" MinimumHeightRequest="100" MinimumWidthRequest="70">
+            <StackLayout x:Name="ShowCarousel" MinimumHeightRequest="200" MinimumWidthRequest="70">
                 <View.GestureRecognizers>
                     <PanGestureRecognizer PanUpdated="PanGestureRecognizer_PanUpdated"/>
                 </View.GestureRecognizers>
