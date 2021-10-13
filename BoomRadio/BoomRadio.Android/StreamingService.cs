@@ -25,52 +25,100 @@ namespace BoomRadio.Droid
         bool IsPrepared = false;
         string dataSource = "http://pollux.shoutca.st:8132/stream";
 
+        /// <summary>
+        /// Starts playing, creating or reseting the native MediaPlayer if needed
+        /// </summary>
         public void Play()
         {
             if (IsPrepared)
             {
+                // Player is prepared, so just call the native MediaPlayer method
                 player.Start();
             }
             else
             {
+                // Create or reset the player
                 if (player == null)
                 {
-                    player = new MediaPlayer();
-                    player.Error += (sender, args) =>
-                    {
-                        //playback error
-                        Console.WriteLine("Error in playback resetting: " + args.What);
-                        Stop();//this will clean up and reset properly.
-                    };
-                    player.Prepared += (sender, args) =>
-                    {
-                        Console.WriteLine("@@@ Starting player...");
-                        player.Start();
-                        IsPrepared = true;
-                    };
+                    CreatePlayer();
                 }
                 else
                 {
                     player.Reset();
                 }
-
+                // Set the data source
                 player.SetDataSource(dataSource);
+                // Prepare the player (this will call the Prepared event handler)
                 player.PrepareAsync();
             }
         }
 
-        public void Pause()
+        /// <summary>
+        /// Creates a new MediaPlayer object and attaches event handlers
+        /// </summary>
+        private void CreatePlayer()
         {
-            player.Pause();
+            player = new MediaPlayer();
+
+            // Attach event handler for errors during preparation or playback
+            player.Error += (sender, args) =>
+            {
+                Console.WriteLine("Error in playback resetting: " + args.What);
+                // Clean up and reset the player.
+                Stop();
+            };
+
+            // Attach event handler to start playing once prepared
+            player.Prepared += (sender, args) =>
+            {
+                Console.WriteLine("@@@ Starting player...");
+                player.Start();
+                IsPrepared = true;
+            };
         }
 
+        /// <summary>
+        /// Pauses playback
+        /// </summary>
+        public void Pause()
+        {
+            if (IsPrepared)
+            {
+                player.Pause();
+            }
+            else
+            {
+                // The player can't be paused before it has been prepared, so
+                // just reset it instead
+                player.Reset();
+            }
+        }
+
+        /// <summary>
+        /// Stops playback
+        /// </summary>
         public void Stop()
         {
-            player.Stop();
-            IsPrepared = false;
+            if (IsPrepared)
+            {
+                player.Stop();
+                IsPrepared = false;
+            }
+            else
+            {
+                // The player can't be stopped before it has been prepared, so
+                // just reset it instead
+                player.Reset();
+            }
         }
+
+        /// <summary>
+        /// Sets the data source for the player, then starts playing
+        /// </summary>
+        /// <param name="uri">Data source URI</param>
         public void PlayFromUri(string uri)
         {
+            // Stop anything previously played or paused
             if (player != null) Stop();
             dataSource = uri;
             Play();

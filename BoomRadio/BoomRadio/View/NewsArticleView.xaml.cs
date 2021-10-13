@@ -47,6 +47,7 @@ namespace BoomRadio.View
             Queue<string> imageUrls = Article.ContentImageUrls();
             // Clear any previous content
             ContentStackLayout.Children.Clear();
+            ContentStackLayout.BackgroundColor = Theme.GetColour("background");
             // Iteratively insert a chunk of text and then an image until all content has been inserted.
             while (textChunks.Count + imageUrls.Count > 0)
             {
@@ -56,7 +57,8 @@ namespace BoomRadio.View
                     {
                         Text = textChunks.Dequeue(),
                         TextType = TextType.Html,
-                        FontSize = 18
+                        FontSize = 18,
+                        TextColor = Theme.GetColour("text")
                     });
                 }
                 if (imageUrls.Count > 0)

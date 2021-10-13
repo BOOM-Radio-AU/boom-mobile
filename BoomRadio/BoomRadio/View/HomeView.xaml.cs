@@ -11,7 +11,7 @@ using Xamarin.Forms.Xaml;
 namespace BoomRadio.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class HomeView : StackLayout
+    public partial class HomeView : StackLayout, IUpdatableUI
     {
         string coverImageUri;
         MainPage MainPage;
@@ -49,6 +49,13 @@ namespace BoomRadio.View
             LiveButton.Opacity = showLiveButton ? 1 : 0;
             LiveButton.IsEnabled = showLiveButton;
 
+            // Update colours
+            PlayerFrame.BackgroundColor = Theme.GetColour("background");
+            ArtistLabel.TextColor = Theme.GetColour("text");
+            TrackTitleLabel.TextColor = Theme.GetColour("text");
+            PlayButton.TextColor = Theme.GetColour("accent");
+            PauseButton.TextColor = Theme.GetColour("accent");
+            LiveButton.TextColor = Theme.GetColour("accent");
         }
 
         private void PlayButton_Clicked(object sender, EventArgs e)

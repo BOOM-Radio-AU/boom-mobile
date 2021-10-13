@@ -19,7 +19,7 @@ namespace BoomRadio
         Dictionary<string, Layout> Views = new Dictionary<string, Layout>();
         string CurrentView;
         bool MenuShown = false;
-        MediaPlayer MediaPlayer = new MediaPlayer();
+        public readonly MediaPlayer MediaPlayer = new MediaPlayer();
         bool UpdateTrackTimerRunning = false;
         NewsCollection News = new NewsCollection();
 
@@ -36,9 +36,10 @@ namespace BoomRadio
             Views["news_article"] = new NewsArticleView(this);
             Views["about"] = new AboutView();
             Views["contact"] = new ContactView();
-            Views["settings"] = new SettingsView();
+            Views["settings"] = new SettingsView(this);
             CurrentView = "home";
             Navigate("home");
+            UpdateUI();
             UpdatePlayerUIs();
         }
 
@@ -56,6 +57,11 @@ namespace BoomRadio
 
             safeinsets.Bottom = 0;
             Padding = safeinsets;
+        }
+
+        internal void UpdatePlayerColours()
+        {
+            MediaPlayerView.UpdateColours();
         }
 
         /// <summary>
@@ -98,17 +104,7 @@ namespace BoomRadio
             }
             MediaPlayerView.UpdateUI();
             if (CurrentView == "home") ((HomeView)Views["home"]).UpdateUI();
-            if (MediaPlayer.IsLive)
-            {
-                LiveIcon.TextColor = Color.Red;
-                LiveText.TextColor = Color.Red;
-
-            }
-            else
-            {
-                LiveIcon.TextColor = Color.Gray;
-                LiveText.TextColor = Color.Gray;
-            }
+            UpdateUI(); // Will update live icon/text colour if needed
         }
 
         /// <summary>
@@ -176,16 +172,27 @@ namespace BoomRadio
             Navigate("news_article");
         }
 
-        private void UpdateUI()
+        public void UpdateUI()
         {
-            // Update tabs
-            HomeText.TextColor = CurrentView == "home" ? Color.Orange : Color.Black;
-            HomeIcon.TextColor = CurrentView == "home" ? Color.Orange : Color.Black;
-            ShowsText.TextColor = CurrentView == "shows" ? Color.Orange : Color.Black;
-            ShowsIcon.TextColor = CurrentView == "shows" ? Color.Orange : Color.Black;
-            NewsText.TextColor = CurrentView == "news" ? Color.Orange : Color.Black;
-            NewsIcon.TextColor = CurrentView == "news" ? Color.Orange : Color.Black;
-           
+            // Update bottom bar/tabs
+            BottomBarGrid.BackgroundColor = Theme.GetColour("nav-bg");
+            HomeText.TextColor = CurrentView == "home"   ? Theme.GetColour("accent") : Theme.GetColour("text");
+            HomeIcon.TextColor = CurrentView == "home"   ? Theme.GetColour("accent") : Theme.GetColour("text");
+            ShowsText.TextColor = CurrentView == "shows" ? Theme.GetColour("accent") : Theme.GetColour("text");
+            ShowsIcon.TextColor = CurrentView == "shows" ? Theme.GetColour("accent") : Theme.GetColour("text");
+            NewsText.TextColor = CurrentView == "news"   ? Theme.GetColour("accent") : Theme.GetColour("text");
+            NewsIcon.TextColor = CurrentView == "news"   ? Theme.GetColour("accent") : Theme.GetColour("text");
+            // Update top bar colours
+            TopBarGrid.BackgroundColor = Theme.GetColour("nav-bg");
+            MenuIcon.TextColor = Theme.GetColour("text");
+            LiveIcon.TextColor = MediaPlayer.IsLive ? Theme.GetColour("is-live") : Theme.GetColour("not-live");
+            LiveText.TextColor = MediaPlayer.IsLive ? Theme.GetColour("is-live") : Theme.GetColour("not-live");
+            // Update menu colours
+            MenuFrame.BackgroundColor = Theme.GetColour("background");
+            AboutMenuItem.TextColor = Theme.GetColour("text");
+            ContactMenuItem.TextColor = Theme.GetColour("text");
+            SettingsMenuItem.TextColor = Theme.GetColour("text");
+
         }
 
         private void HomeTab_Clicked(object sender, EventArgs e)

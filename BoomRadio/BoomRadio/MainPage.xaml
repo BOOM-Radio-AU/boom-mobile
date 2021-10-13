@@ -14,14 +14,14 @@
         </Grid.RowDefinitions>
         
         <!-- Top bar -->
-        <Grid Grid.Row="0" Margin="0" BackgroundColor="LightGray">
+        <Grid x:Name="TopBarGrid" Grid.Row="0" Margin="0" BackgroundColor="LightGray">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Frame Padding="0" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" Background="Transparent">
-                <Label FontFamily="FA-S" Text="&#xf0c9;" FontSize="19" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label x:Name="MenuIcon" FontFamily="FA-S" Text="&#xf0c9;" FontSize="19" HorizontalOptions="Center" VerticalOptions="Center"/>
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer Tapped="MenuIcon_Tapped"/>
                 </Frame.GestureRecognizers>

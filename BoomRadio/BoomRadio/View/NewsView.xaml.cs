@@ -48,6 +48,14 @@ namespace BoomRadio.View
                     }
                 });
             }
+            else
+            {
+                // Just update the colours
+                foreach (NewsSnippet snippet in NewsStacklayout.Children)
+                {
+                    snippet.UpdateColours();
+                }
+            }
             // Hide the loading indicator
             NewsLoadingIndicator.IsVisible = false;
             NewsLoadingIndicator.IsRunning = false;
