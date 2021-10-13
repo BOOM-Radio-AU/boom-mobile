@@ -49,6 +49,8 @@ namespace BoomRadio.View
             string content = stripFormattingRegex.Replace(Article.ContentHTML, string.Empty);
             // Display the content (whithout images) in html-formatted label
             ContentLabel.Text = content;
+            ContentLabel.TextColor = Theme.GetColour("text");
+            ContentLabel.BackgroundColor = Theme.GetColour("background");
 
             // TODO: A better option would be to parse the content for image urls, and then
             // add Image elements with the source set to those urls. Multiple Label elements with TextType="Html"

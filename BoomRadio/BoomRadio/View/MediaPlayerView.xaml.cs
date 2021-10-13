@@ -62,6 +62,17 @@ namespace BoomRadio.View
                 LiveButton.IsVisible = false;
             }
 
+            UpdateColours();
+        }
+
+        internal void UpdateColours()
+        {
+            PlayerFrame.BackgroundColor = Theme.GetColour("player-bg");
+            ArtistLabel.TextColor = Theme.GetColour("text");
+            TrackTitleLabel.TextColor = Theme.GetColour("text");
+            PlayButton.TextColor = Theme.GetColour("accent");
+            PauseButton.TextColor = Theme.GetColour("accent");
+            LiveButton.TextColor = Theme.GetColour("accent");
         }
 
         /// <summary>
