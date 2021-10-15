@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Essentials;
+using Microsoft.AppCenter.Analytics;
 
 namespace BoomRadio.Model
 {
@@ -38,6 +39,9 @@ namespace BoomRadio.Model
         /// </summary>
         public void PlayLive()
         {
+            Analytics.TrackEvent("play", new Dictionary<string, string>{
+                { "live", "true"}
+            });
             Artist = defaultArtist;
             Track = defaultTrack;
             CoverURI = defaultCoverURI;
@@ -70,6 +74,9 @@ namespace BoomRadio.Model
         {
             if (IsPaused)
             {
+                Analytics.TrackEvent("play", new Dictionary<string, string>{
+                    { "live", "false"}
+                });
                 NativePlayer.Play();
                 IsPlaying = true;
                 IsPaused = false;
