@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BoomRadio.Model;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -79,7 +80,7 @@ namespace BoomRadio
                 title = track.Value<string>("Subtitle");
             }
             imageUrl = track.Value<string>("Image").Replace("http://", "https://");
-            return new Track() { Artist = artist, Title = title, ImageUri = imageUrl }; 
+            return new Track() { Artist = artist, Title = title, ImageUri = imageUrl };
         }
 
         /// <summary>
@@ -93,11 +94,61 @@ namespace BoomRadio
                 string response = await instance.FetchAsync(Service.LiveTrack);
                 return instance.ParseTrackResponse(response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("[API] LiveStream error: " + ex.Message);
                 // Use default info
                 return new Track();
+            }
+        }
+
+        /// <summary>
+        /// Parses news articles from the <see cref="Service.News"/> API response
+        /// </summary>
+        /// <param name="response">API response</param>
+        /// <returns>News articles</returns>
+        private List<NewsArticle> ParseNewsResponse(string response)
+        {
+
+            List<NewsArticle> newsArticles = new List<NewsArticle>();
+            JArray responseItems = JsonConvert.DeserializeObject<JArray>(response);
+            foreach (JToken item in responseItems)
+            {
+                try
+                {
+                    // Parse values from JSON
+                    int id = item.Value<int>("id");
+                    string title = item.Value<JObject>("title").Value<string>("rendered"); ;
+                    string content = item.Value<JObject>("content").Value<string>("rendered");
+                    string excerpt = item.Value<JObject>("excerpt").Value<string>("rendered");
+                    string published = item.Value<string>("date");
+                    string modified = item.Value<string>("modified");
+                    string mediaId = item.Value<int>("featured_media").ToString();
+
+                    NewsArticle article = new NewsArticle(id, title, content, excerpt, published, modified, mediaId);
+                    newsArticles.Add(article);
+                }
+                catch { }
+            }
+            return newsArticles;
+        }
+
+        /// <summary>
+        /// Fetches news articles from the API
+        /// </summary>
+        /// <returns>News articles</returns>
+        public static async Task<List<NewsArticle>> GetNewsArticlesAsync()
+        {
+            try
+            {
+                string response = await instance.FetchAsync(Service.News);
+                return instance.ParseNewsResponse(response);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[API] News error: " + ex.Message);
+                // Use default info
+                return new List<NewsArticle>();
             }
         }
     }

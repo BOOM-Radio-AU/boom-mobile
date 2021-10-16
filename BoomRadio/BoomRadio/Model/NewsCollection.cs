@@ -9,8 +9,6 @@ namespace BoomRadio.Model
 {
     public class NewsCollection
     {
-        private string url = "https://boomradio.com.au/wp-json/wp/v2/news";
-        private readonly HttpClient client = new HttpClient();
         public List<NewsArticle> articles;
         private DateTime lastUpdated;
         
@@ -20,68 +18,29 @@ namespace BoomRadio.Model
         }
 
         /// <summary>
-        /// Fetches latest news articles from the server api
+        /// Merges a new list of news articles with the current list articles, reusing
+        /// existing articles where possible. This prevents needlessly repeating media api
+        /// querires.
         /// </summary>
-        /// <returns>String containing the JSON response</returns>
-        public async Task<string> Fetch()
-        {
-            // Fetch data from api
-            var response = await client.GetAsync(url);
-
-            // Check for errors
-            if (response.StatusCode != System.Net.HttpStatusCode.OK || response.Content == null)
-            {
-                throw new Exception(string.Format("Data could not be retrieved from the server (code: {0})", response.StatusCode));
-            }
-
-            // Extract the response
-            string responseString = await response.Content.ReadAsStringAsync();
-            return responseString;
-        }
-
-        /// <summary>
-        /// Parses JSON from the server, adding new stories to the list of articles
-        /// </summary>
-        /// <param name="responseString">API response from <see cref="Fetch"/></param>
-        public void Parse(string responseString)
+        /// <param name="newsArticles">List of new articles</param>
+        public void MergeArticles(List<NewsArticle> newsArticles)
         {
             List<NewsArticle> freshArticles = new List<NewsArticle>();
-            JArray response;
-            try
+            foreach (NewsArticle article in newsArticles)
             {
-
-                response = JsonConvert.DeserializeObject<JArray>(responseString);
-                foreach (var item in response)
+                // Check if existing item in articles
+                NewsArticle existingArticle = articles.Find(a => a.ID == article.ID);
+                // Can re-use the exisiting article if it is present, and has the same last-modified date
+                if (existingArticle != null && existingArticle.DateModified == article.DateModified)
                 {
-                    // Parse values from JSON
-                    int id = item.Value<int>("id");
-                    string title = item.Value<JObject>("title").Value<string>("rendered"); ;
-                    string content = item.Value<JObject>("content").Value<string>("rendered");
-                    string excerpt = item.Value<JObject>("excerpt").Value<string>("rendered");
-                    string published = item.Value<string>("date");
-                    string modified = item.Value<string>("modified");
-                    string mediaId = item.Value<int>("featured_media").ToString();
-
-                    NewsArticle article = new NewsArticle(id, title, content, excerpt, published, modified, mediaId);
-
-                    // Check if existing item in articles
-                    NewsArticle existingArticle = articles.Find(a => a.ID == id);
-                    if (existingArticle != null && existingArticle.DateModified == article.DateModified)
-                    {
-                        freshArticles.Add(existingArticle);
-                    }
-                    else
-                    {
-                        freshArticles.Add(article);
-                    }
-
+                    freshArticles.Add(existingArticle);
                 }
-                articles = freshArticles;
+                else
+                {
+                    freshArticles.Add(article);
+                }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine("Error parsing articles\n" + e.Message);
-            }
+            articles = freshArticles;
         }
 
         /// <summary>
@@ -102,8 +61,13 @@ namespace BoomRadio.Model
 
             try
             {
-                string response = await Fetch();
-                Parse(response);
+                List<NewsArticle> newsArticles = await Api.GetNewsArticlesAsync();
+                if (newsArticles.Count == 0)
+                {
+                    // Nothing returned from API, so don't update
+                    return false;
+                }
+                MergeArticles(newsArticles);
                 lastUpdated = DateTime.Now;
                 return true;
             }
