@@ -33,7 +33,7 @@ namespace BoomRadio.View
         public void UpdateUI()
         {
             ArtistLabel.Text = MediaPlayer.Artist;
-            TrackTitleLabel.Text = MediaPlayer.Track;
+            TrackTitleLabel.Text = MediaPlayer.Title;
             if (coverImageUri != MediaPlayer.CoverURI)
             {
                 coverImageUri = MediaPlayer.CoverURI;

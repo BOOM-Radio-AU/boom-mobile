@@ -31,7 +31,7 @@ namespace BoomRadio.View
             // Update track info
             CoverImage.Source = ImageSource.FromUri(new Uri(MediaPlayer.CoverURI));
             ArtistLabel.Text = MediaPlayer.Artist;
-            TrackTitleLabel.Text = MediaPlayer.Track;
+            TrackTitleLabel.Text = MediaPlayer.Title;
 
             // Resize image
             CoverImage.ScaleTo(PlayerExpanded ? 1.5 : 1, 100, Easing.Linear);
