@@ -32,10 +32,18 @@ namespace BoomRadio
         /// <param name="service">Service type</param>
         /// <exception cref="Exception">Data could not be retrieved from the server</exception>
         /// <returns>Response</returns>
-        private async Task<string> FetchAsync(Service service)
+        private async Task<string> FetchAsync(Service service) => await FetchAsync(Url[service]);
+
+        /// <summary>
+        /// Fetches data from an API
+        /// </summary>
+        /// <param name="url">API url</param>
+        /// <exception cref="Exception">Data could not be retrieved from the server</exception>
+        /// <returns>Response</returns>
+        private async Task<string> FetchAsync(string url) 
         {
             // Fetch data from server's api
-            var response = await client.GetAsync(Url[service]);
+            var response = await client.GetAsync(url);
 
             // Check for errors
             if (response.StatusCode != System.Net.HttpStatusCode.OK || response.Content == null)
@@ -149,6 +157,32 @@ namespace BoomRadio
                 Console.WriteLine("[API] News error: " + ex.Message);
                 // Use default info
                 return new List<NewsArticle>();
+            }
+        }
+
+        /// <summary>
+        /// Parses the image url from the <see cref="Service.Media"/> API response
+        /// </summary>
+        /// <param name="response">API response</param>
+        /// <returns>image url</returns>
+        public string ParseMediaResponse(string response)
+        {
+            JObject responseObj = JsonConvert.DeserializeObject<JObject>(response);
+            return responseObj.Value<string>("source_url");
+        }
+
+        public static async Task<string> GetImageUrlAsync(string mediaId)
+        {
+            try
+            {
+                string mediaUrl = instance.Url[Service.Media] + mediaId;
+                string response = await instance.FetchAsync(mediaUrl);
+                return instance.ParseMediaResponse(response);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[API] Media error: " + ex.Message);
+                return null;
             }
         }
     }

@@ -20,9 +20,6 @@ namespace BoomRadio.Model
         public string MediaID { get; private set; }
         public string ImageUrl { get; private set; } = null;
 
-        private readonly HttpClient client = new HttpClient();
-        public string MediaApiPrefix = "https://boomradio.com.au/wp-json/wp/v2/media/";
-
         /// <summary>
         /// Extracts text content from a HTML string
         /// </summary>
@@ -59,52 +56,15 @@ namespace BoomRadio.Model
         }
 
         /// <summary>
-        /// Fetches data for the image associated with the news article
+        /// Updates the image url, after getting it from from the API
         /// </summary>
-        /// <returns>Image data</returns>
-        public async Task<string> FetchImage()
+        public async Task UpdateImageUrl()
         {
-            // Fetch data from api
-            var response = await client.GetAsync(MediaApiPrefix + MediaID);
-
-            // Check for errors
-            if (response.StatusCode != System.Net.HttpStatusCode.OK || response.Content == null)
+            string url = await Api.GetImageUrlAsync(MediaID);
+            if (url != null)
             {
-                throw new Exception(string.Format("Data could not be retrieved from the server (code: {0})", response.StatusCode));
+                ImageUrl = url;
             }
-
-
-            // Extract the response
-            string responseString = await response.Content.ReadAsStringAsync();
-            return responseString;
-        }
-
-        /// <summary>
-        /// Sets the image url by parsing an api response of image data 
-        /// </summary>
-        /// <param name="apiResponse">image data from <see cref="FetchImage"/></param>
-        public void ParseImageUrl(string apiResponse)
-        {
-            JObject response = JsonConvert.DeserializeObject<JObject>(apiResponse);
-            ImageUrl = response.Value<string>("source_url");
-        }
-
-        /// <summary>
-        /// Fetches and parses image data from the server, and sets the image url
-        /// </summary>
-        /// <returns>image url</returns>
-        public async Task<string> UpdateImageUrl()
-        {
-            try
-            {
-                string response = await FetchImage();
-                ParseImageUrl(response);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Error updating articles\n" + e.Message);
-            }
-            return ImageUrl;
         }
 
         /// <summary>
