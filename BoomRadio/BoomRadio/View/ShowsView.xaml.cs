@@ -89,49 +89,59 @@ namespace BoomRadio.View
             ShowsLoadingIndicator.IsRunning = false;
         }
 
+
+
         private async void PanGestureRecognizer_PanUpdated(object sender, PanUpdatedEventArgs e)
         {
+            
             ShowCarousel.TranslationX = ShowCarousel.TranslationX + e.TotalX;
 
-            if (e.StatusType == GestureStatus.Completed && ShowCarousel.TranslationX > (ShowCarousel.Width / 4))
+            if (e.StatusType == GestureStatus.Completed && ShowCarousel.TranslationX > (ShowCarousel.Width *2 /3))
             {
                 if (Index == 0)
                 {
                     await ShowCarousel.TranslateTo(0, 0, 250);
                     return;
                 }
-
                 SwipeLeft();
-                await ShowCarousel.TranslateTo(0, 0, 250);
                 ShowCarousel.IsVisible = false;
                 ShowCarousel.Children.Clear();
                 ShowCarousel.Children.Add(frameList[Index]);
+                await ShowCarousel.TranslateTo(ShowCarousel.Width, 0, 200);
                 ShowCarousel.IsVisible = true;
                 ShowCarousel.TranslationX = -ShowCarousel.Width;
-                await ShowCarousel.TranslateTo(0, 0, 250);
-
-
+                await ShowCarousel.TranslateTo(0, 0, 100);
 
             }
 
-            if (e.StatusType == GestureStatus.Completed && ShowCarousel.TranslationX < -(ShowCarousel.Width / 4))
+
+
+            if (e.StatusType == GestureStatus.Completed && ShowCarousel.TranslationX < -(ShowCarousel.Width * 2 / 3))
             {
-                if (Index == frameList.Count - 1)
+                if (Index == frameList.Count - 1)                    
                 {
-                    await ShowCarousel.TranslateTo(ShowCarousel.Width, 0, 250);
+                    await ShowCarousel.TranslateTo(0, 0, 250);
                     return;
                 }
                 SwipeRight();
-                await ShowCarousel.TranslateTo(0, 0, 250);
                 ShowCarousel.IsVisible = false;
                 ShowCarousel.Children.Clear();
-
                 ShowCarousel.Children.Add(frameList[Index]);
+                await ShowCarousel.TranslateTo(-ShowCarousel.Width, 0, 200);
                 ShowCarousel.IsVisible = true;
+                ShowCarousel.TranslationX = +ShowCarousel.Width;
+                await ShowCarousel.TranslateTo(0, 0, 100);
 
-                ShowCarousel.TranslationX = -ShowCarousel.Width;
-                await ShowCarousel.TranslateTo(0, 0, 250);
             }
+
+
+
+            if (e.StatusType == GestureStatus.Completed)
+            {
+                await ShowCarousel.TranslateTo(0, 0, 100);
+
+            }
+
 
         }
 

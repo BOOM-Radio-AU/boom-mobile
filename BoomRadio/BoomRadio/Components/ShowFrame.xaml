@@ -9,7 +9,7 @@
     <ContentView.Content>
         <Frame MinimumHeightRequest="500" MinimumWidthRequest="100">
 
-            <StackLayout x:Name="ShowStackLayout" Padding="0" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="White" MinimumHeightRequest="200" MinimumWidthRequest="60">
+            <StackLayout x:Name="ShowStackLayout" Padding="0" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="White" MinimumHeightRequest="600" MinimumWidthRequest="60">
                 
                 <Image x:Name="ShowImage" MinimumWidthRequest="120" MinimumHeightRequest="120"  Aspect="AspectFill"/>
                 <StackLayout Orientation="Vertical">
