@@ -67,8 +67,8 @@ namespace BoomRadio.Components
             // Otherwise, wait for the url to be fetched and then use it
             try
             {
-                string imageUrl = await Article.UpdateImageUrl();
-                if (imageUrl != null)
+                await Article.UpdateImageUrl();
+                if (Article.ImageUrl != null)
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {

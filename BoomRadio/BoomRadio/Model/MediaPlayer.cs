@@ -10,11 +10,7 @@ namespace BoomRadio.Model
 {
     public class MediaPlayer
     {
-        readonly string defaultArtist = "BOOM Radio";
-        readonly string defaultTrack = "Not Just Noise";
-        readonly string defaultCoverURI = "https://cdn-radiotime-logos.tunein.com/s195836q.png";
-
-        readonly LiveStreamTrack liveStreamTrack = new LiveStreamTrack();
+        readonly Track defaultTrack = new Track();
 
         private IStreaming NativePlayer { get; set; }
         private string LiveStreamURI = "http://pollux.shoutca.st:8132/stream";
@@ -22,16 +18,17 @@ namespace BoomRadio.Model
         public bool IsPlaying = false;
         public bool IsPaused = false;
         public string Artist { get; private set; }
-        public string Track { get; private set; }
+        public string Title { get; private set; }
         public string CoverURI { get; private set; }
+
         
 
         public MediaPlayer()
         {
             NativePlayer = DependencyService.Get<IStreaming>();
-            Artist = defaultArtist;
-            Track = defaultTrack;
-            CoverURI = defaultCoverURI;
+            Artist = defaultTrack.Artist;
+            Title = defaultTrack.Title;
+            CoverURI = defaultTrack.ImageUri;
         }
 
         /// <summary>
@@ -42,9 +39,9 @@ namespace BoomRadio.Model
             Analytics.TrackEvent("play", new Dictionary<string, string>{
                 { "live", "true"}
             });
-            Artist = defaultArtist;
-            Track = defaultTrack;
-            CoverURI = defaultCoverURI;
+            Artist = defaultTrack.Artist;
+            Title = defaultTrack.Title;
+            CoverURI = defaultTrack.ImageUri;
             NativePlayer.PlayFromUri(LiveStreamURI);
             IsPlaying = true;
             IsPaused = false;
@@ -59,7 +56,7 @@ namespace BoomRadio.Model
         public void PlayPodcast(string artist, string trackTitle, string audioUrl, string imageUrl)
         {
             Artist = artist;
-            Track = trackTitle;
+            Title = trackTitle;
             CoverURI = imageUrl;
             NativePlayer.PlayFromUri(audioUrl);
             IsPlaying = true;
@@ -100,7 +97,7 @@ namespace BoomRadio.Model
         {
             //NativePlayer.Stop();
             Artist = "No connection";
-            Track = "";
+            Title = "";
             //CoverURI = "";
         }
 
@@ -108,9 +105,9 @@ namespace BoomRadio.Model
         {
             if (IsLive && IsPlaying)
             {
-                await liveStreamTrack.Update();
+                Track liveStreamTrack = await Api.GetLiveStreamTrackAsync();
                 Artist = liveStreamTrack.Artist;
-                Track = liveStreamTrack.Title;
+                Title = liveStreamTrack.Title;
                 CoverURI = liveStreamTrack.ImageUri;
             }
         }
