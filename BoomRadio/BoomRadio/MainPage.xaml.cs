@@ -1,5 +1,6 @@
 ﻿using BoomRadio.Model;
 using BoomRadio.View;
+using Microsoft.AppCenter.Analytics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -150,7 +151,10 @@ namespace BoomRadio
         {
             if (!Views.ContainsKey(target))
             {
-                throw new Exception($"[Navigation error] View not found for '{target}'");
+                Exception ex = new Exception($"[Navigation error] View not found for '{target}'");
+                DependencyService.Get<ILogging>().Error(this, ex);
+                Navigate("home");
+                return;
             }
             if (MenuShown)
             {
@@ -160,6 +164,9 @@ namespace BoomRadio
             CurrentView = target;
             (Views[target] as IUpdatableUI)?.UpdateUI();
             UpdateUI();
+            Analytics.TrackEvent("navigate", new Dictionary<string, string>{
+                { "page", target }
+            });
         }
 
         /// <summary>
@@ -170,6 +177,9 @@ namespace BoomRadio
         {
             ((NewsArticleView)Views["news_article"]).Article = article;
             Navigate("news_article");
+            Analytics.TrackEvent("read_article", new Dictionary<string, string>{
+                { "title", article.Title }
+            });
         }
 
         public void UpdateUI()
