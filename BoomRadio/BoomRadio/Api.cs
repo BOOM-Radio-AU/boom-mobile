@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace BoomRadio
 {
@@ -104,6 +105,7 @@ namespace BoomRadio
             }
             catch (Exception ex)
             {
+                DependencyService.Get<ILogging>().Error("Api.GetLiveStreamTrackAsync", ex);
                 Console.WriteLine("[API] LiveStream error: " + ex.Message);
                 // Use default info
                 return new Track();
@@ -136,7 +138,10 @@ namespace BoomRadio
                     NewsArticle article = new NewsArticle(id, title, content, excerpt, published, modified, mediaId);
                     newsArticles.Add(article);
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    DependencyService.Get<ILogging>().Warn("Api.ParseNewsResponse", "Error parsing news article: "+ex.Message);
+                }
             }
             return newsArticles;
         }
@@ -181,6 +186,7 @@ namespace BoomRadio
             }
             catch (Exception ex)
             {
+                DependencyService.Get<ILogging>().Error("Api.GetImageUrlAsync", ex);
                 Console.WriteLine("[API] Media error: " + ex.Message);
                 return null;
             }

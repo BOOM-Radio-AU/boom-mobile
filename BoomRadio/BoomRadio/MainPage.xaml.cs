@@ -150,7 +150,10 @@ namespace BoomRadio
         {
             if (!Views.ContainsKey(target))
             {
-                throw new Exception($"[Navigation error] View not found for '{target}'");
+                Exception ex = new Exception($"[Navigation error] View not found for '{target}'");
+                DependencyService.Get<ILogging>().Error(this, ex);
+                Navigate("home");
+                return;
             }
             if (MenuShown)
             {

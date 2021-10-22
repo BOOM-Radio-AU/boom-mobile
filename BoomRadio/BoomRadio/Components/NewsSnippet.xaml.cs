@@ -78,6 +78,7 @@ namespace BoomRadio.Components
             }
             catch(Exception e)
             {
+                DependencyService.Get<ILogging>().Error(this, e);
                 Console.WriteLine("Error with news article image\n " + e.Message);
             }
         }

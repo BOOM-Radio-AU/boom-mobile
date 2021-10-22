@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace BoomRadio.Model
 {
@@ -73,6 +74,7 @@ namespace BoomRadio.Model
             }
             catch (Exception e)
             {
+                DependencyService.Get<ILogging>().Error(this, e);
                 Console.WriteLine("Error updating articles\n" + e.Message);
                 return false;
             }
