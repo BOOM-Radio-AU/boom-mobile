@@ -1,5 +1,6 @@
 ﻿using BoomRadio.Model;
 using BoomRadio.View;
+using Microsoft.AppCenter.Analytics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -163,6 +164,9 @@ namespace BoomRadio
             CurrentView = target;
             (Views[target] as IUpdatableUI)?.UpdateUI();
             UpdateUI();
+            Analytics.TrackEvent("navigate", new Dictionary<string, string>{
+                { "page", target }
+            });
         }
 
         /// <summary>
@@ -173,6 +177,9 @@ namespace BoomRadio
         {
             ((NewsArticleView)Views["news_article"]).Article = article;
             Navigate("news_article");
+            Analytics.TrackEvent("read_article", new Dictionary<string, string>{
+                { "title", article.Title }
+            });
         }
 
         public void UpdateUI()
