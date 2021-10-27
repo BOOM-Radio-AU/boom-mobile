@@ -13,11 +13,12 @@ namespace BoomRadio
     public class Api
     {
         private readonly HttpClient client = new HttpClient();
-        public enum Service { LiveTrack, News, Media };
+        public enum Service { LiveTrack, News, Media, Shows };
         private Dictionary<Service, string> Url = new Dictionary<Service, string>() {
             {Service.LiveTrack, "https://feed.tunein.com/profiles/s195836/nowPlaying"},
             {Service.News, "https://boomradio.com.au/wp-json/wp/v2/news" },
-            {Service.Media, "https://boomradio.com.au/wp-json/wp/v2/media/" }
+            {Service.Media, "https://boomradio.com.au/wp-json/wp/v2/media/" },
+            {Service.Shows, "https://boomradio.com.au/wp-json/wp/v2/schedule" }
         };
 
         static Api instance;
@@ -178,10 +179,14 @@ namespace BoomRadio
 
         public static async Task<string> GetImageUrlAsync(string mediaId)
         {
+            return await Api.GetImageFromQueryAsync(instance.Url[Service.Media] + mediaId);
+        }
+
+        public static async Task<string> GetImageFromQueryAsync(string queryUrl)
+        {
             try
             {
-                string mediaUrl = instance.Url[Service.Media] + mediaId;
-                string response = await instance.FetchAsync(mediaUrl);
+                string response = await instance.FetchAsync(queryUrl);
                 return instance.ParseMediaResponse(response);
             }
             catch (Exception ex)
@@ -189,6 +194,58 @@ namespace BoomRadio
                 DependencyService.Get<ILogging>().Error("Api.GetImageUrlAsync", ex);
                 Console.WriteLine("[API] Media error: " + ex.Message);
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// Parses shows from the <see cref="Service.Shows"/> API response
+        /// </summary>
+        /// <param name="response">API Response</param>
+        /// <returns>Shows</returns>
+        public List<Shows> ParseShowsResponse(string response)
+        {
+
+            List<Shows> showList = new List<Shows>();
+            JArray responseItems = JsonConvert.DeserializeObject<JArray>(response);
+            foreach (JToken item in responseItems)
+            {
+                try
+                {
+                    // Parse values from JSON
+                    int id = item.Value<int>("id");
+                    string title = item.Value<JObject>("title").Value<string>("rendered"); ;
+                    string time = item.Value<JObject>("content").Value<string>("rendered");
+                    string description = item.Value<JObject>("excerpt")?.Value<string>("rendered");
+                    string imageURL = (item.Value<JObject>("_links").Value<JArray>("wp:featuredmedia")[0] as JObject).Value<string>("href");
+
+                    Shows show = new Shows(id, title, time, description, imageURL);
+
+                    showList.Add(show);
+                }
+                catch (Exception ex)
+                {
+                    DependencyService.Get<ILogging>().Warn("Api.ParseShowsResponse", "Error parsing show: " + ex.Message);
+                }
+            }
+            return showList;
+        }
+
+        /// <summary>
+        /// Fetches shows from the API
+        /// </summary>
+        /// <returns>Shows</returns>
+        public static async Task<List<Shows>> GetShowsAsync()
+        {
+            try
+            {
+                string response = await instance.FetchAsync(Service.Shows);
+                return instance.ParseShowsResponse(response);
+            }
+            catch (Exception ex)
+            {
+                DependencyService.Get<ILogging>().Error("Api.GetShowsAsync", ex);
+                Console.WriteLine("[API] Shows error: " + ex.Message);
+                return new List<Shows>();
             }
         }
     }
