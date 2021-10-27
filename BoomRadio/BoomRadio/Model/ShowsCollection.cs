@@ -4,14 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace BoomRadio.Model
 {
     public class ShowsCollection
     {
-
-        private string url = "https://boomradio.com.au/wp-json/wp/v2/schedule";
-        private readonly HttpClient client = new HttpClient();
         public List<Shows> shows;
         private DateTime lastUpdated;
 
@@ -20,59 +18,30 @@ namespace BoomRadio.Model
             shows = new List<Shows>();
         }
 
-        public async Task<string> Fetch()
+        /// <summary>
+        /// Merges a new list of news articles with the current list articles, reusing
+        /// existing articles where possible. This prevents needlessly repeating media api
+        /// querires.
+        /// </summary>
+        /// <param name="newsArticles">List of new articles</param>
+        public void MergeShows(List<Shows> newShows)
         {
-            // Fetch data from api
-            var response = await client.GetAsync(url);
-
-            // Check for errors
-            if (response.StatusCode != System.Net.HttpStatusCode.OK || response.Content == null)
+            List<Shows> freshShows = new List<Shows>();
+            foreach (Shows show in newShows)
             {
-                throw new Exception(string.Format("Data could not be retrieved from the server (code: {0})", response.StatusCode));
-            }
-
-            // Extract the response
-            string responseString = await response.Content.ReadAsStringAsync();
-            return responseString;
-        }
-
-        public void Parse(string responseString)
-        {
-            List<Shows> freshShowList = new List<Shows>();
-            JArray response;
-            try
-            {
-
-                response = JsonConvert.DeserializeObject<JArray>(responseString);
-                foreach (var item in response)
+                // Check if existing item in articles
+                Shows existingshow = shows.Find(s => s.ID == show.ID);
+                // Can re-use the exisiting article if it is present
+                if (existingshow != null)
                 {
-                    // Parse values from JSON
-                    int id = item.Value<int>("id");
-                    string title = item.Value<JObject>("title").Value<string>("rendered"); ;
-                    string time = item.Value<JObject>("content").Value<string>("rendered");
-                    string description = item.Value<JObject>("excerpt")?.Value<string>("rendered");
-                    string imageURL = (item.Value<JObject>("_links").Value<JArray>("wp:featuredmedia")[0] as JObject).Value<string>("href");
-
-                    Shows show = new Shows(id, title, time, description, imageURL);
-
-                    // Check if existing item in articles
-                    Shows existingShow = shows.Find(a => a.ID == id);
-                    if (existingShow != null && existingShow.ShowTitle == existingShow.ShowTitle)
-                    {
-                        freshShowList.Add(existingShow);
-                    }
-                    else
-                    {
-                        freshShowList.Add(show);
-                    }
-
+                    freshShows.Add(existingshow);
                 }
-                shows = freshShowList;
+                else
+                {
+                    freshShows.Add(show);
+                }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine("Error parsing articles\n" + e.Message);
-            }
+            shows = freshShows;
         }
 
 
@@ -90,13 +59,19 @@ namespace BoomRadio.Model
 
             try
             {
-                string response = await Fetch();
-                Parse(response);
+                List<Shows> fetchedShows = await Api.GetShowsAsync();
+                if (fetchedShows.Count == 0)
+                {
+                    // Nothing returned from API
+                    return false;
+                }
+                MergeShows(fetchedShows);
                 lastUpdated = DateTime.Now;
                 return true;
             }
             catch (Exception e)
             {
+                DependencyService.Get<ILogging>().Error(this, e);
                 Console.WriteLine("Error updating shows\n" + e.Message);
                 return false;
             }
