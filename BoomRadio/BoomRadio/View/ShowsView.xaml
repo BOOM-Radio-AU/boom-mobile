@@ -17,7 +17,7 @@
             <CarouselView x:Name="ShowCarousel" MinimumHeightRequest="200" MinimumWidthRequest="70" ItemsSource="{Binding Show}" BackgroundColor="Transparent">
                 <CarouselView.ItemTemplate>
                     <DataTemplate>
-                        <Frame MinimumHeightRequest="200" MinimumWidthRequest="100" VerticalOptions="FillAndExpand" BackgroundColor="Transparent">
+                        <Frame MinimumHeightRequest="200" MinimumWidthRequest="100" VerticalOptions="FillAndExpand" BackgroundColor="Transparent" Margin="10">
 
                             <StackLayout x:Name="ShowStackLayout" Padding="0" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" MinimumHeightRequest="200" MinimumWidthRequest="60">
                 
@@ -26,7 +26,7 @@
                                         <UriImageSource Uri="{Binding ShowImageUrl}" CachingEnabled="True" CacheValidity="1"/>
                                     </Image.Source>
                                 </Image>
-                                <StackLayout Orientation="Vertical" BackgroundColor="white" VerticalOptions="Start" MinimumHeightRequest="100">
+                                <StackLayout Orientation="Vertical" BackgroundColor="white" VerticalOptions="Start" MinimumHeightRequest="100" Padding="5">
                                     <Label Text="{Binding ShowTitle}" FontSize="18" FontFamily="CG-B"
                                         VerticalOptions="StartAndExpand" 
                                         HorizontalOptions="CenterAndExpand"
@@ -39,7 +39,9 @@
                                     <Label Text="{Binding ShowDescription}" FontSize="14" FontFamily="CG-R"
                                         VerticalOptions="StartAndExpand" 
                                         HorizontalOptions="StartAndExpand"
-                                        TextType="Html" />
+                                        TextType="Html"
+                                        Margin="5"
+                                        HorizontalTextAlignment="Center"/>
 
                                 </StackLayout>
                              </StackLayout>
