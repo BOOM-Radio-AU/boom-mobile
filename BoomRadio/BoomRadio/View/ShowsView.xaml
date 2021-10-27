@@ -1,9 +1,62 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:BoomRadio.Components"
              x:Class="BoomRadio.View.ShowsView"
-             VerticalOptions="StartAndExpand">
-    <Label Text="This is the shows page"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+             VerticalOptions="StartAndExpand"
+             >
+    <Label Text="Shows" FontSize="18" FontFamily="CG-B"
+           VerticalOptions="CenterAndExpand" 
+           HorizontalOptions="CenterAndExpand"
+           Padding="10"/>
+    <ActivityIndicator x:Name="ShowsLoadingIndicator" IsVisible="False"/>
+    <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
+        <Frame x:Name="ShowContent" MinimumHeightRequest="100" MinimumWidthRequest="70" BackgroundColor="Transparent">
+
+            <CarouselView x:Name="ShowCarousel" MinimumHeightRequest="200" MinimumWidthRequest="70" ItemsSource="{Binding Show}" BackgroundColor="Transparent">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame MinimumHeightRequest="200" MinimumWidthRequest="100" VerticalOptions="FillAndExpand" BackgroundColor="Transparent" Margin="10">
+
+                            <StackLayout x:Name="ShowStackLayout" Padding="0" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" MinimumHeightRequest="200" MinimumWidthRequest="60">
+                
+                                <Image  MinimumWidthRequest="120" MinimumHeightRequest="120"  Aspect="AspectFill">
+                                    <Image.Source>
+                                        <UriImageSource Uri="{Binding ShowImageUrl}" CachingEnabled="True" CacheValidity="1"/>
+                                    </Image.Source>
+                                </Image>
+                                <StackLayout Orientation="Vertical" BackgroundColor="white" VerticalOptions="Start" MinimumHeightRequest="100" Padding="5">
+                                    <Label Text="{Binding ShowTitle}" FontSize="18" FontFamily="CG-B"
+                                        VerticalOptions="StartAndExpand" 
+                                        HorizontalOptions="CenterAndExpand"
+                                        TextType="Html"
+                                        Padding="5"/>
+                                    <Label Text="{Binding ShowSchedule}" FontSize="18" FontFamily="CG-R"
+                                        VerticalOptions="StartAndExpand" 
+                                        HorizontalOptions="StartAndExpand"
+                                        TextType="Html" />
+                                    <Label Text="{Binding ShowDescription}" FontSize="14" FontFamily="CG-R"
+                                        VerticalOptions="StartAndExpand" 
+                                        HorizontalOptions="StartAndExpand"
+                                        TextType="Html"
+                                        Margin="5"
+                                        HorizontalTextAlignment="Center"/>
+
+                                </StackLayout>
+                             </StackLayout>
+
+         </Frame>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+      
+            </CarouselView>
+
+        </Frame>
+
+    </StackLayout>
+
+
+
+
 </StackLayout>

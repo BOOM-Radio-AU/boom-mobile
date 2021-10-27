@@ -23,6 +23,7 @@ namespace BoomRadio
         public readonly MediaPlayer MediaPlayer = new MediaPlayer();
         bool UpdateTrackTimerRunning = false;
         NewsCollection News = new NewsCollection();
+        ShowsCollection Show = new ShowsCollection();
 
         public MainPage()
         {
@@ -32,7 +33,7 @@ namespace BoomRadio
             MediaPlayerView.MainPage = this;
             // Initialise views to load into content area
             Views["home"] = new HomeView(MediaPlayer, this);
-            Views["shows"] = new ShowsView();
+            Views["shows"] = new ShowsView(Show, this);
             Views["news"] = new NewsView(News, this);
             Views["news_article"] = new NewsArticleView(this);
             Views["about"] = new AboutView();
