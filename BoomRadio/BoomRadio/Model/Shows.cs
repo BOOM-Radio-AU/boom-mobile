@@ -26,7 +26,9 @@ namespace BoomRadio.Model
         private readonly HttpClient client = new HttpClient();
         public string MediaApiPrefix = "https://boomradio.com.au/wp-json/wp/v2/schedule/";
 
-
+        // Some colour properties for data binding
+        public Xamarin.Forms.Color TextColour { get => Theme.GetColour("text"); }
+        public Xamarin.Forms.Color BgColour { get => Theme.GetColour("background"); }
 
         public Shows(int id, string title, string time, string description, string imageURL)
         {
