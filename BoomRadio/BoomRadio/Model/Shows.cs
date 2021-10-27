@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -96,6 +97,9 @@ namespace BoomRadio.Model
             return ShowImageUrl;
         }
 
-
+        public static implicit operator ObservableCollection<object>(Shows v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

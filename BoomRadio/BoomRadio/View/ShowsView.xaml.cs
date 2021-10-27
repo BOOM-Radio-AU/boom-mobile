@@ -2,6 +2,7 @@
 using BoomRadio.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,26 +19,8 @@ namespace BoomRadio.View
 
         public ShowsCollection ShowC;
         MainPage MainPage;
-        List<ShowFrame> frameList = new List<ShowFrame>();
+        public ObservableCollection<Shows> Show { get; set; } = new ObservableCollection<Shows>();
 
-
-        private int index = 0;
-
-        public int Index
-        {
-            get
-            {
-                return index;
-            }
-            private set
-            {
-                if(value >=0 && value < frameList.Count)
-                {
-                    index = value;
-                    OnPropertyChanged("Index");
-                }
-            }
-        }
 
         public ShowsView(ShowsCollection show, MainPage mainPage)
 
@@ -45,44 +28,44 @@ namespace BoomRadio.View
             InitializeComponent();
             ShowC = show;
             MainPage = mainPage;
+            BindingContext = this;
+            
+
         }
 
         public async void UpdateUI()
         {
+
 
             // Don't try to update without internet connection
             if (!MainPage.HasInternet())
             {
                 return;
             }
+
+            await ShowC.UpdateAsync();
+            
             // Show the loading indicator
             ShowsLoadingIndicator.IsVisible = true;
             ShowsLoadingIndicator.IsRunning = true;
             // Update the News collection, and then the UI if needed
-            bool shouldUpdateUI = await ShowC.UpdateAsync();
-            if (shouldUpdateUI)
+            Show.Clear();
+            List<Task> imageFetches = new List<Task>();
+          
+            foreach (var showItem in ShowC.shows)
             {
-
-                Device.BeginInvokeOnMainThread(() =>
+                if(showItem.ShowImageUrl == null)
                 {
-
-
-                    foreach (Shows show in ShowC.shows)
-                    {
-                        ShowFrame item = new ShowFrame(show, MainPage);
-                        frameList.Add(item);
-
-                    }
-
-                    ShowCarousel.Children.Add(frameList[Index]);
-
-
-
-                });
+                    imageFetches.Add(showItem.UpdateImageUrl());
+                }
+           
             }
+            await Task.WhenAll(imageFetches.ToArray());
 
-
-
+            foreach (var showItem in ShowC.shows)
+            {
+                Show.Add(showItem);
+            }
 
             // Hide the loading indicator
             ShowsLoadingIndicator.IsVisible = false;
@@ -91,73 +74,6 @@ namespace BoomRadio.View
 
 
 
-        private async void PanGestureRecognizer_PanUpdated(object sender, PanUpdatedEventArgs e)
-        {
-            
-            ShowCarousel.TranslationX = ShowCarousel.TranslationX + e.TotalX;
 
-            if (e.StatusType == GestureStatus.Completed && ShowCarousel.TranslationX > (ShowCarousel.Width *2 /3))
-            {
-                if (Index == 0)
-                {
-                    await ShowCarousel.TranslateTo(0, 0, 250);
-                    return;
-                }
-                SwipeLeft();
-                ShowCarousel.IsVisible = false;
-                ShowCarousel.Children.Clear();
-                ShowCarousel.Children.Add(frameList[Index]);
-                await ShowCarousel.TranslateTo(ShowCarousel.Width, 0, 200);
-                ShowCarousel.IsVisible = true;
-                ShowCarousel.TranslationX = -ShowCarousel.Width;
-                await ShowCarousel.TranslateTo(0, 0, 100);
-
-            }
-
-
-
-            if (e.StatusType == GestureStatus.Completed && ShowCarousel.TranslationX < -(ShowCarousel.Width * 2 / 3))
-            {
-                if (Index == frameList.Count - 1)                    
-                {
-                    await ShowCarousel.TranslateTo(0, 0, 250);
-                    return;
-                }
-                SwipeRight();
-                ShowCarousel.IsVisible = false;
-                ShowCarousel.Children.Clear();
-                ShowCarousel.Children.Add(frameList[Index]);
-                await ShowCarousel.TranslateTo(-ShowCarousel.Width, 0, 200);
-                ShowCarousel.IsVisible = true;
-                ShowCarousel.TranslationX = +ShowCarousel.Width;
-                await ShowCarousel.TranslateTo(0, 0, 100);
-
-            }
-
-
-
-            if (e.StatusType == GestureStatus.Completed)
-            {
-                await ShowCarousel.TranslateTo(0, 0, 100);
-
-            }
-
-
-        }
-
-        private void SwipeLeft()
-        {
-            Index--;
-
-
-        }
-
-        private void SwipeRight()
-        {
-            Index++;
-
-
-
-        }
     }
 }

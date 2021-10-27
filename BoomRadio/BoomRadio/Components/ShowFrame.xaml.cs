@@ -21,6 +21,7 @@ namespace BoomRadio.Components
         /// </summary>
         Shows Show ;
         MainPage MainPage;
+        public ShowFrame() { }
 
         /// <summary>
         /// Initialises a new instance
