@@ -16,12 +16,13 @@
                     <Label x:Name="TitleLabel" Text="Title" FontSize="18" FontFamily="CG-B"
                         VerticalOptions="StartAndExpand" 
                         HorizontalOptions="CenterAndExpand"
-                        TextType="Html" />
+                        TextType="Html"
+                        Padding="5"/>
                     <Label x:Name="TimeLabel" Text="Schedule" FontSize="18" FontFamily="CG-R"
                         VerticalOptions="StartAndExpand" 
                         HorizontalOptions="StartAndExpand"
                         TextType="Html" />
-                    <Label x:Name="Description" Text="Description" FontSize="15" FontFamily="CG-R"
+                    <Label x:Name="Description" Text="Description" FontSize="14" FontFamily="CG-R"
                         VerticalOptions="StartAndExpand" 
                         HorizontalOptions="StartAndExpand"
                         TextType="Html" />
