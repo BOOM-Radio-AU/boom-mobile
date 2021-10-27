@@ -25,7 +25,7 @@
                                         <UriImageSource Uri="{Binding ShowImageUrl}" CachingEnabled="True" CacheValidity="1"/>
                                     </Image.Source>
                                 </Image>
-                                <StackLayout Orientation="Vertical" BackgroundColor="{Binding Path=BgColour}" VerticalOptions="Start" MinimumHeightRequest="100" Padding="5">
+                                <StackLayout Orientation="Vertical" BackgroundColor="{Binding Path=BgColour}" VerticalOptions="StartAndExpand" MinimumHeightRequest="100" Padding="5">
                                     <Label Text="{Binding ShowTitle}" FontSize="18" FontFamily="CG-B"
                                            TextColor="{Binding Path=TextColour}"
                                         VerticalOptions="StartAndExpand" 
