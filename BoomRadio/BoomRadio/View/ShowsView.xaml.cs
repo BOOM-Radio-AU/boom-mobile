@@ -49,22 +49,27 @@ namespace BoomRadio.View
             ShowsLoadingIndicator.IsVisible = true;
             ShowsLoadingIndicator.IsRunning = true;
             // Update the News collection, and then the UI if needed
-            Show.Clear();
-            List<Task> imageFetches = new List<Task>();
-          
-            foreach (var showItem in ShowC.shows)
+            if(Show.Count != ShowC.shows.Count)
             {
-                if(showItem.ShowImageUrl == null)
-                {
-                    imageFetches.Add(showItem.UpdateImageUrl());
-                }
-           
-            }
-            await Task.WhenAll(imageFetches.ToArray());
+                Show.Clear();
+                List<Task> imageFetches = new List<Task>();
 
-            foreach (var showItem in ShowC.shows)
-            {
-                Show.Add(showItem);
+
+                foreach (var showItem in ShowC.shows)
+                {
+                    if (showItem.ShowImageUrl == null)
+                    {
+                        imageFetches.Add(showItem.UpdateImageUrl());
+                    }
+
+                }
+                await Task.WhenAll(imageFetches.ToArray());
+
+                foreach (var showItem in ShowC.shows)
+                {
+                    Show.Add(showItem);
+                }
+
             }
 
             // Hide the loading indicator
