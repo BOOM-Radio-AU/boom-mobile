@@ -46,7 +46,7 @@
                                 </StackLayout>
                              </StackLayout>
 
-         </Frame>
+                         </Frame>
                     </DataTemplate>
                 </CarouselView.ItemTemplate>
       
