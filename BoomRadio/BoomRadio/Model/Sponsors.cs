@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace BoomRadio.Model
 {
@@ -22,11 +23,13 @@ namespace BoomRadio.Model
 
         }
 
-        public Sponsors(int id, string sponsorName, string sponsorDescription)
+        public Sponsors(int id, string sponsorName, string sponsorDescription, string imageURL)
         {
             ID = id;
             SponsorName = sponsorName;
             SponsorDescription = sponsorDescription;
+            SponsorImageQueryUrl = imageURL;
+
         }
 
         public string TextFromHTML(string html)
@@ -35,6 +38,15 @@ namespace BoomRadio.Model
             string text = stripFormattingRegex.Replace(html, string.Empty);
             text = System.Net.WebUtility.HtmlDecode(text);
             return text.Trim();
+        }
+
+        public async Task UpdateImageUrl()
+        {
+            string url = await Api.GetImageFromQueryAsync(SponsorImageQueryUrl);
+            if (url != null)
+            {
+                SponsorImageUrl = url;
+            }
         }
 
 

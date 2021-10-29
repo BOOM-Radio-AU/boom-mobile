@@ -24,6 +24,7 @@ namespace BoomRadio
         bool UpdateTrackTimerRunning = false;
         NewsCollection News = new NewsCollection();
         ShowsCollection Show = new ShowsCollection();
+        SponsorsCollection Sponsor = new SponsorsCollection();
 
         public MainPage()
         {
@@ -36,7 +37,7 @@ namespace BoomRadio
             Views["shows"] = new ShowsView(Show, this);
             Views["news"] = new NewsView(News, this);
             Views["news_article"] = new NewsArticleView(this);
-            Views["about"] = new AboutView();
+            Views["about"] = new AboutView(Sponsor);
             Views["contact"] = new ContactView();
             Views["settings"] = new SettingsView(this);
             CurrentView = "home";

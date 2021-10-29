@@ -29,7 +29,7 @@
                         </Grid.ColumnDefinitions>
 
                         <!-- COME BACK AND CHANGE TEXT TO API-->
-                        <Label x:Name="AboutText" FontFamily="CG-R" FontSize="12"
+                        <Label x:Name="AboutText" FontFamily="MET-R" FontSize="16"
                                Text="Officially launched in 2012, BOOM Radio is a student run, not-for-profit online radio station operating out of North Metropolitan TAFE, Leederville. Since inception, BOOM Radio has received several accolades and awards most notably winning the Radio Flag – World College Radio Station of the Year in 2015 and 2016. As well as providing a learning environment for future radio broadcasters, BOOM Radio has become a platform for graduates to build solid careers within the professional radio and media industry."/>
                     </Grid>
                 </xct:Expander>
@@ -53,7 +53,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                                                 <!-- COME BACK AND CHANGE TEXT TO API-->
-                        <Label x:Name="JoinText" FontFamily="CG-R" FontSize="12"
+                        <Label x:Name="JoinText" FontFamily="MET-R" FontSize="16"
                                Text="There's nothing stopping you! Whether you're a fan and want to request a song or an artist wanting some air-play and promotion, hit up our Music page. If you want more entertainment, why not give us a like onÂ Facebook?
                                Or hey, want to get behind the scenes and join us? Check out the Radio Diploma Radio Advanced DiplomaÂ page over onÂ North Metropolitan TAFE‘s site, because Radio at NMTÂ is a home for every voice." />
 
@@ -71,9 +71,13 @@
              FontSize="16"/>
 
 
+    <ActivityIndicator x:Name="SponsorsLoading" IsVisible="False"/>
+
+
 
     <!--Sponsors carousel-->
     <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+
         <Frame x:Name="SponsorContent" MinimumHeightRequest="100" MinimumWidthRequest="70" BackgroundColor="Transparent">
             <CarouselView x:Name="SponsorCarousel" MinimumHeightRequest="200" MinimumWidthRequest="70" ItemsSource="{Binding Sponsor}" BackgroundColor="Transparent">
                 <CarouselView.ItemTemplate>
@@ -84,28 +88,26 @@
                             <StackLayout x:Name="SponsorStackLayout" Padding="0" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" MinimumHeightRequest="200" MinimumWidthRequest="60">
 
                                 <!--Sponsors Image loads here, out of the expand-->
-                                <Image  MinimumWidthRequest="120" MinimumHeightRequest="120"  Aspect="AspectFill">
+                                <Image  Aspect="AspectFit" HeightRequest="350" BackgroundColor="white">
                                     <Image.Source>
                                         <UriImageSource Uri="{Binding SponsorImageUrl}" CachingEnabled="True" CacheValidity="1"/>
                                     </Image.Source>
                                 </Image>
 
-
                                 <Frame VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
                                     <StackLayout Padding="10" BackgroundColor="White" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
-                                         <Image WidthRequest="60" HeightRequest="60" BackgroundColor="Orange"/>
-
                                         <!--Sponsor expand-->
+                                        <Label Text="{Binding SponsorName}" TextType="Html" Padding="10" FontFamily="CG-B" FontSize="14" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                                             <xct:Expander>
                                                 <xct:Expander.Header>
-                                                    <Label Text="{Binding SponsorName}" Padding="10" FontFamily="CG-B" FontSize="14" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                                    <Label Text="Click to read more" Padding="10" FontFamily="CG-r" FontSize="12" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                                                 </xct:Expander.Header>
 
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="Auto"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <Label FontFamily="CG-R" FontSize="12" Text="{Binding SponsorDescription}"/>
+                                                    <Label FontFamily="MET-R" FontSize="16" TextType="Html" Text="{Binding SponsorDescription}"/>
                                                 </Grid>
                                             </xct:Expander>
 
