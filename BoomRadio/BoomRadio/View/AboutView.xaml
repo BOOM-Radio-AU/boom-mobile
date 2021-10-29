@@ -15,10 +15,13 @@
     <!--About BOOM Box-->
     <Frame x:Name="AboutBoomBox" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
         <StackLayout Padding="10" BackgroundColor="White" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
-             <Image WidthRequest="60" HeightRequest="60" BackgroundColor="Orange"/>
                 <xct:Expander>
                     <xct:Expander.Header>
-                        <Label Text="Who is BOOM Radio?" Padding="10" FontFamily="CG-B" FontSize="14" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
+                            <Image WidthRequest="60" HeightRequest="60" BackgroundColor="Orange"/>
+
+                            <Label Text="Who is BOOM Radio?" Padding="10" FontFamily="CG-B" FontSize="14" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                        </StackLayout>
                     </xct:Expander.Header>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -37,10 +40,13 @@
     <!--Join BOOM Box-->
    <Frame x:Name="JoinBoomBox" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
         <StackLayout Padding="10" BackgroundColor="White" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
-             <Image WidthRequest="60" HeightRequest="60" BackgroundColor="Orange"/>
                 <xct:Expander>
                     <xct:Expander.Header>
-                        <Label Text="Want to get involved?" Padding="10" FontFamily="CG-B" FontSize="14" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
+                            <Image WidthRequest="60" HeightRequest="60" BackgroundColor="Orange"/>
+
+                            <Label Text="Get involved with BOOM" Padding="10" FontFamily="CG-B" FontSize="14" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                        </StackLayout>
                     </xct:Expander.Header>
                     <Grid>
                         <Grid.ColumnDefinitions>

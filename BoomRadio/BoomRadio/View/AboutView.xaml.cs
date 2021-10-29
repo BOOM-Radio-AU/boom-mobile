@@ -16,18 +16,16 @@ namespace BoomRadio.View
     public partial class AboutView : StackLayout
     {
 
-        public SponsorsCollection SponsC;
-        public ObservableCollection<Sponsors> Sponsor { get; set; } = new ObservableCollection<Sponsors>();
+        //public SponsorsCollection SponsC;
+       // public ObservableCollection<Sponsors> Sponsor { get; set; } = new ObservableCollection<Sponsors>();
 
-        public AboutView(SponsorsCollection Sponsor)
+        public AboutView()
         {
             InitializeComponent();
-            SponsC = Sponsor;
-            BindingContext = this;
+           // SponsC = Sponsor;
+          //  BindingContext = this;
         }
 
-        public async void UpdateUI()
-        {
-        }
+      
     }
 }
