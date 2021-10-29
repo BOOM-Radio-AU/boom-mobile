@@ -19,11 +19,11 @@ namespace BoomRadio.Model
         }
 
         /// <summary>
-        /// Merges a new list of news articles with the current list articles, reusing
-        /// existing articles where possible. This prevents needlessly repeating media api
+        /// Merges a new list of shows with the current list shows, reusing
+        /// existing shows where possible. This prevents needlessly repeating media api
         /// querires.
         /// </summary>
-        /// <param name="newsArticles">List of new articles</param>
+        /// <param name="shows">List of shows</param>
         public void MergeShows(List<Shows> newShows)
         {
             List<Shows> freshShows = new List<Shows>();

@@ -10,50 +10,68 @@ namespace BoomRadio.Model
 {
     public class SponsorsCollection
     {
-        public List<Sponsors> sponsorlist;
+        public List<Sponsors> sponsors;
+        private DateTime lastUpdated;
+
 
         public SponsorsCollection()
         {
-            sponsorlist = new List<Sponsors>();
+            sponsors = new List<Sponsors>();
         }
 
 
-        public void ParseSponsors(string responseString)
+        public void MergeSponsors(List<Sponsors> newSponsors)
         {
-            List<Sponsors> freshSponsorList = new List<Sponsors>();
-            JArray response;
+            List<Sponsors> freshSponsors = new List<Sponsors>();
+            foreach (Sponsors sponsor in newSponsors)
+            {
+                // Check if existing item in articles
+                Sponsors existingSponsor = sponsors.Find(s => s.ID == sponsor.ID);
+                // Can re-use the exisiting article if it is present
+                if (existingSponsor != null)
+                {
+                    freshSponsors.Add(existingSponsor);
+                }
+                else
+                {
+                    freshSponsors.Add(sponsor);
+                }
+            }
+            sponsors = freshSponsors;
+        }
+
+
+        public async Task<bool> UpdateAsync()
+        {
+            // Don't update if already updated recently
+            if (lastUpdated != null)
+            {
+                TimeSpan timeSinceLastUpdate = DateTime.Now - lastUpdated;
+                if (timeSinceLastUpdate < TimeSpan.FromMinutes(2))
+                {
+                    return false;
+                }
+            }
+
             try
             {
-
-                response = JsonConvert.DeserializeObject<JArray>(responseString);
-                foreach (var item in response)
+                List<Sponsors> fetchedSponsors = await Api.GetSponsorsAsync();
+                if (fetchedSponsors.Count == 0)
                 {
-                    // Parse values from JSON
-                    int id = item.Value<int>("id");
-                    string sponsorName = item.Value<JObject>("title").Value<string>("rendered"); ;
-                    string sponsorDescription = item.Value<JObject>("content").Value<string>("rendered");
-                    string imageURL = (item.Value<JObject>("_links").Value<JArray>("wp:featuredmedia")[0] as JObject).Value<string>("href");
-
-                    Sponsors sponsor = new Sponsors(id, sponsorName, sponsorDescription);
-
-                    // Check if existing item in articles
-                    Sponsors existingSponsor = sponsorlist.Find(a => a.ID == id);
-                    if (existingSponsor != null && existingSponsor.SponsorName == sponsor.SponsorName)
-                    {
-                        freshSponsorList.Add(existingSponsor);
-                    }
-                    else
-                    {
-                        freshSponsorList.Add(sponsor);
-                    }
-
+                    // Nothing returned from API
+                    return false;
                 }
-                sponsorlist = freshSponsorList;
+                MergeSponsors(fetchedSponsors);
+                lastUpdated = DateTime.Now;
+                return true;
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error parsing articles\n" + e.Message);
+                DependencyService.Get<ILogging>().Error(this, e);
+                Console.WriteLine("Error updating shows\n" + e.Message);
+                return false;
             }
+
         }
 
     }
