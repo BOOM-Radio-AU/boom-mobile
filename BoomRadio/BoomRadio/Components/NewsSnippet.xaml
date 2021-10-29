@@ -7,10 +7,10 @@
         <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
             <Image x:Name="NewsImage" WidthRequest="120" Aspect="AspectFill"/>
             <StackLayout Orientation="Vertical">
-                <Label x:Name="TitleLabel" Text="Headline goes here" FontSize="18" FontFamily="CG-B"
+                <Label x:Name="TitleLabel" Text="Headline goes here" FontSize="20" FontFamily="MET-B"
                     VerticalOptions="StartAndExpand" 
                     HorizontalOptions="StartAndExpand" />
-                <Label x:Name="ExcertLabel" Text="Headline goes here" FontSize="15" FontFamily="CG-L"
+                <Label x:Name="ExcertLabel" Text="Headline goes here" FontSize="16" FontFamily="MET-R"
                     VerticalOptions="StartAndExpand" 
                     HorizontalOptions="StartAndExpand" />
             </StackLayout>

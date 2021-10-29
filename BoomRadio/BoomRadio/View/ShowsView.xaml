@@ -26,18 +26,18 @@
                                     </Image.Source>
                                 </Image>
                                 <StackLayout Orientation="Vertical" BackgroundColor="{Binding Path=BgColour}" VerticalOptions="Start" MinimumHeightRequest="100" Padding="5">
-                                    <Label Text="{Binding ShowTitle}" FontSize="18" FontFamily="CG-B"
+                                    <Label Text="{Binding ShowTitle}" FontSize="22" FontFamily="MET-B"
                                            TextColor="{Binding Path=TextColour}"
                                         VerticalOptions="StartAndExpand" 
                                         HorizontalOptions="CenterAndExpand"
                                         TextType="Html"
                                         Padding="5"/>
-                                    <Label Text="{Binding ShowSchedule}" FontSize="18" FontFamily="CG-R"
+                                    <Label Text="{Binding ShowSchedule}" FontSize="16" FontFamily="MET-R"
                                            TextColor="{Binding Path=TextColour}"
                                         VerticalOptions="StartAndExpand" 
                                         HorizontalOptions="StartAndExpand"
                                         TextType="Html" />
-                                    <Label Text="{Binding ShowDescription}" FontSize="14" FontFamily="CG-R"
+                                    <Label Text="{Binding ShowDescription}" FontSize="16" FontFamily="MET-R"
                                            TextColor="{Binding Path=TextColour}"
                                         VerticalOptions="StartAndExpand" 
                                         HorizontalOptions="StartAndExpand"
