@@ -57,8 +57,9 @@ namespace BoomRadio.View
                     {
                         Text = textChunks.Dequeue(),
                         TextType = TextType.Html,
-                        FontSize = 18,
-                        TextColor = Theme.GetColour("text")
+                        FontSize = 16,
+                        TextColor = Theme.GetColour("text"),
+                        FontFamily ="MET-L"
                     });
                 }
                 if (imageUrls.Count > 0)

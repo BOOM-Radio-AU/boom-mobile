@@ -8,3 +8,5 @@ using Xamarin.Forms;
 [assembly: ExportFont("Cocogoose light.ttf", Alias = "CG-R")]
 [assembly: ExportFont("Cocogoose Bold.ttf", Alias = "CG-B")]
 [assembly: ExportFont("Cocogoose Italic.ttf", Alias = "CG-I")]
+[assembly: ExportFont("Metropolis-Bold.otf", Alias = "MET-B")]
+[assembly: ExportFont("Metropolis-Regular.otf", Alias = "MET-R")]

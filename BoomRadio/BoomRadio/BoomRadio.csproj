@@ -26,6 +26,8 @@
     <EmbeddedResource Include="Resources\Fonts\Font Awesome 5 Brands.otf" />
     <EmbeddedResource Include="Resources\Fonts\Font Awesome 5 Regular.otf" />
     <EmbeddedResource Include="Resources\Fonts\Font Awesome 5 Solid.otf" />
+    <EmbeddedResource Include="Resources\Fonts\Metropolis-Bold.otf" />
+    <EmbeddedResource Include="Resources\Fonts\Metropolis-Regular.otf" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Components\NewsSnippet.xaml">
@@ -68,6 +70,8 @@
     <None Remove="Resources\Fonts\Font Awesome 5 Brands.otf" />
     <None Remove="Resources\Fonts\Font Awesome 5 Regular.otf" />
     <None Remove="Resources\Fonts\Font Awesome 5 Solid.otf" />
+    <None Remove="Resources\Fonts\Metropolis-Bold.otf" />
+    <None Remove="Resources\Fonts\Metropolis-Regular.otf" />
     <None Remove="Resources\Images\" />
     <None Remove="Xamarin.CommunityToolkit" />
   </ItemGroup>
