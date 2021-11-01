@@ -11,13 +11,18 @@
            Padding="10"/>
     <ActivityIndicator x:Name="ShowsLoadingIndicator" IsVisible="False"/>
     <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-
+        <IndicatorView
+            x:Name="indicatorview"
+            HorizontalOptions="Center"
+            IndicatorSize="10"
+            IndicatorColor="{Binding Path=BgColour}"
+            SelectedIndicatorColor="{Binding Path=TextColour}" />
         <Frame x:Name="ShowContent" MinimumHeightRequest="100" MinimumWidthRequest="70" BackgroundColor="Transparent">
 
-            <CarouselView x:Name="ShowCarousel" MinimumHeightRequest="200" MinimumWidthRequest="70" ItemsSource="{Binding Show}" BackgroundColor="Transparent">
+            <CarouselView x:Name="ShowCarousel" IndicatorView="indicatorview" MinimumHeightRequest="200" MinimumWidthRequest="70" ItemsSource="{Binding Show}" BackgroundColor="Transparent">
                 <CarouselView.ItemTemplate>
                     <DataTemplate>
-                        <Frame MinimumHeightRequest="200" MinimumWidthRequest="100" VerticalOptions="FillAndExpand" BackgroundColor="Transparent" Margin="10">
+                        <Frame MinimumHeightRequest="200" MinimumWidthRequest="100" VerticalOptions="FillAndExpand" BackgroundColor="Transparent" Margin="10,0">
 
                             <StackLayout x:Name="ShowStackLayout" Padding="0" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" MinimumHeightRequest="200" MinimumWidthRequest="60">
                 

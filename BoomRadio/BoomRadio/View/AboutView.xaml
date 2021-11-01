@@ -78,9 +78,14 @@
 
     <!--Sponsors carousel-->
     <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-
+        <IndicatorView
+            x:Name="indicatorview"
+            HorizontalOptions="Center"
+            IndicatorSize="10"
+            IndicatorColor="{Binding Path=BgColour}"
+            SelectedIndicatorColor="{Binding Path=TextColour}" />
         <Frame x:Name="SponsorContent" MinimumHeightRequest="100" MinimumWidthRequest="70" BackgroundColor="Transparent">
-            <CarouselView x:Name="SponsorCarousel" MinimumHeightRequest="200" MinimumWidthRequest="70" ItemsSource="{Binding Sponsor}" BackgroundColor="Transparent">
+            <CarouselView x:Name="SponsorCarousel" MinimumHeightRequest="200" MinimumWidthRequest="70" ItemsSource="{Binding Sponsor}" BackgroundColor="Transparent" IndicatorView="indicatorview">
                 <CarouselView.ItemTemplate>
                     <DataTemplate>
 
