@@ -54,13 +54,10 @@ namespace BoomRadio.View
             TextColour = Theme.GetColour("text");
             BgColour = Theme.GetColour("background");
 
-            await SponsC.UpdateAsync();
-
-
             SponsorsLoading.IsVisible = true;
             SponsorsLoading.IsRunning = true;
 
-
+            await SponsC.UpdateAsync();
 
             if (Sponsor.Count != SponsC.sponsors.Count)
             {

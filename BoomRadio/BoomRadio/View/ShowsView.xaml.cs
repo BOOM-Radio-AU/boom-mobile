@@ -65,11 +65,12 @@ namespace BoomRadio.View
                 return;
             }
 
-            await ShowC.UpdateAsync();
-
             // Show the loading indicator
             ShowsLoadingIndicator.IsVisible = true;
             ShowsLoadingIndicator.IsRunning = true;
+
+            await ShowC.UpdateAsync();
+
             // Update the News collection, and then the UI if needed
             if (Show.Count != ShowC.shows.Count)
             {
