@@ -5,13 +5,10 @@
              VerticalOptions="StartAndExpand">
 
 
-    <Grid Padding="20">
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Frame x:Name="PlayerFrame" HasShadow="True" MinimumWidthRequest="100" MinimumHeightRequest="50">
-            <StackLayout x:Name="PlayerStackLayout" Padding="0" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
+    
+
+        <Frame x:Name="PlayerFrame" HasShadow="True" MinimumWidthRequest="100" MinimumHeightRequest="50" VerticalOptions="StartAndExpand" Padding="10" Margin="10">
+            <StackLayout x:Name="PlayerStackLayout" Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
                 <Grid>
                     <Image x:Name="CoverArtImage" VerticalOptions="CenterAndExpand"
                            Scale="3.5"
@@ -19,10 +16,10 @@
                            WidthRequest="50"
                            Source="https://cdn-radiotime-logos.tunein.com/s195836q.png"
                            Aspect="AspectFit"
-                           Grid.Row="0"
+                          
                            />
 
-                    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Grid.Row="1" >
+                    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand">
                         <Label x:Name="ArtistLabel" Text="Artist" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" Padding="0,5,0,0"/>
                         <Label x:Name="TrackTitleLabel" Text="Some song" HorizontalOptions="CenterAndExpand"/>
 
@@ -38,7 +35,22 @@
                 </Grid>
             </StackLayout>
         </Frame>
-    </Grid>
+
+
+        
+    <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" BackgroundColor="White" MinimumWidthRequest="100" Padding="10" Margin="20">
+        <Label FontSize="25" FontFamily="CG-B" Text="EVENTS" HorizontalOptions="CenterAndExpand"/>
+        <Label FontSize="16" FontFamily="MET-R" Text="BOOM Hosts tons of events that you wont want to miss. To keep updated on new events be sure to follow our socials, or head on over to our website for more details."/>
+
+
+    </StackLayout>
+    
+    <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" BackgroundColor="White" MinimumWidthRequest="100" Padding="10" Margin="20">
+        <Label FontSize="25" FontFamily="CG-B" Text="COMPETITIONS" HorizontalOptions="CenterAndExpand"/>
+        <Label FontSize="16" FontFamily="MET-R" Text="BOOM Hosts tons of competitions that you wont want to miss. To keep updated on new competitions be sure to follow our socials, or head on over to our website for more details."/>
+
+    </StackLayout>
+
 
 
 </StackLayout>        
