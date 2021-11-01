@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:BoomRadio.Components"
              x:Class="BoomRadio.View.ShowsView"
-             VerticalOptions="StartAndExpand">
+             VerticalOptions="StartAndExpand"
+             x:Name="ShowsPage">
     <Label Text="Shows" FontSize="18" FontFamily="CG-B"
            VerticalOptions="CenterAndExpand" 
            HorizontalOptions="CenterAndExpand"
@@ -25,20 +26,20 @@
                                         <UriImageSource Uri="{Binding ShowImageUrl}" CachingEnabled="True" CacheValidity="1"/>
                                     </Image.Source>
                                 </Image>
-                                <StackLayout Orientation="Vertical" BackgroundColor="{Binding Path=BgColour}" VerticalOptions="StartAndExpand" MinimumHeightRequest="100" Padding="5">
+                                <StackLayout Orientation="Vertical" BackgroundColor="{Binding Source={x:Reference ShowsPage}, Path=BgColour}" VerticalOptions="StartAndExpand" MinimumHeightRequest="100" Padding="5">
                                     <Label Text="{Binding ShowTitle}" FontSize="22" FontFamily="MET-B"
-                                           TextColor="{Binding Path=TextColour}"
+                                           TextColor="{Binding Source={x:Reference ShowsPage}, Path=TextColour}"
                                         VerticalOptions="StartAndExpand" 
                                         HorizontalOptions="CenterAndExpand"
                                         TextType="Html"
                                         Padding="5"/>
                                     <Label Text="{Binding ShowSchedule}" FontSize="16" FontFamily="MET-R"
-                                           TextColor="{Binding Path=TextColour}"
+                                           TextColor="{Binding Source={x:Reference ShowsPage}, Path=TextColour}"
                                         VerticalOptions="StartAndExpand" 
                                         HorizontalOptions="StartAndExpand"
                                         TextType="Html" />
                                     <Label Text="{Binding ShowDescription}" FontSize="16" FontFamily="MET-R"
-                                           TextColor="{Binding Path=TextColour}"
+                                           TextColor="{Binding Source={x:Reference ShowsPage}, Path=TextColour}"
                                         VerticalOptions="StartAndExpand" 
                                         HorizontalOptions="StartAndExpand"
                                         TextType="Html"
