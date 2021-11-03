@@ -116,6 +116,8 @@ namespace BoomRadio
                 StartUpdateTrackTimer();
             }
             MediaPlayerView.UpdateUI();
+            PlayPauseTabIcon.Text = MediaPlayer.IsPlaying ? "Pause" : "Play";
+            PlayPauseTabText.Text = MediaPlayer.IsPlaying ? "Pause" : "Play";
             if (CurrentView == "home") ((HomeView)Views["home"]).UpdateUI();
             UpdateUI(); // Will update live icon/text colour if needed
         }
@@ -198,6 +200,8 @@ namespace BoomRadio
         {
             // Update bottom bar/tabs
             BottomBarGrid.BackgroundColor = Theme.GetColour("nav-bg");
+            PlayPauseTabIcon.TextColor = Theme.GetColour("text");
+            PlayPauseTabText.TextColor = Theme.GetColour("text");
             HomeText.TextColor = CurrentView == "home"   ? Theme.GetColour("accent") : Theme.GetColour("text");
             HomeIcon.TextColor = CurrentView == "home"   ? Theme.GetColour("accent") : Theme.GetColour("text");
             ShowsText.TextColor = CurrentView == "shows" ? Theme.GetColour("accent") : Theme.GetColour("text");
@@ -292,5 +296,40 @@ namespace BoomRadio
             Navigate("settings");
         }
 
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            base.OnSizeAllocated(width, height); //must be called
+
+            if (this.Width > this.Height)
+            {
+                // Horizontal orientation
+                MediaPlayerView.IsVisible = false;
+                PlayPauseTab.IsVisible = true;
+                MainGridRowThree.Height = 0;
+                BottomBarGridColOne.Width = GridLength.Star;
+                (Views["home"] as HomeView).SetHorizontalDisplay();
+            }
+            else
+            {
+                MediaPlayerView.IsVisible = true;
+                PlayPauseTab.IsVisible = false;
+                MainGridRowThree.Height = 80;
+                BottomBarGridColOne.Width = 0;
+                (Views["home"] as HomeView).SetVerticalDisplay();
+            }
+        }
+
+        private void PlayPauseTab_Tapped(object sender, EventArgs e)
+        {
+            if (MediaPlayer.IsPlaying)
+            {
+                MediaPlayer.Pause();
+            }
+            else
+            {
+                MediaPlayer.Play();
+            }
+            UpdatePlayerUIs();
+        }
     }
 }

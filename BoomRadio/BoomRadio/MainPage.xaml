@@ -9,7 +9,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="80"/>
+            <RowDefinition x:Name="MainGridRowThree" Height="80"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         
@@ -77,14 +77,24 @@
         <!-- Bottom bar -->
         <Grid x:Name="BottomBarGrid" Grid.Row="3" BackgroundColor="LightGray">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="BottomBarGridColOne" Width="0"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
+            <Frame x:Name="PlayPauseTab" Padding="0" Margin="0,10,0,0" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" HasShadow="False" Background="transparent" Grid.Column="0">
+                <StackLayout >
+                    <Label x:Name="PlayPauseTabIcon" FontFamily="FA-S" FontSize="20" Text="Home" HorizontalTextAlignment="Center"/>
+                    <Label x:Name="PlayPauseTabText" FontFamily="CG-R" Text="Home" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>
+                </StackLayout>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="PlayPauseTab_Tapped"/>
+                </Frame.GestureRecognizers>
 
+            </Frame>
 
-            <Frame Padding="0" Margin="0,10,0,0" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" HasShadow="False" Background="transparent" Grid.Column="0">
+            <Frame Padding="0" Margin="0,10,0,0" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" HasShadow="False" Background="transparent" Grid.Column="1">
                 <StackLayout >
                     <Label x:Name="HomeIcon" FontFamily="FA-S" FontSize="20" Text="Home" HorizontalTextAlignment="Center"/>
                     <Label x:Name="HomeText" FontFamily="CG-R" Text="Home" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>
@@ -95,7 +105,7 @@
 
             </Frame>
 
-            <Frame Padding="0" Margin="0,10,0,0" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" HasShadow="False" Background="transparent" Grid.Column="1">
+            <Frame Padding="0" Margin="0,10,0,0" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" HasShadow="False" Background="transparent" Grid.Column="2">
                 <StackLayout>
                     <Label x:Name="ShowsIcon" FontFamily="FA-S" FontSize="20" Text="Podcast" HorizontalTextAlignment="Center"/>
                     <Label x:Name="ShowsText" FontFamily="CG-R" Text="Shows" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>
@@ -108,7 +118,7 @@
 
 
 
-            <Frame Padding="0" Margin="0,10,0,0" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" HasShadow="False" Background="transparent" Grid.Column="2">
+            <Frame Padding="0" Margin="0,10,0,0" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" HasShadow="False" Background="transparent" Grid.Column="3">
                 <StackLayout>
                     <Label x:Name="NewsIcon" FontFamily="FA-S" FontSize="20" Text="Newspaper" HorizontalTextAlignment="Center"/>
                     <Label x:Name="NewsText" FontFamily="CG-R" Text="News" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>
