@@ -14,5 +14,11 @@ namespace BoomRadio
         public string Title { get; set; } = "Not Just Noise";
         public string ImageUri { get; set; } = "https://cdn-radiotime-logos.tunein.com/s195836q.png";
 
+
+        public override bool Equals(object obj)
+        {
+            Track otherTrack = obj as Track;
+            return otherTrack?.Artist == Artist && otherTrack?.Title == Title && otherTrack?.ImageUri == ImageUri;
+        }
     }
 }

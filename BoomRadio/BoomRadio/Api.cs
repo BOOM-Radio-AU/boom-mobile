@@ -24,7 +24,7 @@ namespace BoomRadio
         };
 
         static Api instance;
-        private Api() { }
+        public Api() { }
         static Api()
         {
             instance = new Api();
