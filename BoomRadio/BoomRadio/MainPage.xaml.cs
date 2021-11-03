@@ -307,6 +307,7 @@ namespace BoomRadio
                 PlayPauseTab.IsVisible = true;
                 MainGridRowThree.Height = 0;
                 BottomBarGridColOne.Width = GridLength.Star;
+                (Views["home"] as HomeView).SetHorizontalDisplay();
             }
             else
             {
@@ -314,6 +315,7 @@ namespace BoomRadio
                 PlayPauseTab.IsVisible = false;
                 MainGridRowThree.Height = 80;
                 BottomBarGridColOne.Width = 0;
+                (Views["home"] as HomeView).SetVerticalDisplay();
             }
         }
 
