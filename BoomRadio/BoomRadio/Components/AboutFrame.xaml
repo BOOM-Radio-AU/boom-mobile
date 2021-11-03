@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Frame xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+       x:Class="BoomRadio.Components.AboutFrame"
+       Padding="5">
+    <Frame.Content VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
+        <StackLayout x:Name="BackPanel" BackgroundColor="Transparent" VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand">
+                <xct:Expander>
+                    <xct:Expander.Header>
+                        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
+                            <Image x:Name="MainImage"/>
+                            <Label x:Name="TitleLabel" Text="Who is BOOM Radio?" Padding="10" FontFamily="CG-B" FontSize="14" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                        </StackLayout>
+                    </xct:Expander.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions> 
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackLayout x:Name="ContentStackLayout" Orientation="Vertical"/>
+                    </Grid>
+                </xct:Expander>
+        </StackLayout>
+    </Frame.Content>
+</Frame>

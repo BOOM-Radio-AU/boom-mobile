@@ -13,13 +13,14 @@ namespace BoomRadio
     public class Api
     {
         private readonly HttpClient client = new HttpClient();
-        public enum Service { LiveTrack, News, Media, Shows, Sponsor };
+        public enum Service { LiveTrack, News, Media, Shows, Sponsor, About };
         private Dictionary<Service, string> Url = new Dictionary<Service, string>() {
             {Service.LiveTrack, "https://feed.tunein.com/profiles/s195836/nowPlaying"},
             {Service.News, "https://boomradio.com.au/wp-json/wp/v2/news" },
             {Service.Media, "https://boomradio.com.au/wp-json/wp/v2/media/" },
             {Service.Shows, "https://boomradio.com.au/wp-json/wp/v2/schedule" },
-            {Service.Sponsor, "https://boomradio.com.au/wp-json/wp/v2/sponsors" }
+            {Service.Sponsor, "https://boomradio.com.au/wp-json/wp/v2/sponsors" },
+            {Service.About, "https://boomradio.com.au/wp-json/wp/v2/about" }
         };
 
         static Api instance;
@@ -148,6 +149,44 @@ namespace BoomRadio
             return newsArticles;
         }
 
+
+
+        /// <summary>
+        /// Parses the about articles from the <see cref="Service.About"/> API Response
+        /// </summary>
+        /// <param name="response">API response</param>
+        /// <returns>About articles</returns>
+        private List<NewsArticle> ParseAboutResponse(string response)
+        {
+
+            List<NewsArticle> aboutArticles = new List<NewsArticle>();
+            JArray responseItems = JsonConvert.DeserializeObject<JArray>(response);
+            foreach (JToken item in responseItems)
+            {
+                try
+                {
+                    // Parse values from JSON
+                    int id = item.Value<int>("id");
+                    string title = item.Value<JObject>("title").Value<string>("rendered"); ;
+                    string content = item.Value<JObject>("content").Value<string>("rendered");
+                    string excerpt = "";
+                    string published = item.Value<string>("date");
+                    string modified = item.Value<string>("modified");
+                    string mediaId = item.Value<int>("featured_media").ToString();
+
+                    NewsArticle article = new NewsArticle(id, title, content, excerpt, published, modified, mediaId);
+                    aboutArticles.Add(article);
+                }
+                catch (Exception ex)
+                {
+                    DependencyService.Get<ILogging>().Warn("Api.ParseAboutResponse", "Error parsing about article: "+ex.Message);
+                }
+            }
+            return aboutArticles;
+        }
+
+
+
         /// <summary>
         /// Fetches news articles from the API
         /// </summary>
@@ -166,6 +205,29 @@ namespace BoomRadio
                 return new List<NewsArticle>();
             }
         }
+
+
+
+        /// <summary>
+        /// Fetches about article from the API
+        /// </summary>
+        /// <returns>About info</returns>
+        public static async Task<List<NewsArticle>> GetAboutArticlesAsync()
+        {
+            try
+            {
+                string response = await instance.FetchAsync(Service.About);
+                return instance.ParseAboutResponse(response);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[API] News error: " + ex.Message);
+                // Use default info
+                return new List<NewsArticle>();
+            }
+        }
+
+
 
         /// <summary>
         /// Parses the image url from the <see cref="Service.Media"/> API response

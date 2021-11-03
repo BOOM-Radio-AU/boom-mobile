@@ -9,12 +9,15 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.CommunityToolkit;
 using BoomRadio.Model;
+using BoomRadio.Components;
 
 namespace BoomRadio.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AboutView : StackLayout , IUpdatableUI
     {
+
+        public NewsCollection collec = new NewsCollection();
 
         public SponsorsCollection SponsC;
         public ObservableCollection<Sponsors> Sponsor { get; set; } = new ObservableCollection<Sponsors>();
@@ -45,6 +48,8 @@ namespace BoomRadio.View
             InitializeComponent();
             SponsC = Sponsor;
             BindingContext = this;
+            collec.service = Api.Service.About;
+
         }
 
 
@@ -53,6 +58,23 @@ namespace BoomRadio.View
             // Update colours
             TextColour = Theme.GetColour("text");
             BgColour = Theme.GetColour("background");
+
+            //BUG HERE SOMEWHERE IDK HOW TO FIX IT COME BACK LATER
+            //BOXES DONT OPEN WHEN PAGE IS RELOADED/CANT SCROLL PAGE
+
+            await collec.UpdateAsync();
+
+            if (collec.articles.Count > 0)
+            {
+                BoxesHome.Children.Clear();
+
+                foreach (NewsArticle box in collec.articles)
+                {
+                    AboutFrame item = new AboutFrame(box);
+                    BoxesHome.Children.Add(item);
+                }
+                    
+            }
 
             SponsorsLoading.IsVisible = true;
             SponsorsLoading.IsRunning = true;
