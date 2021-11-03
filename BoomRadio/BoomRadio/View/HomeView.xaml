@@ -7,8 +7,10 @@
 
     <Grid Padding="20">
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Frame x:Name="PlayerFrame" HasShadow="True" MinimumWidthRequest="100" MinimumHeightRequest="50">
             <StackLayout x:Name="PlayerStackLayout" Padding="0" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
@@ -40,17 +42,16 @@
             </StackLayout>
         </Frame>
 
-
-        
-        <Label FontSize="25" FontFamily="CG-B" Text="EVENTS and COMPETITIONS" HorizontalOptions="CenterAndExpand"/>
-        <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" BackgroundColor="White" MinimumWidthRequest="100" Padding="10" Margin="20">
+        <Label FontSize="25" FontFamily="CG-B" Text="EVENTS and COMPETITIONS" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" Grid.Row="2"/>
+        <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" BackgroundColor="White" MinimumWidthRequest="100" Padding="10" Margin="20,10" Grid.Row="3">
 
             <Label FontSize="16" FontFamily="MET-R" Text="BOOM Hosts tons of events and competitions  that you wont want to miss. To keep updated on new events and competitions, head on over to our website at boomradio.com.au."/>
 
 
-         </StackLayout>
-    
- 
+        </StackLayout>
+    </Grid>
+
+
 
 
 
