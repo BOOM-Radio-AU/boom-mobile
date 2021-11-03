@@ -81,5 +81,17 @@ namespace BoomRadio.View
                 MainPage.UpdatePlayerUIs();
             }
         }
+
+        public void SetHorizontalDisplay()
+        {
+            Grid.SetRow(InnerStackLayout, 0);
+            Grid.SetColumn(InnerStackLayout, 1);
+        }
+        public void SetVerticalDisplay()
+        {
+            Grid.SetRow(InnerStackLayout, 1);
+            Grid.SetColumn(InnerStackLayout, 0);
+
+        }
     }
 }

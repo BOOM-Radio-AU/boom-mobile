@@ -13,16 +13,18 @@ namespace BoomRadio
     public class Api
     {
         private readonly HttpClient client = new HttpClient();
-        public enum Service { LiveTrack, News, Media, Shows };
+        public enum Service { LiveTrack, News, Media, Shows, Sponsor, About };
         private Dictionary<Service, string> Url = new Dictionary<Service, string>() {
             {Service.LiveTrack, "https://feed.tunein.com/profiles/s195836/nowPlaying"},
             {Service.News, "https://boomradio.com.au/wp-json/wp/v2/news" },
             {Service.Media, "https://boomradio.com.au/wp-json/wp/v2/media/" },
-            {Service.Shows, "https://boomradio.com.au/wp-json/wp/v2/schedule" }
+            {Service.Shows, "https://boomradio.com.au/wp-json/wp/v2/schedule" },
+            {Service.Sponsor, "https://boomradio.com.au/wp-json/wp/v2/sponsors" },
+            {Service.About, "https://boomradio.com.au/wp-json/wp/v2/about" }
         };
 
         static Api instance;
-        private Api() { }
+        public Api() { }
         static Api()
         {
             instance = new Api();
@@ -147,6 +149,44 @@ namespace BoomRadio
             return newsArticles;
         }
 
+
+
+        /// <summary>
+        /// Parses the about articles from the <see cref="Service.About"/> API Response
+        /// </summary>
+        /// <param name="response">API response</param>
+        /// <returns>About articles</returns>
+        private List<NewsArticle> ParseAboutResponse(string response)
+        {
+
+            List<NewsArticle> aboutArticles = new List<NewsArticle>();
+            JArray responseItems = JsonConvert.DeserializeObject<JArray>(response);
+            foreach (JToken item in responseItems)
+            {
+                try
+                {
+                    // Parse values from JSON
+                    int id = item.Value<int>("id");
+                    string title = item.Value<JObject>("title").Value<string>("rendered"); ;
+                    string content = item.Value<JObject>("content").Value<string>("rendered");
+                    string excerpt = "";
+                    string published = item.Value<string>("date");
+                    string modified = item.Value<string>("modified");
+                    string mediaId = item.Value<int>("featured_media").ToString();
+
+                    NewsArticle article = new NewsArticle(id, title, content, excerpt, published, modified, mediaId);
+                    aboutArticles.Add(article);
+                }
+                catch (Exception ex)
+                {
+                    DependencyService.Get<ILogging>().Warn("Api.ParseAboutResponse", "Error parsing about article: "+ex.Message);
+                }
+            }
+            return aboutArticles;
+        }
+
+
+
         /// <summary>
         /// Fetches news articles from the API
         /// </summary>
@@ -166,6 +206,29 @@ namespace BoomRadio
             }
         }
 
+
+
+        /// <summary>
+        /// Fetches about article from the API
+        /// </summary>
+        /// <returns>About info</returns>
+        public static async Task<List<NewsArticle>> GetAboutArticlesAsync()
+        {
+            try
+            {
+                string response = await instance.FetchAsync(Service.About);
+                return instance.ParseAboutResponse(response);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("[API] News error: " + ex.Message);
+                // Use default info
+                return new List<NewsArticle>();
+            }
+        }
+
+
+
         /// <summary>
         /// Parses the image url from the <see cref="Service.Media"/> API response
         /// </summary>
@@ -174,6 +237,13 @@ namespace BoomRadio
         public string ParseMediaResponse(string response)
         {
             JObject responseObj = JsonConvert.DeserializeObject<JObject>(response);
+            JObject sizes = responseObj.Value<JObject>("media_details").Value<JObject>("sizes");
+            // Use a medium size image url if present
+            if (sizes.ContainsKey("medium"))
+            {
+                return sizes.Value<JObject>("medium").Value<string>("source_url");
+            }
+            // Otherwise use the default full-size image url
             return responseObj.Value<string>("source_url");
         }
 
@@ -246,6 +316,49 @@ namespace BoomRadio
                 DependencyService.Get<ILogging>().Error("Api.GetShowsAsync", ex);
                 Console.WriteLine("[API] Shows error: " + ex.Message);
                 return new List<Shows>();
+            }
+        }
+
+        public List<Sponsors> ParseSponsorsResponse(string response)
+        {
+            List<Sponsors> sponsorList = new List<Sponsors>();
+            JArray responseItems = JsonConvert.DeserializeObject<JArray>(response);
+            foreach (JToken item in responseItems)
+            {
+                try
+
+                {
+                    // Parse values from JSON
+                    int id = item.Value<int>("id");
+                    string sponsorName = item.Value<JObject>("title").Value<string>("rendered"); ;
+                    string sponsorDescription = item.Value<JObject>("content").Value<string>("rendered");
+                    string imageURL = (item.Value<JObject>("_links").Value<JArray>("wp:featuredmedia")[0] as JObject).Value<string>("href");
+
+                    Sponsors sponsor = new Sponsors(id, sponsorName, sponsorDescription, imageURL);
+                    sponsorList.Add(sponsor);
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error parsing articles\n" + e.Message);
+                }
+            }
+            return sponsorList;
+
+        }
+
+        public static async Task<List<Sponsors>> GetSponsorsAsync()
+        {
+            try
+            {
+                string response = await instance.FetchAsync(Service.Sponsor);
+                return instance.ParseSponsorsResponse(response);
+            }
+            catch (Exception ex)
+            {
+                DependencyService.Get<ILogging>().Error("Api.GetSponsorsAsync", ex);
+                Console.WriteLine("[API] Sponsors error: " + ex.Message);
+                return new List<Sponsors>();
             }
         }
     }

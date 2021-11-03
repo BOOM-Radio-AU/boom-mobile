@@ -24,6 +24,8 @@ namespace BoomRadio
         bool UpdateTrackTimerRunning = false;
         NewsCollection News = new NewsCollection();
         ShowsCollection Show = new ShowsCollection();
+        SponsorsCollection Sponsor = new SponsorsCollection();
+        IStatusBarStyler statusBarStyler;
 
         public MainPage()
         {
@@ -31,12 +33,21 @@ namespace BoomRadio
             On<iOS>().SetUseSafeArea(true);
             MediaPlayerView.MediaPlayer = MediaPlayer;
             MediaPlayerView.MainPage = this;
+            statusBarStyler = DependencyService.Get<IStatusBarStyler>();
+            // Set initial status bar colors
+            if (Theme.UseDarkMode)
+            {
+                statusBarStyler.SetDarkTheme();
+            } else
+            {
+                statusBarStyler.SetLightTheme();
+            }
             // Initialise views to load into content area
             Views["home"] = new HomeView(MediaPlayer, this);
             Views["shows"] = new ShowsView(Show, this);
             Views["news"] = new NewsView(News, this);
             Views["news_article"] = new NewsArticleView(this);
-            Views["about"] = new AboutView();
+            Views["about"] = new AboutView(Sponsor);
             Views["contact"] = new ContactView();
             Views["settings"] = new SettingsView(this);
             CurrentView = "home";
@@ -105,6 +116,8 @@ namespace BoomRadio
                 StartUpdateTrackTimer();
             }
             MediaPlayerView.UpdateUI();
+            PlayPauseTabIcon.Text = MediaPlayer.IsPlaying ? "Pause" : "Play";
+            PlayPauseTabText.Text = MediaPlayer.IsPlaying ? "Pause" : "Play";
             if (CurrentView == "home") ((HomeView)Views["home"]).UpdateUI();
             UpdateUI(); // Will update live icon/text colour if needed
         }
@@ -187,6 +200,8 @@ namespace BoomRadio
         {
             // Update bottom bar/tabs
             BottomBarGrid.BackgroundColor = Theme.GetColour("nav-bg");
+            PlayPauseTabIcon.TextColor = Theme.GetColour("text");
+            PlayPauseTabText.TextColor = Theme.GetColour("text");
             HomeText.TextColor = CurrentView == "home"   ? Theme.GetColour("accent") : Theme.GetColour("text");
             HomeIcon.TextColor = CurrentView == "home"   ? Theme.GetColour("accent") : Theme.GetColour("text");
             ShowsText.TextColor = CurrentView == "shows" ? Theme.GetColour("accent") : Theme.GetColour("text");
@@ -194,6 +209,7 @@ namespace BoomRadio
             NewsText.TextColor = CurrentView == "news"   ? Theme.GetColour("accent") : Theme.GetColour("text");
             NewsIcon.TextColor = CurrentView == "news"   ? Theme.GetColour("accent") : Theme.GetColour("text");
             // Update top bar colours
+            this.BackgroundColor = Theme.GetColour("nav-bg");
             TopBarGrid.BackgroundColor = Theme.GetColour("nav-bg");
             MenuIcon.TextColor = Theme.GetColour("text");
             LiveIcon.TextColor = MediaPlayer.IsLive ? Theme.GetColour("is-live") : Theme.GetColour("not-live");
@@ -203,7 +219,15 @@ namespace BoomRadio
             AboutMenuItem.TextColor = Theme.GetColour("text");
             ContactMenuItem.TextColor = Theme.GetColour("text");
             SettingsMenuItem.TextColor = Theme.GetColour("text");
-
+            
+            if (!statusBarStyler.IsDarkTheme() && Theme.UseDarkMode)
+            {
+                statusBarStyler.SetDarkTheme();
+            }
+            else if (statusBarStyler.IsDarkTheme() && !Theme.UseDarkMode)
+            {
+                statusBarStyler.SetLightTheme();
+            }
         }
 
         private void HomeTab_Clicked(object sender, EventArgs e)
@@ -272,5 +296,40 @@ namespace BoomRadio
             Navigate("settings");
         }
 
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            base.OnSizeAllocated(width, height); //must be called
+
+            if (this.Width > this.Height)
+            {
+                // Horizontal orientation
+                MediaPlayerView.IsVisible = false;
+                PlayPauseTab.IsVisible = true;
+                MainGridRowThree.Height = 0;
+                BottomBarGridColOne.Width = GridLength.Star;
+                (Views["home"] as HomeView).SetHorizontalDisplay();
+            }
+            else
+            {
+                MediaPlayerView.IsVisible = true;
+                PlayPauseTab.IsVisible = false;
+                MainGridRowThree.Height = 80;
+                BottomBarGridColOne.Width = 0;
+                (Views["home"] as HomeView).SetVerticalDisplay();
+            }
+        }
+
+        private void PlayPauseTab_Tapped(object sender, EventArgs e)
+        {
+            if (MediaPlayer.IsPlaying)
+            {
+                MediaPlayer.Pause();
+            }
+            else
+            {
+                MediaPlayer.Play();
+            }
+            UpdatePlayerUIs();
+        }
     }
 }

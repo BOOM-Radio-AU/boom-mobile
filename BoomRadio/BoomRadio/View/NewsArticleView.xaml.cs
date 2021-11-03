@@ -1,6 +1,7 @@
 ﻿using BoomRadio.Model;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -21,6 +22,34 @@ namespace BoomRadio.View
         }
 
         /// <summary>
+        /// Resizes an image from the default size (width/height not set, AspectFit)
+        /// to fill the available width and have a height that mantains the aspect ratio.
+        /// The height needs to be calculated from the aspect ratio and the width since
+        /// Image elements do not allow for "auto" sizing.
+        /// </summary>
+        /// <param name="image">Image to be resized</param>
+        private async void ResizeImage(Image image)
+        {
+            // Wait for image to be layed out on page
+            do
+            {
+                await Task.Delay(15);
+            } while (image.Width <= 0 || image.Height <= 0 || this.Width <= 0);
+            await Task.Delay(2); // Another short delay to be sure
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                // Get the aspect ratio and calculate the required width and height
+                double aspectRatio = image.Width / image.Height;
+                double width = this.Width - 20;
+                double height = width / aspectRatio;
+                // Set the image to the required size, on the main (UI) thread
+                image.WidthRequest = width;
+                image.HeightRequest = height;
+                image.Aspect = Aspect.AspectFit;
+            });
+        }
+
+        /// <summary>
         /// Updates the user interface
         /// </summary>
         public void UpdateUI()
@@ -31,6 +60,7 @@ namespace BoomRadio.View
             {
                 NewsImage.Source = ImageSource.FromUri(new Uri(Article.ImageUrl));
                 NewsImage.IsVisible = true;
+                ResizeImage(NewsImage);
             }
             else
             {
@@ -64,12 +94,15 @@ namespace BoomRadio.View
                 }
                 if (imageUrls.Count > 0)
                 {
-                    ContentStackLayout.Children.Add(new Image()
+                    Image img = new Image()
                     {
                         Source = ImageSource.FromUri(new Uri(imageUrls.Dequeue())),
-                        MinimumHeightRequest = 150,
-                        Aspect = Aspect.AspectFit
-                    });
+                        HorizontalOptions = LayoutOptions.Center,
+                        Aspect = Aspect.AspectFit,
+                        BackgroundColor = Color.Black
+                    };
+                    ContentStackLayout.Children.Add(img);
+                    ResizeImage(img);
                 }
             }
         }

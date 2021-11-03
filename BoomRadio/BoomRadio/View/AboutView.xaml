@@ -2,7 +2,8 @@
 <StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
-             x:Class="BoomRadio.View.AboutView">
+             x:Class="BoomRadio.View.AboutView"
+             x:Name="AboutPage">
 
     <Label   Text="About BOOM Radio"
              VerticalOptions="StartAndExpand" 
@@ -13,56 +14,13 @@
 
 
     <!--About BOOM Box-->
-    <Frame x:Name="AboutBoomBox" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-        <StackLayout Padding="10" BackgroundColor="White" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
-                <xct:Expander>
-                    <xct:Expander.Header>
-                        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
-                            <Image WidthRequest="60" HeightRequest="60" BackgroundColor="Orange"/>
-
-                            <Label Text="Who is BOOM Radio?" Padding="10" FontFamily="CG-B" FontSize="14" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                        </StackLayout>
-                    </xct:Expander.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-
-                        <!-- COME BACK AND CHANGE TEXT TO API-->
-                        <Label x:Name="AboutText" FontFamily="CG-R" FontSize="12"
-                               Text="Officially launched in 2012, BOOM Radio is a student run, not-for-profit online radio station operating out of North Metropolitan TAFE, Leederville. Since inception, BOOM Radio has received several accolades and awards most notably winning the Radio Flag – World College Radio Station of the Year in 2015 and 2016. As well as providing a learning environment for future radio broadcasters, BOOM Radio has become a platform for graduates to build solid careers within the professional radio and media industry."/>
-                    </Grid>
-                </xct:Expander>
-        </StackLayout>
-    </Frame>
+    <StackLayout x:Name="BoxesHome" BackgroundColor="Transparent" HorizontalOptions="CenterAndExpand" Padding="20"/>
 
 
-    <!--Join BOOM Box-->
-   <Frame x:Name="JoinBoomBox" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-        <StackLayout Padding="10" BackgroundColor="White" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
-                <xct:Expander>
-                    <xct:Expander.Header>
-                        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
-                            <Image WidthRequest="60" HeightRequest="60" BackgroundColor="Orange"/>
-
-                            <Label Text="Get involved with BOOM" Padding="10" FontFamily="CG-B" FontSize="14" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                        </StackLayout>
-                    </xct:Expander.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                                                <!-- COME BACK AND CHANGE TEXT TO API-->
-                        <Label x:Name="JoinText" FontFamily="CG-R" FontSize="12"
-                               Text="There's nothing stopping you! Whether you're a fan and want to request a song or an artist wanting some air-play and promotion, hit up our Music page. If you want more entertainment, why not give us a like onÂ Facebook?
-                               Or hey, want to get behind the scenes and join us? Check out the Radio Diploma Radio Advanced DiplomaÂ page over onÂ North Metropolitan TAFE‘s site, because Radio at NMTÂ is a home for every voice." />
-
-                        </Grid>
-                </xct:Expander>
-        </StackLayout>
-    </Frame>
 
 
+
+    <!--Sponsors carousel-->
     <Label   Text="Our Sponsors!"
              VerticalOptions="StartAndExpand" 
              HorizontalOptions="CenterAndExpand"
@@ -70,12 +28,17 @@
              FontFamily="CG-B"
              FontSize="16"/>
 
+    <ActivityIndicator x:Name="SponsorsLoading" IsVisible="False"/>
 
-
-    <!--Sponsors carousel-->
     <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <IndicatorView
+            x:Name="indicatorview"
+            HorizontalOptions="Center"
+            IndicatorSize="10"
+            IndicatorColor="{Binding Path=BgColour}"
+            SelectedIndicatorColor="{Binding Path=TextColour}" />
         <Frame x:Name="SponsorContent" MinimumHeightRequest="100" MinimumWidthRequest="70" BackgroundColor="Transparent">
-            <CarouselView x:Name="SponsorCarousel" MinimumHeightRequest="200" MinimumWidthRequest="70" ItemsSource="{Binding Sponsor}" BackgroundColor="Transparent">
+            <CarouselView x:Name="SponsorCarousel" MinimumHeightRequest="200" MinimumWidthRequest="70" ItemsSource="{Binding Sponsor}" BackgroundColor="Transparent" IndicatorView="indicatorview">
                 <CarouselView.ItemTemplate>
                     <DataTemplate>
 
@@ -84,28 +47,26 @@
                             <StackLayout x:Name="SponsorStackLayout" Padding="0" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" MinimumHeightRequest="200" MinimumWidthRequest="60">
 
                                 <!--Sponsors Image loads here, out of the expand-->
-                                <Image  MinimumWidthRequest="120" MinimumHeightRequest="120"  Aspect="AspectFill">
+                                <Image  Aspect="AspectFit" HeightRequest="350" BackgroundColor="{Binding Source={x:Reference AboutPage}, Path=BgColour}">
                                     <Image.Source>
                                         <UriImageSource Uri="{Binding SponsorImageUrl}" CachingEnabled="True" CacheValidity="1"/>
                                     </Image.Source>
                                 </Image>
 
-
                                 <Frame VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-                                    <StackLayout Padding="10" BackgroundColor="White" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
-                                         <Image WidthRequest="60" HeightRequest="60" BackgroundColor="Orange"/>
-
+                                    <StackLayout Padding="10" BackgroundColor="{Binding Source={x:Reference AboutPage}, Path=BgColour}" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
                                         <!--Sponsor expand-->
+                                        <Label Text="{Binding SponsorName}" TextColor="{Binding Source={x:Reference AboutPage}, Path=TextColour}" TextType="Html" Padding="10" FontFamily="CG-B" FontSize="14" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                                             <xct:Expander>
                                                 <xct:Expander.Header>
-                                                    <Label Text="{Binding SponsorName}" Padding="10" FontFamily="CG-B" FontSize="14" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                                <Label Text="Click to read more" Padding="10" FontFamily="CG-r" FontSize="12" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" TextColor="{Binding Source={x:Reference AboutPage}, Path=TextColour}"/>
                                                 </xct:Expander.Header>
 
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="Auto"/>
                                                     </Grid.ColumnDefinitions>
-                                                    <Label FontFamily="CG-R" FontSize="12" Text="{Binding SponsorDescription}"/>
+                                                <Label FontFamily="MET-R" FontSize="16" TextType="Html" Text="{Binding SponsorDescription}" TextColor="{Binding Source={x:Reference AboutPage}, Path=TextColour}"/>
                                                 </Grid>
                                             </xct:Expander>
 
