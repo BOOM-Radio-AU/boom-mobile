@@ -66,6 +66,7 @@
     <Compile Include="LoggingService.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="StatusBarStylerService.cs" />
     <Compile Include="StreamingService.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
