@@ -175,6 +175,13 @@ namespace BoomRadio
         public string ParseMediaResponse(string response)
         {
             JObject responseObj = JsonConvert.DeserializeObject<JObject>(response);
+            JObject sizes = responseObj.Value<JObject>("media_details").Value<JObject>("sizes");
+            // Use a medium size image url if present
+            if (sizes.ContainsKey("medium"))
+            {
+                return sizes.Value<JObject>("medium").Value<string>("source_url");
+            }
+            // Otherwise use the default full-size image url
             return responseObj.Value<string>("source_url");
         }
 
