@@ -25,6 +25,7 @@ namespace BoomRadio
         NewsCollection News = new NewsCollection();
         ShowsCollection Show = new ShowsCollection();
         SponsorsCollection Sponsor = new SponsorsCollection();
+        IStatusBarStyler statusBarStyler;
 
         public MainPage()
         {
@@ -32,6 +33,15 @@ namespace BoomRadio
             On<iOS>().SetUseSafeArea(true);
             MediaPlayerView.MediaPlayer = MediaPlayer;
             MediaPlayerView.MainPage = this;
+            statusBarStyler = DependencyService.Get<IStatusBarStyler>();
+            // Set initial status bar colors
+            if (Theme.UseDarkMode)
+            {
+                statusBarStyler.SetDarkTheme();
+            } else
+            {
+                statusBarStyler.SetLightTheme();
+            }
             // Initialise views to load into content area
             Views["home"] = new HomeView(MediaPlayer, this);
             Views["shows"] = new ShowsView(Show, this);
@@ -195,6 +205,7 @@ namespace BoomRadio
             NewsText.TextColor = CurrentView == "news"   ? Theme.GetColour("accent") : Theme.GetColour("text");
             NewsIcon.TextColor = CurrentView == "news"   ? Theme.GetColour("accent") : Theme.GetColour("text");
             // Update top bar colours
+            this.BackgroundColor = Theme.GetColour("nav-bg");
             TopBarGrid.BackgroundColor = Theme.GetColour("nav-bg");
             MenuIcon.TextColor = Theme.GetColour("text");
             LiveIcon.TextColor = MediaPlayer.IsLive ? Theme.GetColour("is-live") : Theme.GetColour("not-live");
@@ -204,7 +215,15 @@ namespace BoomRadio
             AboutMenuItem.TextColor = Theme.GetColour("text");
             ContactMenuItem.TextColor = Theme.GetColour("text");
             SettingsMenuItem.TextColor = Theme.GetColour("text");
-
+            
+            if (!statusBarStyler.IsDarkTheme() && Theme.UseDarkMode)
+            {
+                statusBarStyler.SetDarkTheme();
+            }
+            else if (statusBarStyler.IsDarkTheme() && !Theme.UseDarkMode)
+            {
+                statusBarStyler.SetLightTheme();
+            }
         }
 
         private void HomeTab_Clicked(object sender, EventArgs e)
