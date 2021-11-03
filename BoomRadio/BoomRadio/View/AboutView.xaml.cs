@@ -22,6 +22,27 @@ namespace BoomRadio.View
         public SponsorsCollection SponsC;
         public ObservableCollection<Sponsors> Sponsor { get; set; } = new ObservableCollection<Sponsors>();
 
+        // Some colour fields and properties for data binding
+        private Color textColour = Theme.GetColour("text");
+        private Color bgColour = Theme.GetColour("background");
+        public Color TextColour
+        {
+            get => textColour; private set
+            {
+                textColour = value;
+                OnPropertyChanged("TextColour");
+            }
+        }
+        public Color BgColour
+        {
+            get => bgColour;
+            private set
+            {
+                bgColour = value;
+                OnPropertyChanged("BgColour");
+            }
+        }
+
         public AboutView(SponsorsCollection Sponsor)
         {
             InitializeComponent();
@@ -34,8 +55,9 @@ namespace BoomRadio.View
 
         public async void UpdateUI()
         {
-
-
+            // Update colours
+            TextColour = Theme.GetColour("text");
+            BgColour = Theme.GetColour("background");
 
             //BUG HERE SOMEWHERE IDK HOW TO FIX IT COME BACK LATER
             //BOXES DONT OPEN WHEN PAGE IS RELOADED/CANT SCROLL PAGE
@@ -54,15 +76,11 @@ namespace BoomRadio.View
                     
             }
 
-
-            await SponsC.UpdateAsync();
-
-
             SponsorsLoading.IsVisible = true;
             SponsorsLoading.IsRunning = true;
 
+            await SponsC.UpdateAsync();
 
-            //Loop to create the sponsors carousel 
             if (Sponsor.Count != SponsC.sponsors.Count)
             {
                 Sponsor.Clear();

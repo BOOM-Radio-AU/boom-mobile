@@ -19,8 +19,28 @@ namespace BoomRadio.View
 
         public ShowsCollection ShowC;
         MainPage MainPage;
+
         public ObservableCollection<Shows> Show { get; set; } = new ObservableCollection<Shows>();
 
+        // Some colour fields and properties for data binding
+        private Color textColour = Theme.GetColour("text");
+        private Color bgColour = Theme.GetColour("background");
+        public Color TextColour
+        {
+            get => textColour; private set
+            {
+                textColour = value;
+                OnPropertyChanged("TextColour");
+            }
+        }
+        public Color BgColour
+        {
+            get => bgColour;
+            private set {
+                bgColour = value;
+                OnPropertyChanged("BgColour");
+            }
+        }
 
         public ShowsView(ShowsCollection show, MainPage mainPage)
 
@@ -29,13 +49,15 @@ namespace BoomRadio.View
             ShowC = show;
             MainPage = mainPage;
             BindingContext = this;
-            
+
 
         }
 
         public async void UpdateUI()
         {
-
+            // Update colours
+            TextColour = Theme.GetColour("text");
+            BgColour = Theme.GetColour("background");
 
             // Don't try to update without internet connection
             if (!MainPage.HasInternet())
@@ -43,13 +65,14 @@ namespace BoomRadio.View
                 return;
             }
 
-            await ShowC.UpdateAsync();
-            
             // Show the loading indicator
             ShowsLoadingIndicator.IsVisible = true;
             ShowsLoadingIndicator.IsRunning = true;
+
+            await ShowC.UpdateAsync();
+
             // Update the News collection, and then the UI if needed
-            if(Show.Count != ShowC.shows.Count)
+            if (Show.Count != ShowC.shows.Count)
             {
                 Show.Clear();
                 List<Task> imageFetches = new List<Task>();
