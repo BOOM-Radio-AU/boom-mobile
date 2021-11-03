@@ -19,6 +19,27 @@ namespace BoomRadio.View
         public SponsorsCollection SponsC;
         public ObservableCollection<Sponsors> Sponsor { get; set; } = new ObservableCollection<Sponsors>();
 
+        // Some colour fields and properties for data binding
+        private Color textColour = Theme.GetColour("text");
+        private Color bgColour = Theme.GetColour("background");
+        public Color TextColour
+        {
+            get => textColour; private set
+            {
+                textColour = value;
+                OnPropertyChanged("TextColour");
+            }
+        }
+        public Color BgColour
+        {
+            get => bgColour;
+            private set
+            {
+                bgColour = value;
+                OnPropertyChanged("BgColour");
+            }
+        }
+
         public AboutView(SponsorsCollection Sponsor)
         {
             InitializeComponent();
@@ -29,14 +50,14 @@ namespace BoomRadio.View
 
         public async void UpdateUI()
         {
-
-            await SponsC.UpdateAsync();
-
+            // Update colours
+            TextColour = Theme.GetColour("text");
+            BgColour = Theme.GetColour("background");
 
             SponsorsLoading.IsVisible = true;
             SponsorsLoading.IsRunning = true;
 
-
+            await SponsC.UpdateAsync();
 
             if (Sponsor.Count != SponsC.sponsors.Count)
             {

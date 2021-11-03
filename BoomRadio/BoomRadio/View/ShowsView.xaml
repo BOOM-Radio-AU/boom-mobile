@@ -3,20 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:BoomRadio.Components"
              x:Class="BoomRadio.View.ShowsView"
-             VerticalOptions="StartAndExpand">
+             VerticalOptions="StartAndExpand"
+             x:Name="ShowsPage">
     <Label Text="Shows" FontSize="18" FontFamily="CG-B"
            VerticalOptions="CenterAndExpand" 
            HorizontalOptions="CenterAndExpand"
            Padding="10"/>
     <ActivityIndicator x:Name="ShowsLoadingIndicator" IsVisible="False"/>
     <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-
+        <IndicatorView
+            x:Name="indicatorview"
+            HorizontalOptions="Center"
+            IndicatorSize="10"
+            IndicatorColor="{Binding Path=BgColour}"
+            SelectedIndicatorColor="{Binding Path=TextColour}" />
         <Frame x:Name="ShowContent" MinimumHeightRequest="100" MinimumWidthRequest="70" BackgroundColor="Transparent">
 
-            <CarouselView x:Name="ShowCarousel" MinimumHeightRequest="200" MinimumWidthRequest="70" ItemsSource="{Binding Show}" BackgroundColor="Transparent">
+            <CarouselView x:Name="ShowCarousel" IndicatorView="indicatorview" MinimumHeightRequest="200" MinimumWidthRequest="70" ItemsSource="{Binding Show}" BackgroundColor="Transparent">
                 <CarouselView.ItemTemplate>
                     <DataTemplate>
-                        <Frame MinimumHeightRequest="200" MinimumWidthRequest="100" VerticalOptions="FillAndExpand" BackgroundColor="Transparent" Margin="10">
+                        <Frame MinimumHeightRequest="200" MinimumWidthRequest="100" VerticalOptions="FillAndExpand" BackgroundColor="Transparent" Margin="10,0">
 
                             <StackLayout x:Name="ShowStackLayout" Padding="0" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" MinimumHeightRequest="200" MinimumWidthRequest="60">
                 
@@ -25,20 +31,20 @@
                                         <UriImageSource Uri="{Binding ShowImageUrl}" CachingEnabled="True" CacheValidity="1"/>
                                     </Image.Source>
                                 </Image>
-                                <StackLayout Orientation="Vertical" BackgroundColor="{Binding Path=BgColour}" VerticalOptions="StartAndExpand" MinimumHeightRequest="100" Padding="5">
+                                <StackLayout Orientation="Vertical" BackgroundColor="{Binding Source={x:Reference ShowsPage}, Path=BgColour}" VerticalOptions="StartAndExpand" MinimumHeightRequest="100" Padding="5">
                                     <Label Text="{Binding ShowTitle}" FontSize="22" FontFamily="MET-B"
-                                           TextColor="{Binding Path=TextColour}"
+                                           TextColor="{Binding Source={x:Reference ShowsPage}, Path=TextColour}"
                                         VerticalOptions="StartAndExpand" 
                                         HorizontalOptions="CenterAndExpand"
                                         TextType="Html"
                                         Padding="5"/>
                                     <Label Text="{Binding ShowSchedule}" FontSize="16" FontFamily="MET-R"
-                                           TextColor="{Binding Path=TextColour}"
+                                           TextColor="{Binding Source={x:Reference ShowsPage}, Path=TextColour}"
                                         VerticalOptions="StartAndExpand" 
                                         HorizontalOptions="StartAndExpand"
                                         TextType="Html" />
                                     <Label Text="{Binding ShowDescription}" FontSize="16" FontFamily="MET-R"
-                                           TextColor="{Binding Path=TextColour}"
+                                           TextColor="{Binding Source={x:Reference ShowsPage}, Path=TextColour}"
                                         VerticalOptions="StartAndExpand" 
                                         HorizontalOptions="StartAndExpand"
                                         TextType="Html"
