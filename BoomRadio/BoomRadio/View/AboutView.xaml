@@ -13,56 +13,13 @@
 
 
     <!--About BOOM Box-->
-    <Frame x:Name="AboutBoomBox" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-        <StackLayout Padding="10" BackgroundColor="White" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
-                <xct:Expander>
-                    <xct:Expander.Header>
-                        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
-                            <Image WidthRequest="60" HeightRequest="60" BackgroundColor="Orange"/>
-
-                            <Label Text="Who is BOOM Radio?" Padding="10" FontFamily="CG-B" FontSize="14" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                        </StackLayout>
-                    </xct:Expander.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-
-                        <!-- COME BACK AND CHANGE TEXT TO API-->
-                        <Label x:Name="AboutText" FontFamily="MET-R" FontSize="16"
-                               Text="Officially launched in 2012, BOOM Radio is a student run, not-for-profit online radio station operating out of North Metropolitan TAFE, Leederville. Since inception, BOOM Radio has received several accolades and awards most notably winning the Radio Flag – World College Radio Station of the Year in 2015 and 2016. As well as providing a learning environment for future radio broadcasters, BOOM Radio has become a platform for graduates to build solid careers within the professional radio and media industry."/>
-                    </Grid>
-                </xct:Expander>
-        </StackLayout>
-    </Frame>
+    <StackLayout x:Name="BoxesHome" BackgroundColor="Transparent" HorizontalOptions="CenterAndExpand" Padding="20"/>
 
 
-    <!--Join BOOM Box-->
-   <Frame x:Name="JoinBoomBox" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-        <StackLayout Padding="10" BackgroundColor="White" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
-                <xct:Expander>
-                    <xct:Expander.Header>
-                        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
-                            <Image WidthRequest="60" HeightRequest="60" BackgroundColor="Orange"/>
-
-                            <Label Text="Get involved with BOOM" Padding="10" FontFamily="CG-B" FontSize="14" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                        </StackLayout>
-                    </xct:Expander.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                                                <!-- COME BACK AND CHANGE TEXT TO API-->
-                        <Label x:Name="JoinText" FontFamily="MET-R" FontSize="16"
-                               Text="There's nothing stopping you! Whether you're a fan and want to request a song or an artist wanting some air-play and promotion, hit up our Music page. If you want more entertainment, why not give us a like onÂ Facebook?
-                               Or hey, want to get behind the scenes and join us? Check out the Radio Diploma Radio Advanced DiplomaÂ page over onÂ North Metropolitan TAFE‘s site, because Radio at NMTÂ is a home for every voice." />
-
-                        </Grid>
-                </xct:Expander>
-        </StackLayout>
-    </Frame>
 
 
+
+    <!--Sponsors carousel-->
     <Label   Text="Our Sponsors!"
              VerticalOptions="StartAndExpand" 
              HorizontalOptions="CenterAndExpand"
@@ -70,12 +27,8 @@
              FontFamily="CG-B"
              FontSize="16"/>
 
-
     <ActivityIndicator x:Name="SponsorsLoading" IsVisible="False"/>
 
-
-
-    <!--Sponsors carousel-->
     <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 
         <Frame x:Name="SponsorContent" MinimumHeightRequest="100" MinimumWidthRequest="70" BackgroundColor="Transparent">

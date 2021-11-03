@@ -12,6 +12,7 @@ namespace BoomRadio.Model
     {
         public List<NewsArticle> articles;
         private DateTime lastUpdated;
+        public Api.Service service { get; set; } = Api.Service.News;
         
         public NewsCollection()
         {
@@ -62,8 +63,15 @@ namespace BoomRadio.Model
 
             try
             {
-                List<NewsArticle> newsArticles = await Api.GetNewsArticlesAsync();
-                if (newsArticles.Count == 0)
+                List<NewsArticle> newsArticles = null;
+                if (service == Api.Service.News)
+                {
+                    newsArticles = await Api.GetNewsArticlesAsync();
+                } else if (service == Api.Service.About)
+                {
+                    newsArticles = await Api.GetAboutArticlesAsync();
+                }
+                if (newsArticles == null || newsArticles.Count == 0)
                 {
                     // Nothing returned from API, so don't update
                     return false;
