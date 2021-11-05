@@ -56,6 +56,7 @@ namespace BoomRadio.View
             PlayButton.TextColor = Theme.GetColour("accent");
             PauseButton.TextColor = Theme.GetColour("accent");
             LiveButton.TextColor = Theme.GetColour("accent");
+            EventsHeadingBox.UpdateColours();
         }
 
         private void PlayButton_Clicked(object sender, EventArgs e)

@@ -1,10 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:components="clr-namespace:BoomRadio.Components"
              x:Class="BoomRadio.View.ContactView"
              Margin="10">
 
-    <Label Text="Contact Us" HorizontalOptions="CenterAndExpand" />
+    <components:HeadingBox
+        x:Name="HeadingBox"
+        Text="Contact Us"
+        VerticalOptions="Start" 
+        HorizontalOptions="CenterAndExpand" />
 
     <Label Text="Get Social" Margin="0,10,10,2" FontFamily="CG-B" FontSize="18"/>
     <Grid>

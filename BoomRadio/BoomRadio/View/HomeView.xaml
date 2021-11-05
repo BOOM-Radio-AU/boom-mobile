@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:components="clr-namespace:BoomRadio.Components"
              x:Class="BoomRadio.View.HomeView"
              VerticalOptions="StartAndExpand">
 
@@ -42,7 +42,11 @@
             </StackLayout>
         </Frame>
 
-        <Label FontSize="25" FontFamily="CG-B" Text="EVENTS and COMPETITIONS" HorizontalOptions="CenterAndExpand" HorizontalTextAlignment="Center" Grid.Row="2"/>
+        <components:HeadingBox
+        x:Name="EventsHeadingBox"
+        Text="EVENTS and COMPETITIONS"
+        VerticalOptions="Start" 
+        HorizontalOptions="CenterAndExpand" Grid.Row="2" />
         <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" BackgroundColor="White" MinimumWidthRequest="100" Padding="10" Margin="20,10" Grid.Row="3">
 
             <Label FontSize="16" FontFamily="MET-R" Text="BOOM Hosts tons of events and competitions  that you wont want to miss. To keep updated on new events and competitions, head on over to our website at boomradio.com.au."/>

@@ -1,32 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit" xmlns:components="clr-namespace:BoomRadio.Components"
              x:Class="BoomRadio.View.AboutView"
              x:Name="AboutPage">
 
-    <Label   Text="About BOOM Radio"
-             VerticalOptions="StartAndExpand" 
-             HorizontalOptions="CenterAndExpand"
-             Padding="5"
-             FontFamily="CG-B"
-             FontSize="16"/>
-
+    <components:HeadingBox
+        x:Name="AboutHeadingBox"
+        Text="About BOOM Radio"
+        VerticalOptions="Start" 
+        HorizontalOptions="CenterAndExpand" />
 
     <!--About BOOM Box-->
     <StackLayout x:Name="BoxesHome" BackgroundColor="Transparent" HorizontalOptions="CenterAndExpand" Padding="20"/>
 
-
-
-
-
     <!--Sponsors carousel-->
-    <Label   Text="Our Sponsors!"
-             VerticalOptions="StartAndExpand" 
-             HorizontalOptions="CenterAndExpand"
-             Padding="5"
-             FontFamily="CG-B"
-             FontSize="16"/>
+    <components:HeadingBox
+        x:Name="SponsorsHeadingBox"
+        Text="Our Sponsors!"
+        VerticalOptions="CenterAndExpand" 
+        HorizontalOptions="CenterAndExpand" />
 
     <ActivityIndicator x:Name="SponsorsLoading" IsVisible="False"/>
 

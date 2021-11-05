@@ -38,6 +38,7 @@ namespace BoomRadio.View
             instagramButton.TextColor = Color.White;
             twitterButton.BackgroundColor = Theme.GetColour("accent");
             twitterButton.TextColor = Color.White;
+            HeadingBox.UpdateColours();
         }
 
         /// <summary>
