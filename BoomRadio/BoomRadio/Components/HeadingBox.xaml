@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Frame xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BoomRadio.Components.HeadingBox"
+       BackgroundColor="{Binding BorderColour}" Padding="3" Margin="6" CornerRadius="10">
+    <Frame Margin="5" BackgroundColor="{Binding BackgroundColour}" Padding="16,3" CornerRadius="8">
+        <Label Padding="0" Margin="0" Text="{Binding Text}" TextColor="{Binding TextColour}"
+               BackgroundColor="Transparent" FontSize="25" FontFamily="CG-B" HorizontalTextAlignment="Center" Rotation="-2"/>
+    </Frame>
+</Frame>
+    
+    

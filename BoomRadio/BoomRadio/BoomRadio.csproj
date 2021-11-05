@@ -30,6 +30,9 @@
     <EmbeddedResource Include="Resources\Fonts\Metropolis-Regular.otf" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Components\HeadingBox.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Components\NewsSnippet.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

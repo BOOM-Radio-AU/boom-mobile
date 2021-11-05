@@ -58,6 +58,8 @@ namespace BoomRadio.View
             // Update colours
             TextColour = Theme.GetColour("text");
             BgColour = Theme.GetColour("background");
+            AboutHeadingBox.UpdateColours();
+            SponsorsHeadingBox.UpdateColours();
 
             //BUG HERE SOMEWHERE IDK HOW TO FIX IT COME BACK LATER
             //BOXES DONT OPEN WHEN PAGE IS RELOADED/CANT SCROLL PAGE

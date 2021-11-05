@@ -25,6 +25,7 @@ namespace BoomRadio.View
 
         public async void UpdateUI()
         {
+            HeadingBox.UpdateColours();
             // Don't try to update without internet connection
             if (!MainPage.HasInternet())
             {

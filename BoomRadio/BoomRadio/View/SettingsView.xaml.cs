@@ -66,6 +66,7 @@ namespace BoomRadio.View
             DarkModeLabel.TextColor = Theme.GetColour("text");
             DeviceDarkModeLabel.TextColor = Theme.GetColour("text");
             AutoplayLabel.TextColor = Theme.GetColour("text");
+            HeadingBox.UpdateColours();
         }
 
         /// <summary>
