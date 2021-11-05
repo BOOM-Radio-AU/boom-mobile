@@ -2,25 +2,29 @@
 <Frame xmlns="http://xamarin.com/schemas/2014/forms"
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+       HasShadow="True"
        x:Class="BoomRadio.Components.AboutFrame"
-       Padding="5"
-       HasShadow="True">
-    <Frame.Content VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-        <StackLayout x:Name="BackPanel" BackgroundColor="Transparent" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
-                <xct:Expander HorizontalOptions="FillAndExpand" WidthRequest="400">
-                    <xct:Expander.Header>
-                        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" >
-                            <Image x:Name="MainImage"/>
-                            <Label x:Name="TitleLabel" Text="Who is BOOM Radio?" Padding="10" FontFamily="CG-B" FontSize="18" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                        </StackLayout>
-                    </xct:Expander.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions> 
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <StackLayout x:Name="ContentStackLayout" Orientation="Vertical"/>
-                    </Grid>
-                </xct:Expander>
-        </StackLayout>
+       x:Name="BackFrame"
+       >
+
+    <Frame.Content VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
+        <Frame BackgroundColor="Transparent" HasShadow="True">
+            <StackLayout x:Name="BackPanel" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Padding="5">
+                    <xct:Expander HorizontalOptions="FillAndExpand" WidthRequest="400">
+                        <xct:Expander.Header>
+                            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
+                                <Image x:Name="MainImage"/>
+                                <Label x:Name="TitleLabel" Text="Who is BOOM Radio?" Padding="10" FontFamily="CG-B" FontSize="18" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                            </StackLayout>
+                        </xct:Expander.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions> 
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackLayout x:Name="ContentStackLayout" Orientation="Vertical"/>
+                        </Grid>
+                    </xct:Expander>
+            </StackLayout>
+        </Frame>
     </Frame.Content>
 </Frame>
