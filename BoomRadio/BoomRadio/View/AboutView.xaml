@@ -47,20 +47,24 @@
                             <StackLayout x:Name="SponsorStackLayout" Padding="0" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" MinimumHeightRequest="200" MinimumWidthRequest="60">
 
                                 <!--Sponsors Image loads here, out of the expand-->
-                                <Image  Aspect="AspectFit" HeightRequest="350" BackgroundColor="{Binding Source={x:Reference AboutPage}, Path=BgColour}">
-                                    <Image.Source>
-                                        <UriImageSource Uri="{Binding SponsorImageUrl}" CachingEnabled="True" CacheValidity="1"/>
-                                    </Image.Source>
-                                </Image>
+
 
                                 <Frame VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
                                     <StackLayout Padding="10" BackgroundColor="{Binding Source={x:Reference AboutPage}, Path=BgColour}" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
                                         <!--Sponsor expand-->
-                                        <Label Text="{Binding SponsorName}" TextColor="{Binding Source={x:Reference AboutPage}, Path=TextColour}" TextType="Html" Padding="10" FontFamily="CG-B" FontSize="14" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                                             <xct:Expander>
                                                 <xct:Expander.Header>
-                                                <Label Text="Click to read more" Padding="10" FontFamily="CG-r" FontSize="12" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" TextColor="{Binding Source={x:Reference AboutPage}, Path=TextColour}"/>
-                                                </xct:Expander.Header>
+                                                <StackLayout>
+                                                    <Image  Aspect="AspectFit" HeightRequest="350" BackgroundColor="{Binding Source={x:Reference AboutPage}, Path=BgColour}">
+                                                        <Image.Source>
+                                                            <UriImageSource Uri="{Binding SponsorImageUrl}" CachingEnabled="True" CacheValidity="1"/>
+                                                         </Image.Source>
+                                                    </Image>
+                                                    <Label Text="{Binding SponsorName}" TextColor="{Binding Source={x:Reference AboutPage}, Path=TextColour}" TextType="Html" Padding="10" FontFamily="CG-B" FontSize="18" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                                    <Label Text="Tap to read more" Padding="10" FontFamily="CG-r" FontSize="12" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" TextColor="{Binding Source={x:Reference AboutPage}, Path=TextColour}"/>
+ 
+                                                </StackLayout>
+                                               </xct:Expander.Header>
 
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>

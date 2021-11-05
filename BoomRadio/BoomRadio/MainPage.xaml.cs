@@ -174,6 +174,11 @@ namespace BoomRadio
             {
                 CloseMenu();
             }
+
+            if(target == "about")
+            {
+                Views["about"] = new AboutView(Sponsor);
+            }
             ContentAreaScrollView.Content = Views[target];
             CurrentView = target;
             (Views[target] as IUpdatableUI)?.UpdateUI();
