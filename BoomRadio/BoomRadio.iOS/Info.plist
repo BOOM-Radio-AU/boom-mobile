@@ -20,14 +20,14 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-  <key>UIViewControllerBasedStatusBarAppearance</key>
-  <false/>
-  <key>UIStatusBarStyle</key>
-  <string>UIStatusBarStyleDefault</string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleDefault</string>
 	<key>CFBundleDisplayName</key>
-	<string>BoomRadio</string>
+	<string>BOOM Radio</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.companyname.BoomRadio</string>
+	<string>au.com.boomradio</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>UILaunchStoryboardName</key>
