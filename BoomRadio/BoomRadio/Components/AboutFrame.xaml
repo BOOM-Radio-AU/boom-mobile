@@ -8,7 +8,7 @@
        >
 
     <Frame.Content VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
-        <Frame BackgroundColor="Transparent" HasShadow="True">
+        <Frame x:Name="BackFrame2" HasShadow="True" HorizontalOptions="FillAndExpand">
             <StackLayout x:Name="BackPanel" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Padding="5">
                     <xct:Expander HorizontalOptions="FillAndExpand" WidthRequest="400">
                         <xct:Expander.Header>
