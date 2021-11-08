@@ -67,8 +67,6 @@ namespace BoomRadio.View
             ShowC = show;
             MainPage = mainPage;
             BindingContext = this;
-
-
         }
 
         public async void UpdateUI()
@@ -118,8 +116,12 @@ namespace BoomRadio.View
             ShowsLoadingIndicator.IsRunning = false;
         }
 
-        public void SetHorizontalDisplay()
+        public async void SetHorizontalDisplay()
         {
+            while (this.Width == -1)
+            {
+                await Task.Delay(10);
+            }
             ShowsOrientation = StackOrientation.Horizontal;
             ShowsTextWidth = this.Width / 2;
         }

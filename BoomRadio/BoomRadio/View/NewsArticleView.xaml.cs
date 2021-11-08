@@ -19,6 +19,10 @@ namespace BoomRadio.View
         {
             InitializeComponent();
             MainPage = mainPage;
+            if (mainPage.Width > mainPage.Height)
+            {
+                SetHorizontalDisplay();
+            }
         }
 
         /// <summary>
@@ -117,14 +121,42 @@ namespace BoomRadio.View
             MainPage.Navigate("news");
         }
 
-        public void SetHorizontalDisplay()
+        private void ResizeAllImages()
         {
-            // TODO;
+            if (Article?.ImageUrl != null)
+            {
+                NewsImage.WidthRequest = -1;
+                NewsImage.HeightRequest = -1;
+                //await Task.Delay(20);
+                ResizeImage(NewsImage);
+            }
+            foreach (var item in ContentStackLayout.Children)
+            {
+                Image img = item as Image;
+                if (img != null)
+                {
+                    img.WidthRequest = -1;
+                    img.HeightRequest = -1;
+                    //await Task.Delay(20);
+                    ResizeImage(img);
+                }
+            }
+        }
+
+        public async void SetHorizontalDisplay()
+        {
+            while (this.Width == -1)
+            {
+                await Task.Delay(10);
+            }
+            Margin = new Thickness(this.Width / 8, 0, this.Width / 8, 10);
+            ResizeAllImages();
         }
 
         public void SetVerticalDisplay()
         {
-            // TODO;
+            Margin = new Thickness(10, 0, 10, 10);
+            ResizeAllImages();
         }
     }
 }
