@@ -26,7 +26,7 @@
                     <TapGestureRecognizer Tapped="MenuIcon_Tapped"/>
                 </Frame.GestureRecognizers>
             </Frame>
-            <Image Grid.Column="1" Source="boomlogo.png"/>
+            <Image x:Name="LogoImage" Grid.Column="1" Source="boomlogowhite.png"/>
             <Label x:Name="LiveIcon" Grid.Column="2" FontFamily="FA-S" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Text="&#xf111;" FontSize="10" TextColor="Gray"/>
             <Label x:Name="LiveText" Grid.Column="2" VerticalTextAlignment="End" HorizontalTextAlignment="Center" Text="Live" FontSize="13" TextColor="Gray"/>
         </Grid>
