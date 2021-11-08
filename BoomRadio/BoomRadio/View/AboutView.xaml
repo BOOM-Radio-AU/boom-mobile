@@ -49,7 +49,7 @@
                                 <xct:Expander VerticalOptions="StartAndExpand">
                                     <xct:Expander.Header>
                                     <StackLayout>
-                                        <Image Aspect="AspectFit" HeightRequest="300" BackgroundColor="{Binding Source={x:Reference AboutPage}, Path=BgColour}">
+                                        <Image Aspect="AspectFit" HeightRequest="{Binding Source={x:Reference AboutPage}, Path=SponsorImageHeight}" BackgroundColor="{Binding Source={x:Reference AboutPage}, Path=BgColour}">
                                             <Image.Source>
                                                 <UriImageSource Uri="{Binding SponsorImageUrl}" CachingEnabled="True" CacheValidity="1"/>
                                                 </Image.Source>

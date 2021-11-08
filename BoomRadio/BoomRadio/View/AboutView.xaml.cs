@@ -25,6 +25,7 @@ namespace BoomRadio.View
         // Some colour fields and properties for data binding
         private Color textColour = Theme.GetColour("text");
         private Color bgColour = Theme.GetColour("background");
+        private double sponsorImageHeight = 300;
         public Color TextColour
         {
             get => textColour; private set
@@ -40,6 +41,15 @@ namespace BoomRadio.View
             {
                 bgColour = value;
                 OnPropertyChanged("BgColour");
+            }
+        }
+        public double SponsorImageHeight
+        {
+            get => sponsorImageHeight;
+            private set
+            {
+                sponsorImageHeight = value;
+                OnPropertyChanged("SponsorImageHeight");
             }
         }
 
@@ -111,14 +121,21 @@ namespace BoomRadio.View
             SponsorsLoading.IsRunning = false;
         }
 
-        public void SetHorizontalDisplay()
+        public async void SetHorizontalDisplay()
         {
-            // TODO;
+            while (this.Width == -1)
+            {
+                await Task.Delay(10);
+            }
+            this.Margin = new Thickness(this.Width / 8 + 10, 10);
+            SponsorImageHeight = 150;
         }
 
-        public void SetVerticalDisplay()
+        public async void SetVerticalDisplay()
         {
-            // TODO;
+            await Task.Delay(10);
+            this.Margin = new Thickness(5,10);
+            SponsorImageHeight = 300;
         }
     }
 }
