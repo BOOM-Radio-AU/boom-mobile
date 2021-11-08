@@ -26,7 +26,7 @@ namespace BoomRadio
         ShowsCollection Show = new ShowsCollection();
         SponsorsCollection Sponsor = new SponsorsCollection();
         IStatusBarStyler statusBarStyler;
-
+        bool orientationIsHorizontal = false;
         public MainPage()
         {
             InitializeComponent();
@@ -182,6 +182,13 @@ namespace BoomRadio
             ContentAreaScrollView.Content = Views[target];
             CurrentView = target;
             (Views[target] as IUpdatableUI)?.UpdateUI();
+            if (orientationIsHorizontal)
+            {
+                (Views[target] as IUpdatableUI)?.SetHorizontalDisplay();
+            } else
+            {
+                (Views[target] as IUpdatableUI)?.SetVerticalDisplay();
+            }
             UpdateUI();
             Analytics.TrackEvent("navigate", new Dictionary<string, string>{
                 { "page", target }
@@ -308,6 +315,7 @@ namespace BoomRadio
             if (this.Width > this.Height)
             {
                 // Horizontal orientation
+                orientationIsHorizontal = true;
                 MediaPlayerView.IsVisible = false;
                 PlayPauseTab.IsVisible = true;
                 MainGridRowThree.Height = 0;
@@ -324,13 +332,11 @@ namespace BoomRadio
                 NewsIcon.FontSize = 16;
                 NewsTabStack.Orientation = StackOrientation.Horizontal;
                 NewsTabStack.Margin = new Thickness(0, 0, 0, 10);
-                foreach (KeyValuePair<string, Layout> view in Views)
-                {
-                    (view.Value as IUpdatableUI)?.SetHorizontalDisplay();
-                }
+                (Views[CurrentView] as IUpdatableUI)?.SetHorizontalDisplay();
             }
             else
             {
+                orientationIsHorizontal = false;
                 MediaPlayerView.IsVisible = true;
                 PlayPauseTab.IsVisible = false;
                 MainGridRowThree.Height = 80;
@@ -347,10 +353,7 @@ namespace BoomRadio
                 NewsIcon.FontSize = 20;
                 NewsTabStack.Orientation = StackOrientation.Vertical;
                 NewsTabStack.Margin = new Thickness(0);
-                foreach (KeyValuePair<string, Layout> view in Views)
-                {
-                    (view.Value as IUpdatableUI)?.SetVerticalDisplay();
-                }
+                (Views[CurrentView] as IUpdatableUI)?.SetVerticalDisplay();
             }
         }
 
