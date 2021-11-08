@@ -47,11 +47,9 @@
         Text="EVENTS and COMPETITIONS"
         VerticalOptions="Start" 
         HorizontalOptions="CenterAndExpand" Grid.Row="2" />
-        <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" BackgroundColor="White" MinimumWidthRequest="100" Padding="10" Margin="20,10" Grid.Row="3">
-
-            <Label FontSize="16" FontFamily="MET-R" Text="BOOM Hosts tons of events and competitions  that you wont want to miss. To keep updated on new events and competitions, head on over to our website at boomradio.com.au."/>
-
-
+        <StackLayout x:Name="EventsStackLayout" VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" BackgroundColor="White" MinimumWidthRequest="100" Padding="10" Margin="20,10" Grid.Row="3">
+            <Label x:Name="EventsLabel" FontSize="16" FontFamily="MET-R" Text="BOOM Radio hosts tons of events and competitions that you wont want to miss. To keep updated on new events and competitions, head on over to our website at boomradio.com.au."/>
+            <Button x:Name="VisitWebsiteButton" Text="Visit Website" HorizontalOptions="FillAndExpand" Clicked="VisitWebsiteButton_Clicked" FontSize="17" Margin="10,5" FontAttributes="Bold" FontFamily="MET-B"/>
         </StackLayout>
     </Grid>
 
