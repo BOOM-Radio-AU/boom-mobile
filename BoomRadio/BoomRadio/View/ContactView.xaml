@@ -10,23 +10,23 @@
         VerticalOptions="Start" 
         HorizontalOptions="CenterAndExpand" />
 
-    <Label Text="Get Social" Margin="0,10,10,2" FontFamily="CG-B" FontSize="18"/>
-    <Grid>
+    <Label Text="Get Social" Margin="0,10,10,2" FontFamily="CG-B" FontSize="18" TextColor="Black"/>
+    <Grid ColumnSpacing="30">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Button x:Name="facebookButton" Grid.Column="0" Text="facebook" FontFamily="FA-B" FontSize="25" HeightRequest="20" HorizontalOptions="Center" Clicked="facebookButton_Clicked"/>
-        <Button x:Name="instagramButton" Grid.Column="1" Text="instagram" FontFamily="FA-B" FontSize="25" HorizontalOptions="Center" Clicked="instagramButton_Clicked"/>
-        <Button x:Name="twitterButton" Grid.Column="2" Text="twitter" FontFamily="FA-B" FontSize="25" HorizontalOptions="Center" Clicked="twitterButton_Clicked" />
+        <Button x:Name="facebookButton" Grid.Column="0" Text="facebook" FontFamily="FA-B" FontSize="25" Padding="10" HeightRequest="20" HorizontalOptions="Fill" Clicked="facebookButton_Clicked"/>
+        <Button x:Name="instagramButton" Grid.Column="1" Text="instagram" FontFamily="FA-B" FontSize="25" Padding="10" HorizontalOptions="Fill" Clicked="instagramButton_Clicked"/>
+        <Button x:Name="twitterButton" Grid.Column="2" Text="twitter" FontFamily="FA-B" FontSize="25" Padding="10" HorizontalOptions="Fill" Clicked="twitterButton_Clicked" />
     </Grid>
 
-    <Label Text="Email Us" Margin="0,15,10,0" FontFamily="CG-B" FontSize="18"/>
-    <Label Text="Subject" Margin="0,0,10,2"/>
+    <Label Text="Email Us" Margin="0,15,10,0" FontFamily="CG-B" FontSize="18" TextColor="Black"/>
+    <Label Text="Subject" Margin="0,0,10,2" TextColor="Black"/>
     <Entry x:Name="SubjectEntry" HorizontalOptions="FillAndExpand" MaxLength="200" BackgroundColor="White" TextChanged="ContactForm_TextChanged"/>
 
-    <Label Text="Message" Margin="0,10,10,2"/>
+    <Label Text="Message" Margin="0,10,10,2" TextColor="Black"/>
     <Editor x:Name="MessageEditor" HorizontalOptions="FillAndExpand" AutoSize="TextChanges" BackgroundColor="White" TextChanged="ContactForm_TextChanged"/>
 
     <Button x:Name="SubmitButton" Text="Submit" Clicked="SubmitButton_Clicked"/>

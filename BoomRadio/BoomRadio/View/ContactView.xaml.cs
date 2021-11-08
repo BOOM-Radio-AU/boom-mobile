@@ -114,14 +114,24 @@ namespace BoomRadio.View
         /// <param name="e"></param>
         private void twitterButton_Clicked(object sender, EventArgs e) => Launcher.OpenAsync("https://twitter.com/boomradioau");
 
-        public void SetHorizontalDisplay()
+        public async void SetHorizontalDisplay()
         {
-            // TODO;
+            while (this.Width == -1)
+            {
+                await Task.Delay(10);
+            }
+            this.Margin = new Thickness(this.Width / 8 + 10, 10);
+            facebookButton.FontSize = 32;
+            instagramButton.FontSize = 32;
+            twitterButton.FontSize = 32;
         }
 
         public void SetVerticalDisplay()
         {
-            // TODO;
+            this.Margin = new Thickness(10);
+            facebookButton.FontSize = 25;
+            instagramButton.FontSize = 25;
+            twitterButton.FontSize = 25;
         }
     }
 }
