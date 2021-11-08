@@ -312,6 +312,19 @@ namespace BoomRadio
                 PlayPauseTab.IsVisible = true;
                 MainGridRowThree.Height = 0;
                 BottomBarGridColOne.Width = GridLength.Star;
+                PlayPauseTabIcon.FontSize = 16;
+                PlayPauseTabStack.Orientation = StackOrientation.Horizontal;
+                PlayPauseTabStack.Margin = new Thickness(0, 0, 0, 10);
+                HomeIcon.FontSize = 16;
+                HomeTabStack.Orientation = StackOrientation.Horizontal;
+                HomeTabStack.Margin = new Thickness(0, 0, 0, 10);
+                ShowsIcon.FontSize = 16;
+                ShowsTabStack.Orientation = StackOrientation.Horizontal;
+                ShowsTabStack.Margin = new Thickness(0, 0, 0, 10);
+                NewsIcon.FontSize = 16;
+                NewsTabStack.Orientation = StackOrientation.Horizontal;
+                NewsTabStack.Margin = new Thickness(0, 0, 0, 10);
+
                 (Views["home"] as HomeView).SetHorizontalDisplay();
             }
             else
@@ -320,6 +333,18 @@ namespace BoomRadio
                 PlayPauseTab.IsVisible = false;
                 MainGridRowThree.Height = 80;
                 BottomBarGridColOne.Width = 0;
+                PlayPauseTabIcon.FontSize = 20;
+                PlayPauseTabStack.Orientation = StackOrientation.Vertical;
+                PlayPauseTabStack.Margin = new Thickness(0); 
+                HomeIcon.FontSize = 20;
+                HomeTabStack.Orientation = StackOrientation.Vertical;
+                HomeTabStack.Margin = new Thickness(0);
+                ShowsIcon.FontSize = 20;
+                ShowsTabStack.Orientation = StackOrientation.Vertical;
+                ShowsTabStack.Margin = new Thickness(0);
+                NewsIcon.FontSize = 20;
+                NewsTabStack.Orientation = StackOrientation.Vertical;
+                NewsTabStack.Margin = new Thickness(0);
                 (Views["home"] as HomeView).SetVerticalDisplay();
             }
         }

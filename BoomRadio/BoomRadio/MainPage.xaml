@@ -84,7 +84,7 @@
             </Grid.ColumnDefinitions>
 
             <Frame x:Name="PlayPauseTab" Padding="0" Margin="0,10,0,0" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" HasShadow="False" Background="transparent" Grid.Column="0">
-                <StackLayout >
+                <StackLayout x:Name="PlayPauseTabStack" HorizontalOptions="CenterAndExpand">
                     <Label x:Name="PlayPauseTabIcon" FontFamily="FA-S" FontSize="20" Text="Home" HorizontalTextAlignment="Center"/>
                     <Label x:Name="PlayPauseTabText" FontFamily="CG-R" Text="Home" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>
                 </StackLayout>
@@ -95,7 +95,7 @@
             </Frame>
 
             <Frame Padding="0" Margin="0,10,0,0" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" HasShadow="False" Background="transparent" Grid.Column="1">
-                <StackLayout >
+                <StackLayout x:Name="HomeTabStack" HorizontalOptions="CenterAndExpand">
                     <Label x:Name="HomeIcon" FontFamily="FA-S" FontSize="20" Text="Home" HorizontalTextAlignment="Center"/>
                     <Label x:Name="HomeText" FontFamily="CG-R" Text="Home" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>
                 </StackLayout>
@@ -106,7 +106,7 @@
             </Frame>
 
             <Frame Padding="0" Margin="0,10,0,0" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" HasShadow="False" Background="transparent" Grid.Column="2">
-                <StackLayout>
+                <StackLayout x:Name="ShowsTabStack" HorizontalOptions="CenterAndExpand">
                     <Label x:Name="ShowsIcon" FontFamily="FA-S" FontSize="20" Text="Podcast" HorizontalTextAlignment="Center"/>
                     <Label x:Name="ShowsText" FontFamily="CG-R" Text="Shows" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>
                 </StackLayout>
@@ -119,7 +119,7 @@
 
 
             <Frame Padding="0" Margin="0,10,0,0" HorizontalOptions="Fill" VerticalOptions="FillAndExpand" HasShadow="False" Background="transparent" Grid.Column="3">
-                <StackLayout>
+                <StackLayout x:Name="NewsTabStack" HorizontalOptions="CenterAndExpand">
                     <Label x:Name="NewsIcon" FontFamily="FA-S" FontSize="20" Text="Newspaper" HorizontalTextAlignment="Center"/>
                     <Label x:Name="NewsText" FontFamily="CG-R" Text="News" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="Center"/>
                 </StackLayout>
