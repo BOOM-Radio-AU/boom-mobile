@@ -25,6 +25,8 @@ namespace BoomRadio.Components
         {
             this.BackgroundColor = Theme.GetColour("background");
             BackPanel.BackgroundColor = Theme.GetColour("background");
+            BackFrame2.BackgroundColor = Theme.GetColour("background");
+            BackFrame.BackgroundColor = Color.Transparent;
             TitleLabel.TextColor = Theme.GetColour("text");
         }
 

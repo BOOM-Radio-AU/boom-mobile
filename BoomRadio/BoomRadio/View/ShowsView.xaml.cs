@@ -58,7 +58,6 @@ namespace BoomRadio.View
             // Update colours
             TextColour = Theme.GetColour("text");
             BgColour = Theme.GetColour("background");
-            HeadingBox.UpdateColours();
 
             // Don't try to update without internet connection
             if (!MainPage.HasInternet())

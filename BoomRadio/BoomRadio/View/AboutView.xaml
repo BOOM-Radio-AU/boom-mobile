@@ -23,59 +23,54 @@
 
     <ActivityIndicator x:Name="SponsorsLoading" IsVisible="False"/>
 
-    <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-        <IndicatorView
-            x:Name="indicatorview"
-            HorizontalOptions="Center"
-            IndicatorSize="10"
-            IndicatorColor="{Binding Path=BgColour}"
-            SelectedIndicatorColor="{Binding Path=TextColour}" />
-        <Frame x:Name="SponsorContent" MinimumHeightRequest="100" MinimumWidthRequest="70" BackgroundColor="Transparent">
-            <CarouselView x:Name="SponsorCarousel" MinimumHeightRequest="200" MinimumWidthRequest="70" ItemsSource="{Binding Sponsor}" BackgroundColor="Transparent" IndicatorView="indicatorview">
-                <CarouselView.ItemTemplate>
-                    <DataTemplate>
-
-                        <Frame MinimumHeightRequest="200" MinimumWidthRequest="100" VerticalOptions="FillAndExpand" BackgroundColor="Transparent" Margin="10">
-
-                            <StackLayout x:Name="SponsorStackLayout" Padding="0" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" MinimumHeightRequest="200" MinimumWidthRequest="60">
-
-                                <!--Sponsors Image loads here, out of the expand-->
+    <IndicatorView
+        x:Name="indicatorview"
+        IndicatorSize="10"
+        IndicatorColor="{Binding Path=BgColour}"
+        SelectedIndicatorColor="{Binding Path=TextColour}"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand"
+        BackgroundColor="Transparent"/>
 
 
-                                <Frame VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent">
-                                    <StackLayout Padding="10" BackgroundColor="{Binding Source={x:Reference AboutPage}, Path=BgColour}" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
-                                        <!--Sponsor expand-->
-                                            <xct:Expander>
-                                                <xct:Expander.Header>
-                                                <StackLayout>
-                                                    <Image  Aspect="AspectFit" HeightRequest="350" BackgroundColor="{Binding Source={x:Reference AboutPage}, Path=BgColour}">
-                                                        <Image.Source>
-                                                            <UriImageSource Uri="{Binding SponsorImageUrl}" CachingEnabled="True" CacheValidity="1"/>
-                                                         </Image.Source>
-                                                    </Image>
-                                                    <Label Text="{Binding SponsorName}" TextColor="{Binding Source={x:Reference AboutPage}, Path=TextColour}" TextType="Html" Padding="10" FontFamily="CG-B" FontSize="18" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                                                    <Label Text="Tap to read more" Padding="10" FontFamily="CG-r" FontSize="12" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" TextColor="{Binding Source={x:Reference AboutPage}, Path=TextColour}"/>
  
-                                                </StackLayout>
-                                               </xct:Expander.Header>
 
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                    </Grid.ColumnDefinitions>
-                                                <Label FontFamily="MET-R" FontSize="16" TextType="Html" Text="{Binding SponsorDescription}" TextColor="{Binding Source={x:Reference AboutPage}, Path=TextColour}"/>
-                                                </Grid>
-                                            </xct:Expander>
 
+    <Frame x:Name="SponsorContent" BackgroundColor="Transparent" HorizontalOptions="Start" VerticalOptions="Start" HasShadow="True">
+
+        <CarouselView x:Name="SponsorCarousel" HeightRequest="800" ItemsSource="{Binding Sponsor}" BackgroundColor="Transparent" IndicatorView="indicatorview" VerticalOptions="Start">
+            
+            <CarouselView.ItemTemplate>
+                
+                <DataTemplate>
+                    <Frame HorizontalOptions="Fill" VerticalOptions="Fill" BackgroundColor="Transparent">
+                        <Frame Padding="10" BackgroundColor="{Binding Source={x:Reference AboutPage}, Path=BgColour}" VerticalOptions="Start" HorizontalOptions="FillAndExpand" HasShadow="True">
+                            <!--Sponsor expand-->
+                                <xct:Expander VerticalOptions="StartAndExpand">
+                                    <xct:Expander.Header>
+                                    <StackLayout>
+                                        <Image Aspect="AspectFit" HeightRequest="300" BackgroundColor="{Binding Source={x:Reference AboutPage}, Path=BgColour}">
+                                            <Image.Source>
+                                                <UriImageSource Uri="{Binding SponsorImageUrl}" CachingEnabled="True" CacheValidity="1"/>
+                                                </Image.Source>
+                                        </Image>
+                                        <Label Text="{Binding SponsorName}" TextColor="{Binding Source={x:Reference AboutPage}, Path=TextColour}" TextType="Html" FontFamily="CG-B" FontSize="18" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                        <Label Text="Tap to read more" Padding="10" FontFamily="CG-r" FontSize="12" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" TextColor="{Binding Source={x:Reference AboutPage}, Path=TextColour}"/>
+ 
                                     </StackLayout>
-                                </Frame>
-                             </StackLayout>
+                                    </xct:Expander.Header>
 
-                         </Frame>
+                                      
+                                    <Label FontFamily="MET-R" FontSize="16" TextType="Html" Text="{Binding SponsorDescription}" TextColor="{Binding Source={x:Reference AboutPage}, Path=TextColour}"/>
+                                </xct:Expander>
 
-                    </DataTemplate>
-                </CarouselView.ItemTemplate>      
-            </CarouselView>
-        </Frame>
-    </StackLayout>
+                        </Frame>
+                    </Frame>
+
+                </DataTemplate>
+
+            </CarouselView.ItemTemplate>
+            
+        </CarouselView>
+    </Frame>
 </StackLayout>

@@ -5,22 +5,21 @@
              x:Class="BoomRadio.View.ShowsView"
              VerticalOptions="StartAndExpand"
              x:Name="ShowsPage">
-
-    <local:HeadingBox
-        x:Name="HeadingBox"
-        Text="Shows"
-        VerticalOptions="Start" 
-        HorizontalOptions="CenterAndExpand" />
-
+    <Label Text="Shows" FontSize="18" FontFamily="CG-B"
+           VerticalOptions="CenterAndExpand" 
+           HorizontalOptions="CenterAndExpand"
+           Padding="10"/>
     <ActivityIndicator x:Name="ShowsLoadingIndicator" IsVisible="False"/>
     <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
         <IndicatorView
             x:Name="indicatorview"
-            HorizontalOptions="Center"
             IndicatorSize="10"
             IndicatorColor="{Binding Path=BgColour}"
-            SelectedIndicatorColor="{Binding Path=TextColour}" />
-        <Frame x:Name="ShowContent" MinimumHeightRequest="100" MinimumWidthRequest="70" BackgroundColor="Transparent">
+            SelectedIndicatorColor="{Binding Path=TextColour}"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"
+            BackgroundColor="Transparent"/>
+        <Frame x:Name="ShowContent" MinimumHeightRequest="100" MinimumWidthRequest="100" BackgroundColor="Transparent">
 
             <CarouselView x:Name="ShowCarousel" IndicatorView="indicatorview" MinimumHeightRequest="200" MinimumWidthRequest="70" ItemsSource="{Binding Show}" BackgroundColor="Transparent">
                 <CarouselView.ItemTemplate>
