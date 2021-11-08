@@ -113,5 +113,15 @@ namespace BoomRadio.View
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void twitterButton_Clicked(object sender, EventArgs e) => Launcher.OpenAsync("https://twitter.com/boomradioau");
+
+        public void SetHorizontalDisplay()
+        {
+            // TODO;
+        }
+
+        public void SetVerticalDisplay()
+        {
+            // TODO;
+        }
     }
 }

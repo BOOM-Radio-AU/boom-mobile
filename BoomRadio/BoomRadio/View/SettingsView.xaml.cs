@@ -98,5 +98,15 @@ namespace BoomRadio.View
         /// <param name="e"></param>
         private void AutoplaySwitch_Toggled(object sender, ToggledEventArgs e) => Preferences.Set(autoplayKey, e.Value);
 
+
+        public void SetHorizontalDisplay()
+        {
+            // TODO;
+        }
+
+        public void SetVerticalDisplay()
+        {
+            // TODO;
+        }
     }
 }

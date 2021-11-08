@@ -116,5 +116,15 @@ namespace BoomRadio.View
         {
             MainPage.Navigate("news");
         }
+
+        public void SetHorizontalDisplay()
+        {
+            // TODO;
+        }
+
+        public void SetVerticalDisplay()
+        {
+            // TODO;
+        }
     }
 }

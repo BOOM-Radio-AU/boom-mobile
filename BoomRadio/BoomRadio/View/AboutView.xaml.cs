@@ -111,7 +111,14 @@ namespace BoomRadio.View
             SponsorsLoading.IsRunning = false;
         }
 
-     
+        public void SetHorizontalDisplay()
+        {
+            // TODO;
+        }
 
+        public void SetVerticalDisplay()
+        {
+            // TODO;
+        }
     }
 }

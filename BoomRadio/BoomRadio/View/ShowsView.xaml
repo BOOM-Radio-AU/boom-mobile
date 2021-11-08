@@ -26,14 +26,14 @@
                     <DataTemplate>
                         <Frame MinimumHeightRequest="200" MinimumWidthRequest="100" VerticalOptions="FillAndExpand" BackgroundColor="Transparent" Margin="10,0">
 
-                            <StackLayout x:Name="ShowStackLayout" Padding="0" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" MinimumHeightRequest="200" MinimumWidthRequest="60">
+                            <StackLayout x:Name="ShowStackLayout" Padding="0" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Transparent" MinimumHeightRequest="200" MinimumWidthRequest="60" Orientation="{Binding Source={x:Reference ShowsPage}, Path=ShowsOrientation}">
                 
-                                <Image  MinimumWidthRequest="120" MinimumHeightRequest="120"  Aspect="AspectFill">
+                                <Image  MinimumWidthRequest="120" MinimumHeightRequest="120"  Aspect="AspectFill" VerticalOptions="Start">
                                     <Image.Source>
                                         <UriImageSource Uri="{Binding ShowImageUrl}" CachingEnabled="True" CacheValidity="1"/>
                                     </Image.Source>
                                 </Image>
-                                <StackLayout Orientation="Vertical" BackgroundColor="{Binding Source={x:Reference ShowsPage}, Path=BgColour}" VerticalOptions="StartAndExpand" MinimumHeightRequest="100" Padding="5">
+                                <StackLayout Orientation="Vertical" BackgroundColor="{Binding Source={x:Reference ShowsPage}, Path=BgColour}" VerticalOptions="FillAndExpand" MinimumHeightRequest="100" Padding="5" WidthRequest="{Binding Source={x:Reference ShowsPage}, Path=ShowsTextWidth}">
                                     <Label Text="{Binding ShowTitle}" FontSize="22" FontFamily="MET-B"
                                            TextColor="{Binding Source={x:Reference ShowsPage}, Path=TextColour}"
                                         VerticalOptions="StartAndExpand" 

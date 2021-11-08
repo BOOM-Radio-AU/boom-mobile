@@ -61,5 +61,15 @@ namespace BoomRadio.View
             NewsLoadingIndicator.IsVisible = false;
             NewsLoadingIndicator.IsRunning = false;
         }
+
+        public void SetHorizontalDisplay()
+        {
+            // TODO;
+        }
+
+        public void SetVerticalDisplay()
+        {
+            // TODO;
+        }
     }
 }

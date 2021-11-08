@@ -324,8 +324,10 @@ namespace BoomRadio
                 NewsIcon.FontSize = 16;
                 NewsTabStack.Orientation = StackOrientation.Horizontal;
                 NewsTabStack.Margin = new Thickness(0, 0, 0, 10);
-
-                (Views["home"] as HomeView).SetHorizontalDisplay();
+                foreach (KeyValuePair<string, Layout> view in Views)
+                {
+                    (view.Value as IUpdatableUI)?.SetHorizontalDisplay();
+                }
             }
             else
             {
@@ -345,7 +347,10 @@ namespace BoomRadio
                 NewsIcon.FontSize = 20;
                 NewsTabStack.Orientation = StackOrientation.Vertical;
                 NewsTabStack.Margin = new Thickness(0);
-                (Views["home"] as HomeView).SetVerticalDisplay();
+                foreach (KeyValuePair<string, Layout> view in Views)
+                {
+                    (view.Value as IUpdatableUI)?.SetVerticalDisplay();
+                }
             }
         }
 
