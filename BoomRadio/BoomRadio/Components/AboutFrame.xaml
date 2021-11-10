@@ -10,13 +10,25 @@
     <Frame.Content VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
         <Frame x:Name="BackFrame2" HasShadow="True" HorizontalOptions="FillAndExpand">
             <StackLayout x:Name="BackPanel" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Padding="5">
-                    <xct:Expander HorizontalOptions="FillAndExpand" WidthRequest="400">
+                    <xct:Expander HorizontalOptions="FillAndExpand" WidthRequest="400" IsExpanded="{Binding Source={x:Reference BackFrame},Path=IsExpanded, Mode=OneWayToSource}">
                         <xct:Expander.Header>
                             <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
                                 <Image x:Name="MainImage"/>
                                 <Label x:Name="TitleLabel" Text="Who is BOOM Radio?" Padding="10" FontFamily="CG-B" FontSize="18" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                             </StackLayout>
                         </xct:Expander.Header>
+                        <xct:Expander.Triggers>
+                            <DataTrigger TargetType="xct:Expander"
+                                         Binding="{Binding Source={x:Reference ButtonLabel}, Path=Text}"
+                                         Value="Chevron-Down">
+                                <Setter Property="IsExpanded" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="xct:Expander"
+                                         Binding="{Binding Source={x:Reference ButtonLabel}, Path=Text}"
+                                         Value="Chevron-Up">
+                                <Setter Property="IsExpanded" Value="True"/>
+                            </DataTrigger>
+                        </xct:Expander.Triggers>
                         <Grid>
                             <Grid.ColumnDefinitions> 
                                 <ColumnDefinition Width="Auto"/>
@@ -24,6 +36,13 @@
                             <StackLayout x:Name="ContentStackLayout" Orientation="Vertical"/>
                         </Grid>
                     </xct:Expander>
+                <Button x:Name="ButtonLabel" Clicked="ButtonLabel_Clicked"
+                        Text="Chevron-Down" FontFamily="FA-S" TextColor="Orange" BackgroundColor="Transparent" FontSize="30"
+                        HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+
+                    
+   
+                </Button>
             </StackLayout>
         </Frame>
     </Frame.Content>

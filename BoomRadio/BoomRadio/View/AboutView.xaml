@@ -64,6 +64,7 @@
                                     <Label FontFamily="MET-R" FontSize="16" TextType="Html" Text="{Binding SponsorDescription}" TextColor="{Binding Source={x:Reference AboutPage}, Path=TextColour}"/>
                                 </xct:Expander>
 
+
                         </Frame>
                     </Frame>
 
