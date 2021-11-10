@@ -25,6 +25,8 @@ namespace BoomRadio.View
         // Some colour fields and properties for data binding
         private Color textColour = Theme.GetColour("text");
         private Color bgColour = Theme.GetColour("background");
+        private StackOrientation showsOrientation = StackOrientation.Vertical;
+        private double showsTextWidth = -1;
         public Color TextColour
         {
             get => textColour; private set
@@ -41,6 +43,22 @@ namespace BoomRadio.View
                 OnPropertyChanged("BgColour");
             }
         }
+        public StackOrientation ShowsOrientation
+        {
+            get => showsOrientation;
+            private set {
+                showsOrientation = value;
+                OnPropertyChanged("ShowsOrientation");
+            }
+        }
+        public double ShowsTextWidth
+        {
+            get => showsTextWidth;
+            private set {
+                showsTextWidth = value;
+                OnPropertyChanged("ShowsTextWidth");
+            }
+        }
 
         public ShowsView(ShowsCollection show, MainPage mainPage)
 
@@ -49,8 +67,6 @@ namespace BoomRadio.View
             ShowC = show;
             MainPage = mainPage;
             BindingContext = this;
-
-
         }
 
         public async void UpdateUI()
@@ -100,7 +116,20 @@ namespace BoomRadio.View
             ShowsLoadingIndicator.IsRunning = false;
         }
 
-
+        public async void SetHorizontalDisplay()
+        {
+            while (this.Width == -1)
+            {
+                await Task.Delay(10);
+            }
+            ShowsOrientation = StackOrientation.Horizontal;
+            ShowsTextWidth = this.Width / 2;
+        }
+        public void SetVerticalDisplay()
+        {
+            ShowsOrientation = StackOrientation.Vertical;
+            ShowsTextWidth = -1;
+        }
 
 
     }

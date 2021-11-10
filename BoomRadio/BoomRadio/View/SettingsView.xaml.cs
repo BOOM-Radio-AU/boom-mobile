@@ -2,6 +2,7 @@
 using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
 using BoomRadio.Model;
+using System.Threading.Tasks;
 
 namespace BoomRadio.View
 {
@@ -98,5 +99,18 @@ namespace BoomRadio.View
         /// <param name="e"></param>
         private void AutoplaySwitch_Toggled(object sender, ToggledEventArgs e) => Preferences.Set(autoplayKey, e.Value);
 
+        public async void SetHorizontalDisplay()
+        {
+            while (this.Width == -1)
+            {
+                await Task.Delay(10);
+            }
+            ContainerGrid.Margin = new Thickness(this.Width / 8, 5);
+        }
+
+        public void SetVerticalDisplay()
+        {
+            ContainerGrid.Margin = new Thickness(5);
+        }
     }
 }

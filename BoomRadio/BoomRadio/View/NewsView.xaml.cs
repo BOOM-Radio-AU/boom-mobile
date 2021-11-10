@@ -61,5 +61,19 @@ namespace BoomRadio.View
             NewsLoadingIndicator.IsVisible = false;
             NewsLoadingIndicator.IsRunning = false;
         }
+
+        public async void SetHorizontalDisplay()
+        {
+            while (this.Width == -1)
+            {
+                await Task.Delay(10);
+            }
+            NewsStacklayout.Margin = new Thickness(this.Width / 8, 5);
+        }
+
+        public void SetVerticalDisplay()
+        {
+            NewsStacklayout.Margin = new Thickness(5);
+        }
     }
 }

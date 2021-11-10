@@ -7,5 +7,7 @@ namespace BoomRadio
     public interface IUpdatableUI
     {
         void UpdateUI();
+        void SetHorizontalDisplay();
+        void SetVerticalDisplay();
     }
 }

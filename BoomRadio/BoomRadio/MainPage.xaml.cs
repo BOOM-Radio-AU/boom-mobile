@@ -26,7 +26,7 @@ namespace BoomRadio
         ShowsCollection Show = new ShowsCollection();
         SponsorsCollection Sponsor = new SponsorsCollection();
         IStatusBarStyler statusBarStyler;
-
+        bool orientationIsHorizontal = false;
         public MainPage()
         {
             InitializeComponent();
@@ -182,6 +182,13 @@ namespace BoomRadio
             ContentAreaScrollView.Content = Views[target];
             CurrentView = target;
             (Views[target] as IUpdatableUI)?.UpdateUI();
+            if (orientationIsHorizontal)
+            {
+                (Views[target] as IUpdatableUI)?.SetHorizontalDisplay();
+            } else
+            {
+                (Views[target] as IUpdatableUI)?.SetVerticalDisplay();
+            }
             UpdateUI();
             Analytics.TrackEvent("navigate", new Dictionary<string, string>{
                 { "page", target }
@@ -308,19 +315,45 @@ namespace BoomRadio
             if (this.Width > this.Height)
             {
                 // Horizontal orientation
+                orientationIsHorizontal = true;
                 MediaPlayerView.IsVisible = false;
                 PlayPauseTab.IsVisible = true;
                 MainGridRowThree.Height = 0;
                 BottomBarGridColOne.Width = GridLength.Star;
-                (Views["home"] as HomeView).SetHorizontalDisplay();
+                PlayPauseTabIcon.FontSize = 16;
+                PlayPauseTabStack.Orientation = StackOrientation.Horizontal;
+                PlayPauseTabStack.Margin = new Thickness(0, 0, 0, 10);
+                HomeIcon.FontSize = 16;
+                HomeTabStack.Orientation = StackOrientation.Horizontal;
+                HomeTabStack.Margin = new Thickness(0, 0, 0, 10);
+                ShowsIcon.FontSize = 16;
+                ShowsTabStack.Orientation = StackOrientation.Horizontal;
+                ShowsTabStack.Margin = new Thickness(0, 0, 0, 10);
+                NewsIcon.FontSize = 16;
+                NewsTabStack.Orientation = StackOrientation.Horizontal;
+                NewsTabStack.Margin = new Thickness(0, 0, 0, 10);
+                (Views[CurrentView] as IUpdatableUI)?.SetHorizontalDisplay();
             }
             else
             {
+                orientationIsHorizontal = false;
                 MediaPlayerView.IsVisible = true;
                 PlayPauseTab.IsVisible = false;
                 MainGridRowThree.Height = 80;
                 BottomBarGridColOne.Width = 0;
-                (Views["home"] as HomeView).SetVerticalDisplay();
+                PlayPauseTabIcon.FontSize = 20;
+                PlayPauseTabStack.Orientation = StackOrientation.Vertical;
+                PlayPauseTabStack.Margin = new Thickness(0); 
+                HomeIcon.FontSize = 20;
+                HomeTabStack.Orientation = StackOrientation.Vertical;
+                HomeTabStack.Margin = new Thickness(0);
+                ShowsIcon.FontSize = 20;
+                ShowsTabStack.Orientation = StackOrientation.Vertical;
+                ShowsTabStack.Margin = new Thickness(0);
+                NewsIcon.FontSize = 20;
+                NewsTabStack.Orientation = StackOrientation.Vertical;
+                NewsTabStack.Margin = new Thickness(0);
+                (Views[CurrentView] as IUpdatableUI)?.SetVerticalDisplay();
             }
         }
 
