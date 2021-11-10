@@ -37,7 +37,7 @@
                         </Grid>
                     </xct:Expander>
                 <Button x:Name="ButtonLabel" Clicked="ButtonLabel_Clicked"
-                        Text="Chevron-Down" FontFamily="FA-S" TextColor="Orange" FontSize="30"
+                        Text="Chevron-Down" FontFamily="FA-S" TextColor="Orange" BackgroundColor="Transparent" FontSize="30"
                         HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
 
                     
