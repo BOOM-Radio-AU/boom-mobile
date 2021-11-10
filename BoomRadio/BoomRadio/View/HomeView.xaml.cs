@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -57,6 +57,10 @@ namespace BoomRadio.View
             PauseButton.TextColor = Theme.GetColour("accent");
             LiveButton.TextColor = Theme.GetColour("accent");
             EventsHeadingBox.UpdateColours();
+            EventsStackLayout.BackgroundColor = Theme.GetColour("background");
+            EventsLabel.TextColor = Theme.GetColour("text");
+            VisitWebsiteButton.BackgroundColor = Theme.GetColour("accent");
+            VisitWebsiteButton.TextColor = Color.White;
         }
 
         private void PlayButton_Clicked(object sender, EventArgs e)
@@ -94,5 +98,8 @@ namespace BoomRadio.View
             Grid.SetColumn(InnerStackLayout, 0);
 
         }
+
+        private void VisitWebsiteButton_Clicked(object sender, EventArgs e) => Launcher.OpenAsync("https://www.boomradio.com.au/");
+
     }
 }

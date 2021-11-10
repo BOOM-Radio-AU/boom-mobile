@@ -34,13 +34,15 @@ namespace BoomRadio
             MediaPlayerView.MediaPlayer = MediaPlayer;
             MediaPlayerView.MainPage = this;
             statusBarStyler = DependencyService.Get<IStatusBarStyler>();
-            // Set initial status bar colors
+            // Set initial status bar colors and logo
             if (Theme.UseDarkMode)
             {
                 statusBarStyler.SetDarkTheme();
+                LogoImage.Source = ImageSource.FromFile("boomlogowhite.png");
             } else
             {
                 statusBarStyler.SetLightTheme();
+                LogoImage.Source = ImageSource.FromFile("boomlogoblack.png");
             }
             // Initialise views to load into content area
             Views["home"] = new HomeView(MediaPlayer, this);
@@ -235,10 +237,12 @@ namespace BoomRadio
             if (!statusBarStyler.IsDarkTheme() && Theme.UseDarkMode)
             {
                 statusBarStyler.SetDarkTheme();
+                LogoImage.Source = ImageSource.FromFile("boomlogowhite.png");
             }
             else if (statusBarStyler.IsDarkTheme() && !Theme.UseDarkMode)
             {
                 statusBarStyler.SetLightTheme();
+                LogoImage.Source = ImageSource.FromFile("boomlogoblack.png");
             }
         }
 
