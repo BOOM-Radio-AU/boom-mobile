@@ -9,10 +9,23 @@ namespace BoomRadio.Components
     {
 
         NewsArticle Article;
+        private bool isExpanded;
+
+        public bool IsExpanded {
+            get => isExpanded;
+            set
+            {
+                isExpanded = value;
+                ButtonLabel.Text = value ? "Chevron-Up" : "Chevron-Down";
+            }
+        }
+
+
 
         public AboutFrame(NewsArticle article)
         {
             InitializeComponent();
+            BindingContext = this;
             Article = article;
             TitleLabel.Text = Article.Title;
             UpdateBox();
@@ -28,6 +41,7 @@ namespace BoomRadio.Components
             BackFrame2.BackgroundColor = Theme.GetColour("background");
             BackFrame.BackgroundColor = Color.Transparent;
             TitleLabel.TextColor = Theme.GetColour("text");
+            ButtonLabel.TextColor = Theme.GetColour("accent");
         }
 
         public async void UpdateBox()
@@ -83,6 +97,21 @@ namespace BoomRadio.Components
                 }
             }
          );
+        }
+
+        
+
+        void ButtonLabel_Clicked(System.Object sender, System.EventArgs e)
+        {
+            if (IsExpanded)
+            {
+                ButtonLabel.Text = "Chevron-Down";
+            }
+            else
+            {
+                ButtonLabel.Text = "Chevron-Up";
+
+            }
         }
     }
 }

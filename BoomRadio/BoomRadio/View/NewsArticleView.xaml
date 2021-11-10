@@ -1,11 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:components="clr-namespace:BoomRadio.Components"
              x:Class="BoomRadio.View.NewsArticleView"
              Margin="10,0,10,10"
              Orientation="Vertical" VerticalOptions="Start">
-    <Button x:Name="BackButton" Text="&lt; Back" BackgroundColor="Transparent" TextColor="Black" HorizontalOptions="Start" Clicked="BackButton_Clicked"/>
-    <Image x:Name="NewsImage" HorizontalOptions="Center" Aspect="AspectFit"/>
-    <Label x:Name="HeadlineLabel" Text="Headline goes here" FontSize="22" FontFamily="MET-B" TextColor="Black"/>
+    <Button x:Name="BackButton" Padding="5" Font="FA-S" FontSize="30" Text="chevron-circle-left" BackgroundColor="Transparent" TextColor="Black" HorizontalOptions="Start" Clicked="BackButton_Clicked"/>
+    <Frame x:Name="ImageFrame" Padding="3">
+          <Image x:Name="NewsImage" HorizontalOptions="Center" Aspect="AspectFit"/>
+    </Frame>
+    <components:HeadingBox x:Name="HeadlineLabel" Text="Headline goes here" FontFamily="MET-B"/>
     <StackLayout Orientation="Vertical" x:Name="ContentStackLayout" BackgroundColor="White" Padding="8" Margin="0,5,0,20"/>
 </StackLayout>

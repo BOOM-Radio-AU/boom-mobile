@@ -65,10 +65,14 @@ namespace BoomRadio.View
                 NewsImage.Source = ImageSource.FromUri(new Uri(Article.ImageUrl));
                 NewsImage.IsVisible = true;
                 ResizeImage(NewsImage);
+                ImageFrame.IsVisible = true;
+                ImageFrame.BackgroundColor = Theme.GetColour("accent");
+
             }
             else
             {
                 NewsImage.IsVisible = false;
+                ImageFrame.IsVisible = false;
             }
             HeadlineLabel.Text = Article.Title;
 

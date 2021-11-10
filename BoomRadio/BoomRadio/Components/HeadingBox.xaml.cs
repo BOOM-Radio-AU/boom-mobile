@@ -17,6 +17,7 @@ namespace BoomRadio.Components
         private Color borderColour;
         private Color backgroundColour;
         private Color textColour;
+        private string fontfamily = "CG-B";
 
         public string Text
         {
@@ -55,6 +56,16 @@ namespace BoomRadio.Components
             }
         }
 
+        public string FontFamily
+        {
+            get => fontfamily;
+            set
+            {
+                fontfamily = value;
+                OnPropertyChanged("FontFamily");
+            }
+        }
+
         public HeadingBox()
         {
             InitializeComponent();
@@ -67,6 +78,7 @@ namespace BoomRadio.Components
             BorderColour = Theme.GetColour("accent");
             BackgroundColour = Theme.GetColour("background");//.MultiplyAlpha(0.9);
             TextColour = Theme.GetColour("accent");
+            
         }
     }
 }
