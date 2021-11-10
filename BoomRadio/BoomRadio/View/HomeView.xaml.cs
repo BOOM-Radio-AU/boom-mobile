@@ -50,7 +50,8 @@ namespace BoomRadio.View
             LiveButton.IsEnabled = showLiveButton;
 
             // Update colours
-            PlayerFrame.BackgroundColor = Theme.GetColour("background");
+            PlayerFrame.BackgroundColor = Theme.GetColour("accent");
+            PlayerFrameInner.BackgroundColor = Theme.GetColour("background");
             ArtistLabel.TextColor = Theme.GetColour("text");
             TrackTitleLabel.TextColor = Theme.GetColour("text");
             PlayButton.TextColor = Theme.GetColour("accent");
