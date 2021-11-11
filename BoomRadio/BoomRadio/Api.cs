@@ -320,7 +320,7 @@ namespace BoomRadio
             }
         }
 
-        public List<Sponsors> ParseSponsorsResponse(string response)
+        private List<Sponsors> ParseSponsorsResponse(string response)
         {
             List<Sponsors> sponsorList = new List<Sponsors>();
             JArray responseItems = JsonConvert.DeserializeObject<JArray>(response);
