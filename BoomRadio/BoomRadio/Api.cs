@@ -4,13 +4,14 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace BoomRadio
 {
-    public class Api
+    public class Api : UnitTestable
     {
         private readonly HttpClient client = new HttpClient();
         public enum Service { LiveTrack, News, Media, Shows, Sponsor, About };
@@ -66,7 +67,7 @@ namespace BoomRadio
         /// <param name="responseString">API response</param>
         /// <exception cref="Exception">JSON parsing errors</exception>
         /// <returns>Track information</returns>
-        public Track ParseTrackResponse(string responseString)
+        private Track ParseTrackResponse(string responseString)
         {
             string artist;
             string title;
@@ -361,5 +362,7 @@ namespace BoomRadio
                 return new List<Sponsors>();
             }
         }
+
+
     }
 }
