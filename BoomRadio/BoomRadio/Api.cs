@@ -273,7 +273,7 @@ namespace BoomRadio
         /// </summary>
         /// <param name="response">API Response</param>
         /// <returns>Shows</returns>
-        public List<Shows> ParseShowsResponse(string response)
+        private List<Shows> ParseShowsResponse(string response)
         {
 
             List<Shows> showList = new List<Shows>();
