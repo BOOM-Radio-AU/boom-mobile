@@ -235,7 +235,7 @@ namespace BoomRadio
         /// </summary>
         /// <param name="response">API response</param>
         /// <returns>image url</returns>
-        public string ParseMediaResponse(string response)
+        private string ParseMediaResponse(string response)
         {
             JObject responseObj = JsonConvert.DeserializeObject<JObject>(response);
             JObject sizes = responseObj.Value<JObject>("media_details").Value<JObject>("sizes");
