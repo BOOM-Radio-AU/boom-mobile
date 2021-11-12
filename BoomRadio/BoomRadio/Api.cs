@@ -4,13 +4,14 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace BoomRadio
 {
-    public class Api
+    public class Api : UnitTestable
     {
         private readonly HttpClient client = new HttpClient();
         public enum Service { LiveTrack, News, Media, Shows, Sponsor, About };
@@ -66,7 +67,7 @@ namespace BoomRadio
         /// <param name="responseString">API response</param>
         /// <exception cref="Exception">JSON parsing errors</exception>
         /// <returns>Track information</returns>
-        public Track ParseTrackResponse(string responseString)
+        private Track ParseTrackResponse(string responseString)
         {
             string artist;
             string title;
@@ -234,7 +235,7 @@ namespace BoomRadio
         /// </summary>
         /// <param name="response">API response</param>
         /// <returns>image url</returns>
-        public string ParseMediaResponse(string response)
+        private string ParseMediaResponse(string response)
         {
             JObject responseObj = JsonConvert.DeserializeObject<JObject>(response);
             JObject sizes = responseObj.Value<JObject>("media_details").Value<JObject>("sizes");
@@ -272,7 +273,7 @@ namespace BoomRadio
         /// </summary>
         /// <param name="response">API Response</param>
         /// <returns>Shows</returns>
-        public List<Shows> ParseShowsResponse(string response)
+        private List<Shows> ParseShowsResponse(string response)
         {
 
             List<Shows> showList = new List<Shows>();
@@ -319,7 +320,7 @@ namespace BoomRadio
             }
         }
 
-        public List<Sponsors> ParseSponsorsResponse(string response)
+        private List<Sponsors> ParseSponsorsResponse(string response)
         {
             List<Sponsors> sponsorList = new List<Sponsors>();
             JArray responseItems = JsonConvert.DeserializeObject<JArray>(response);
@@ -361,5 +362,7 @@ namespace BoomRadio
                 return new List<Sponsors>();
             }
         }
+
+
     }
 }
