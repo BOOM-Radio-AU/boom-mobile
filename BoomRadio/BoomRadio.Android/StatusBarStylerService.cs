@@ -1,16 +1,6 @@
-﻿using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
+﻿using Android.OS;
 using Android.Views;
-using Android.Widget;
-using BoomRadio;
 using BoomRadio.Droid;
-using Plugin.CurrentActivity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
