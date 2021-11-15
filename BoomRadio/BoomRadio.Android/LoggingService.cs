@@ -15,7 +15,10 @@ namespace BoomRadio.Droid
         public void Error(object sender, Exception exception)
         {
             Log.Error($"[{sender}]", exception.Message);
-            Crashes.TrackError(exception);
+            Crashes.TrackError(exception, new Dictionary<string, string>
+            {
+                {"sender", sender.ToString()}
+            });
         }
 
         /// <inheritdoc/>

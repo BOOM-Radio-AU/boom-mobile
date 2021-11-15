@@ -53,7 +53,7 @@ namespace BoomRadio
             // Check for errors
             if (response.StatusCode != System.Net.HttpStatusCode.OK || response.Content == null)
             {
-                throw new Exception(string.Format("Data could not be retrieved from the server (code: {0})", response.StatusCode));
+                throw new Exception(string.Format("Data could not be retrieved from the server (code: {0}) for: {1}", response.StatusCode, url));
             }
 
             // Extract the response
