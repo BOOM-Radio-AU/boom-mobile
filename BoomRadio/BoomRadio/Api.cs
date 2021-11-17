@@ -13,19 +13,23 @@ namespace BoomRadio
 {
     public class Api : UnitTestable
     {
+        private readonly string websiteApiBaseUrl = "https://chapterseventyseven.com/boomradio2/wordpress/wp-json/";
         private readonly HttpClient client = new HttpClient();
         public enum Service { LiveTrack, News, Media, Shows, Sponsor, About };
-        private Dictionary<Service, string> Url = new Dictionary<Service, string>() {
-            {Service.LiveTrack, "https://feed.tunein.com/profiles/s195836/nowPlaying"},
-            {Service.News, "https://boomradio.com.au/wp-json/wp/v2/news" },
-            {Service.Media, "https://boomradio.com.au/wp-json/wp/v2/media/" },
-            {Service.Shows, "https://boomradio.com.au/wp-json/wp/v2/schedule" },
-            {Service.Sponsor, "https://boomradio.com.au/wp-json/wp/v2/sponsors" },
-            {Service.About, "https://boomradio.com.au/wp-json/wp/v2/about" }
-        };
+        private Dictionary<Service, string> Url;
 
         static Api instance;
-        public Api() { }
+        public Api()
+        {
+            Url = new Dictionary<Service, string>() {
+                {Service.LiveTrack, "https://feed.tunein.com/profiles/s195836/nowPlaying"},
+                {Service.News, websiteApiBaseUrl+"wp/v2/trends" },
+                {Service.Media, websiteApiBaseUrl + "wp/v2/media/" },
+                {Service.Shows, websiteApiBaseUrl + "wp/v2/programs" },
+                {Service.Sponsor, websiteApiBaseUrl + "wp/v2/sponsors" },
+                {Service.About, websiteApiBaseUrl + "wp/v2/about" }
+            };
+        }
         static Api()
         {
             instance = new Api();
@@ -292,9 +296,20 @@ namespace BoomRadio
                 {
                     // Parse values from JSON
                     int id = item.Value<int>("id");
-                    string title = item.Value<JObject>("title").Value<string>("rendered"); ;
-                    string time = item.Value<JObject>("content").Value<string>("rendered");
-                    string description = item.Value<JObject>("excerpt")?.Value<string>("rendered");
+                    string title = item.Value<JObject>("title").Value<string>("rendered");
+                    string time = item.Value<JObject>("content")?.Value<string>("rendered");
+                    string description = "";
+                    if ((item as JObject).ContainsKey("ACF"))
+                    {
+                        // NEW WEBSITE
+                        description = item.Value<JObject>("ACF").Value<string>("show_description");
+                    }
+                    else
+                    {
+                        // OLD WEBSITE
+                        description = item.Value<JObject>("excerpt")?.Value<string>("rendered");
+                    }
+                    
                     string imageURL = (item.Value<JObject>("_links").Value<JArray>("wp:featuredmedia")[0] as JObject).Value<string>("href");
 
                     Shows show = new Shows(id, title, time, description, imageURL);
@@ -339,8 +354,18 @@ namespace BoomRadio
                 {
                     // Parse values from JSON
                     int id = item.Value<int>("id");
-                    string sponsorName = item.Value<JObject>("title").Value<string>("rendered"); ;
-                    string sponsorDescription = item.Value<JObject>("content").Value<string>("rendered");
+                    string sponsorName = item.Value<JObject>("title").Value<string>("rendered");
+                    string sponsorDescription = "";
+                    if ((item as JObject).ContainsKey("excerpt"))
+                    {
+                        // NEW WEBSITE
+                        sponsorDescription = item.Value<JObject>("excerpt").Value<string>("rendered");
+
+                    } else
+                    {
+                        // OLD WEBSITE
+                        sponsorDescription = item.Value<JObject>("content").Value<string>("rendered");
+                    }
                     string imageURL = (item.Value<JObject>("_links").Value<JArray>("wp:featuredmedia")[0] as JObject).Value<string>("href");
 
                     Sponsors sponsor = new Sponsors(id, sponsorName, sponsorDescription, imageURL);
