@@ -9,10 +9,6 @@ namespace BoomRadio.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SettingsView : StackLayout, IUpdatableUI
     {
-        // Keys used to store preferences
-        readonly string darkModeKey = "darkMode";
-        readonly string deviceDarkModeKey = "deviceDarkMode";
-        readonly string autoplayKey = "autoplay";
         MainPage MainPage;
 
         public SettingsView(MainPage mainPage)
@@ -20,7 +16,6 @@ namespace BoomRadio.View
             InitializeComponent();
             MainPage = mainPage;
             UpdateTheme();
-            Application.Current.RequestedThemeChanged += (sender, args) => UpdateTheme();
             
         }
 
@@ -29,14 +24,7 @@ namespace BoomRadio.View
         /// </summary>
         public void UpdateTheme()
         {
-            if (Preferences.Get(deviceDarkModeKey, false))
-            {
-                Theme.UseDarkMode = Application.Current.RequestedTheme == OSAppTheme.Dark;
-            }
-            else
-            {
-                Theme.UseDarkMode = Preferences.Get(darkModeKey, false);
-            }
+            Theme.UpdateFromPreferences();
             UpdateUI();
             MainPage.UpdateUI();
             MainPage.UpdatePlayerColours();
@@ -48,9 +36,9 @@ namespace BoomRadio.View
         public void UpdateUI()
         {
             // Toggle switches to the saved preference values, or off by default
-            DarkModeSwitch.IsToggled = Preferences.Get(darkModeKey, false);
-            DeviceDarkModeSwitch.IsToggled = Preferences.Get(deviceDarkModeKey, false);
-            AutoplaySwitch.IsToggled = Preferences.Get(autoplayKey, false);
+            DarkModeSwitch.IsToggled = Preferences.Get(Theme.DarkModeKey, false);
+            DeviceDarkModeSwitch.IsToggled = Preferences.Get(Theme.DeviceDarkModeKey, false);
+            AutoplaySwitch.IsToggled = Preferences.Get(Theme.AutoplayKey, false);
             // Disable darm mode toggle if using device mode
             if (DeviceDarkModeSwitch.IsToggled)
             {
@@ -77,7 +65,7 @@ namespace BoomRadio.View
         /// <param name="e"></param>
         private void DarkModeSwitch_Toggled(object sender, ToggledEventArgs e)
         {
-            Preferences.Set(darkModeKey, e.Value);
+            Preferences.Set(Theme.DarkModeKey, e.Value);
             UpdateTheme();
         }
 
@@ -88,7 +76,7 @@ namespace BoomRadio.View
         /// <param name="e"></param>
         private void DeviceDarkModeSwitch_Toggled(object sender, ToggledEventArgs e)
         {
-            Preferences.Set(deviceDarkModeKey, e.Value);
+            Preferences.Set(Theme.DeviceDarkModeKey, e.Value);
             UpdateTheme();
         }
 
@@ -97,7 +85,7 @@ namespace BoomRadio.View
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AutoplaySwitch_Toggled(object sender, ToggledEventArgs e) => Preferences.Set(autoplayKey, e.Value);
+        private void AutoplaySwitch_Toggled(object sender, ToggledEventArgs e) => Preferences.Set(Theme.AutoplayKey, e.Value);
 
         public async void SetHorizontalDisplay()
         {

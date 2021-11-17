@@ -56,6 +56,20 @@ namespace BoomRadio
             Navigate("home");
             UpdateUI();
             UpdatePlayerUIs();
+            // Handle changes to device theme (dark/light mode)
+            Xamarin.Forms.Application.Current.RequestedThemeChanged += RequestedThemeChanged;
+        }
+
+        /// <summary>
+        /// Handles changes to the requested theme (device dark/light mode) 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void RequestedThemeChanged(object sender, AppThemeChangedEventArgs args)
+        {
+            Theme.UpdateFromPreferences();
+            UpdateUI();
+            UpdatePlayerColours();
         }
 
         protected override void OnAppearing()
