@@ -11,7 +11,7 @@ using System.Text;
 
 namespace BoomRadio.Droid
 {
-    [Activity(Label = "SplashActivity", Theme = "@style/SplashTheme", Icon = "@mipmap/ic_launcher", MainLauncher = true, NoHistory = true)]
+    [Activity(Label = "BOOM Radio", Theme = "@style/SplashTheme", Icon = "@mipmap/ic_launcher", MainLauncher = true, NoHistory = true)]
     public class SplashActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)

@@ -17,7 +17,7 @@ namespace BoomRadio
     public partial class MainPage : ContentPage
     {
 
-        Dictionary<string, Layout> Views = new Dictionary<string, Layout>();
+        Dictionary<string, Lazy<Layout>> Views = new Dictionary<string, Lazy<Layout>>();
         string CurrentView;
         bool MenuShown = false;
         public readonly MediaPlayer MediaPlayer = new MediaPlayer();
@@ -45,13 +45,13 @@ namespace BoomRadio
                 LogoImage.Source = ImageSource.FromFile("boomlogoblack.png");
             }
             // Initialise views to load into content area
-            Views["home"] = new HomeView(MediaPlayer, this);
-            Views["shows"] = new ShowsView(Show, this);
-            Views["news"] = new NewsView(News, this);
-            Views["news_article"] = new NewsArticleView(this);
-            Views["about"] = new AboutView(Sponsor);
-            Views["contact"] = new ContactView();
-            Views["settings"] = new SettingsView(this);
+            Views["home"] = new Lazy<Layout>(() => new HomeView(MediaPlayer, this));
+            Views["shows"] = new Lazy<Layout>(() => new ShowsView(Show, this));
+            Views["news"] = new Lazy<Layout>(() => new NewsView(News, this));
+            Views["news_article"] = new Lazy<Layout>(() => new NewsArticleView(this));
+            Views["about"] = new Lazy<Layout>(() => new AboutView(Sponsor));
+            Views["contact"] = new Lazy<Layout>(() => new ContactView());
+            Views["settings"] = new Lazy<Layout>(() => new SettingsView(this));
             CurrentView = "home";
             Navigate("home");
             UpdateUI();
@@ -120,7 +120,7 @@ namespace BoomRadio
             MediaPlayerView.UpdateUI();
             PlayPauseTabIcon.Text = MediaPlayer.IsPlaying ? "Pause" : "Play";
             PlayPauseTabText.Text = MediaPlayer.IsPlaying ? "Pause" : "Play";
-            if (CurrentView == "home") ((HomeView)Views["home"]).UpdateUI();
+            if (CurrentView == "home") ((HomeView)Views["home"].Value).UpdateUI();
             UpdateUI(); // Will update live icon/text colour if needed
         }
 
@@ -179,17 +179,17 @@ namespace BoomRadio
 
             if(target == "about")
             {
-                Views["about"] = new AboutView(Sponsor);
+                Views["about"] = new Lazy<Layout>(()=> new AboutView(Sponsor));
             }
-            ContentAreaScrollView.Content = Views[target];
+            ContentAreaScrollView.Content = Views[target].Value;
             CurrentView = target;
-            (Views[target] as IUpdatableUI)?.UpdateUI();
+            (Views[target].Value as IUpdatableUI)?.UpdateUI();
             if (orientationIsHorizontal)
             {
-                (Views[target] as IUpdatableUI)?.SetHorizontalDisplay();
+                (Views[target].Value as IUpdatableUI)?.SetHorizontalDisplay();
             } else
             {
-                (Views[target] as IUpdatableUI)?.SetVerticalDisplay();
+                (Views[target].Value as IUpdatableUI)?.SetVerticalDisplay();
             }
             UpdateUI();
             Analytics.TrackEvent("navigate", new Dictionary<string, string>{
@@ -203,7 +203,7 @@ namespace BoomRadio
         /// <param name="article">Article to be shown</param>
         public void NavigateToNewsArticle(NewsArticle article)
         {
-            ((NewsArticleView)Views["news_article"]).Article = article;
+            ((NewsArticleView)Views["news_article"].Value).Article = article;
             Navigate("news_article");
             Analytics.TrackEvent("read_article", new Dictionary<string, string>{
                 { "title", article.Title }
@@ -336,7 +336,7 @@ namespace BoomRadio
                 NewsIcon.FontSize = 16;
                 NewsTabStack.Orientation = StackOrientation.Horizontal;
                 NewsTabStack.Margin = new Thickness(0, 0, 0, 10);
-                (Views[CurrentView] as IUpdatableUI)?.SetHorizontalDisplay();
+                (Views[CurrentView].Value as IUpdatableUI)?.SetHorizontalDisplay();
             }
             else
             {
@@ -357,7 +357,7 @@ namespace BoomRadio
                 NewsIcon.FontSize = 20;
                 NewsTabStack.Orientation = StackOrientation.Vertical;
                 NewsTabStack.Margin = new Thickness(0);
-                (Views[CurrentView] as IUpdatableUI)?.SetVerticalDisplay();
+                (Views[CurrentView].Value as IUpdatableUI)?.SetVerticalDisplay();
             }
         }
 
