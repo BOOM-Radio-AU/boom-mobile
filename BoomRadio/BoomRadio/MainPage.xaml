@@ -39,6 +39,13 @@
                 <!-- Views loaded dynamically -->
             </ScrollView>
          </Grid>
+        
+        <!-- Content overlay, beneath menu and only shown when menu is open -->
+        <Frame x:Name="ContentOverlayFrame" Grid.Row="1" Opacity="0.5" BackgroundColor="Gray" IsVisible="False">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+            </Frame.GestureRecognizers>
+        </Frame> 
 
 
         <!-- Menu, overlaps content area when shown -->

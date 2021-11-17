@@ -266,6 +266,7 @@ namespace BoomRadio
             if (!MenuShown)
             {
                 MenuFrame.TranslateTo(0, 0, 400, Easing.Linear);
+                ContentOverlayFrame.IsVisible = true;
                 MenuShown = true;
                 MenuFrame.HasShadow = true;
             }
@@ -275,6 +276,7 @@ namespace BoomRadio
             if (MenuShown)
             {
                 MenuFrame.TranslateTo(-200, 0, 200, Easing.Linear);
+                ContentOverlayFrame.IsVisible = false;
                 MenuShown = false;
                 MenuFrame.HasShadow = false;
             }
@@ -372,6 +374,11 @@ namespace BoomRadio
                 MediaPlayer.Play();
             }
             UpdatePlayerUIs();
+        }
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            CloseMenu();
         }
     }
 }
