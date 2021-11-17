@@ -195,6 +195,7 @@ namespace BoomRadio
             {
                 Views["about"] = new Lazy<Layout>(()=> new AboutView(Sponsor));
             }
+            ContentAreaScrollView.ScrollToAsync(0, 0, false);
             ContentAreaScrollView.Content = Views[target].Value;
             CurrentView = target;
             (Views[target].Value as IUpdatableUI)?.UpdateUI();
