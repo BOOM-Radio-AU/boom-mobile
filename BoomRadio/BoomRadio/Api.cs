@@ -138,6 +138,10 @@ namespace BoomRadio
                     string published = item.Value<string>("date");
                     string modified = item.Value<string>("modified");
                     string mediaId = item.Value<int>("featured_media").ToString();
+                    if (mediaId == "0")
+                    {
+                        mediaId = null;
+                    }
 
                     NewsArticle article = new NewsArticle(id, title, content, excerpt, published, modified, mediaId);
                     newsArticles.Add(article);
@@ -174,6 +178,10 @@ namespace BoomRadio
                     string published = item.Value<string>("date");
                     string modified = item.Value<string>("modified");
                     string mediaId = item.Value<int>("featured_media").ToString();
+                    if (mediaId == "0")
+                    {
+                        mediaId = null;
+                    }
 
                     NewsArticle article = new NewsArticle(id, title, content, excerpt, published, modified, mediaId);
                     aboutArticles.Add(article);
