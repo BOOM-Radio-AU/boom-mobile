@@ -60,10 +60,13 @@ namespace BoomRadio.Model
         /// </summary>
         public async Task UpdateImageUrl()
         {
-            string url = await Api.GetImageUrlAsync(MediaID);
-            if (url != null)
+            if (MediaID != null)
             {
-                ImageUrl = url;
+                string url = await Api.GetImageUrlAsync(MediaID);
+                if (url != null)
+                {
+                    ImageUrl = url;
+                }
             }
         }
 
