@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace BoomRadio.Model
@@ -11,6 +12,11 @@ namespace BoomRadio.Model
         private static Dictionary<string, Color> darkModeColors = new Dictionary<string, Color>();
 
         public static bool UseDarkMode { get; set; } = false;
+
+        // Key names for storing theme/settings in preferences 
+        public static string DarkModeKey { get; } = "darkMode";
+        public static string DeviceDarkModeKey { get; } = "deviceDarkMode";
+        public static string AutoplayKey { get; } = "autoplay";
 
         static Theme()
         {
@@ -32,6 +38,17 @@ namespace BoomRadio.Model
             darkModeColors["is-live"] = Color.FromHex("f95454");
             darkModeColors["accent"] = Color.FromHex("F3712A");
             darkModeColors["highlight"] = Color.FromHex("F27405");
+            UpdateFromPreferences();
+
+            // Check if dark mode should be applied
+            if (Preferences.Get(DeviceDarkModeKey, false))
+            {
+                UseDarkMode = Application.Current.RequestedTheme == OSAppTheme.Dark;
+            }
+            else
+            {
+                UseDarkMode = Preferences.Get(DarkModeKey, false);
+            }
         }
 
         /// <summary>
@@ -42,6 +59,21 @@ namespace BoomRadio.Model
         public static Color GetColour(string name)
         {
             return (UseDarkMode ? darkModeColors : lightModeColors)[name];
+        }
+
+        /// <summary>
+        /// Updates the theme to use dark/light mode based on the saved preference
+        /// </summary>
+        public static void UpdateFromPreferences()
+        {
+            if (Preferences.Get(DeviceDarkModeKey, false))
+            {
+                UseDarkMode = Application.Current.RequestedTheme == OSAppTheme.Dark;
+            }
+            else
+            {
+                UseDarkMode = Preferences.Get(DarkModeKey, false);
+            }
         }
     }
 }
