@@ -13,7 +13,10 @@ namespace BoomRadio
 {
     public class Api : UnitTestable
     {
-        private readonly string websiteApiBaseUrl = "https://chapterseventyseven.com/boomradio2/wordpress/wp-json/";
+        bool useTestServer = false;
+        bool use2021Website = false;
+
+        private string websiteApiBaseUrl;
         private readonly HttpClient client = new HttpClient();
         public enum Service { LiveTrack, News, Media, Shows, Sponsor, About };
         private Dictionary<Service, string> Url;
@@ -21,15 +24,38 @@ namespace BoomRadio
         static Api instance;
         public Api()
         {
-            Url = new Dictionary<Service, string>() {
-                {Service.LiveTrack, "https://feed.tunein.com/profiles/s195836/nowPlaying"},
-                {Service.News, websiteApiBaseUrl+"wp/v2/trends" },
-                {Service.Media, websiteApiBaseUrl + "wp/v2/media/" },
-                {Service.Shows, websiteApiBaseUrl + "wp/v2/programs" },
-                {Service.Sponsor, websiteApiBaseUrl + "wp/v2/sponsors" },
-                {Service.About, websiteApiBaseUrl + "wp/v2/about" }
-            };
+            if (useTestServer)
+            {
+                websiteApiBaseUrl = "https://chapterseventyseven.com/boomradio2/wordpress/wp-json/";
+            }
+            else
+            {
+                websiteApiBaseUrl = "https://boomradio.com.au/wp-json/";
+            }
+            if (use2021Website)
+            {
+                Url = new Dictionary<Service, string>() {
+                    {Service.LiveTrack, "https://feed.tunein.com/profiles/s195836/nowPlaying"},
+                    {Service.News, websiteApiBaseUrl+"wp/v2/trends" },
+                    {Service.Media, websiteApiBaseUrl + "wp/v2/media/" },
+                    {Service.Shows, websiteApiBaseUrl + "wp/v2/programs" },
+                    {Service.Sponsor, websiteApiBaseUrl + "wp/v2/sponsors" },
+                    {Service.About, websiteApiBaseUrl + "wp/v2/about" }
+                };
+            }
+            else
+            {
+                Url = new Dictionary<Service, string>() {
+                    {Service.LiveTrack, "https://feed.tunein.com/profiles/s195836/nowPlaying"},
+                    {Service.News, websiteApiBaseUrl + "wp/v2/news" },
+                    {Service.Media, websiteApiBaseUrl + "wp/v2/media/" },
+                    {Service.Shows, websiteApiBaseUrl + "wp/v2/schedule" },
+                    {Service.Sponsor, websiteApiBaseUrl + "wp/v2/sponsors" },
+                    {Service.About, websiteApiBaseUrl + "wp/v2/about" }
+                };
+            }
         }
+
         static Api()
         {
             instance = new Api();
@@ -49,7 +75,7 @@ namespace BoomRadio
         /// <param name="url">API url</param>
         /// <exception cref="Exception">Data could not be retrieved from the server</exception>
         /// <returns>Response</returns>
-        private async Task<string> FetchAsync(string url) 
+        private async Task<string> FetchAsync(string url)
         {
             // Fetch data from server's api
             var response = await client.GetAsync(url);
@@ -152,7 +178,7 @@ namespace BoomRadio
                 }
                 catch (Exception ex)
                 {
-                    DependencyService.Get<ILogging>().Warn("Api.ParseNewsResponse", "Error parsing news article: "+ex.Message);
+                    DependencyService.Get<ILogging>().Warn("Api.ParseNewsResponse", "Error parsing news article: " + ex.Message);
                 }
             }
             return newsArticles;
@@ -192,7 +218,7 @@ namespace BoomRadio
                 }
                 catch (Exception ex)
                 {
-                    DependencyService.Get<ILogging>().Warn("Api.ParseAboutResponse", "Error parsing about article: "+ex.Message);
+                    DependencyService.Get<ILogging>().Warn("Api.ParseAboutResponse", "Error parsing about article: " + ex.Message);
                 }
             }
             return aboutArticles;
@@ -309,7 +335,7 @@ namespace BoomRadio
                         // OLD WEBSITE
                         description = item.Value<JObject>("excerpt")?.Value<string>("rendered");
                     }
-                    
+
                     string imageURL = (item.Value<JObject>("_links").Value<JArray>("wp:featuredmedia")[0] as JObject).Value<string>("href");
 
                     Shows show = new Shows(id, title, time, description, imageURL);
@@ -361,7 +387,8 @@ namespace BoomRadio
                         // NEW WEBSITE
                         sponsorDescription = item.Value<JObject>("excerpt").Value<string>("rendered");
 
-                    } else
+                    }
+                    else
                     {
                         // OLD WEBSITE
                         sponsorDescription = item.Value<JObject>("content").Value<string>("rendered");
