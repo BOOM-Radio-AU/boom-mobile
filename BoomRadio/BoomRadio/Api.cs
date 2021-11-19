@@ -382,7 +382,7 @@ namespace BoomRadio
                     int id = item.Value<int>("id");
                     string sponsorName = item.Value<JObject>("title").Value<string>("rendered");
                     string sponsorDescription = "";
-                    if ((item as JObject).ContainsKey("excerpt"))
+                    if (use2021Website)
                     {
                         // NEW WEBSITE
                         sponsorDescription = item.Value<JObject>("excerpt").Value<string>("rendered");
