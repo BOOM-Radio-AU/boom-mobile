@@ -7,11 +7,17 @@ using System.Text;
 
 namespace TestBoomRadio.TestApi
 {
+    /// <summary>
+    /// Test parsing responses from the Media API
+    /// </summary>
     [TestClass]
     public class ParseMediaResponse
     {
         readonly Api api = new Api();
 
+        /// <summary>
+        /// Test parsing a normal response, with a medium-size url 
+        /// </summary>
         [TestMethod]
         public void TestNormalResponseWithMediumSize()
         {
@@ -24,6 +30,9 @@ namespace TestBoomRadio.TestApi
             Assert.AreEqual(expectedUrl, actualUrl);
         }
 
+        /// <summary>
+        /// Test parsing a normal response, but without a medium-size url 
+        /// </summary>
         [TestMethod]
         public void TestNormalResponseWithoutMediumSize()
         {
@@ -36,6 +45,9 @@ namespace TestBoomRadio.TestApi
             Assert.AreEqual(expectedUrl, actualUrl);
         }
 
+        /// <summary>
+        /// Test parsing a response that is invalid JSON 
+        /// </summary>
         [TestMethod]
         public void TestInvalidResponse()
         {

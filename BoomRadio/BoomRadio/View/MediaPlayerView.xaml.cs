@@ -10,6 +10,9 @@ using Xamarin.Forms.Xaml;
 
 namespace BoomRadio.View
 {
+    /// <summary>
+    /// View for the bottom/pull-up media player
+    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MediaPlayerView : Frame
     {
@@ -18,11 +21,17 @@ namespace BoomRadio.View
         public MediaPlayer MediaPlayer { get; set; }
         public MainPage MainPage;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public MediaPlayerView()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Updates the UI
+        /// </summary>
         public void UpdateUI()
         {
             // Update orientation
@@ -65,6 +74,9 @@ namespace BoomRadio.View
             UpdateColours();
         }
 
+        /// <summary>
+        /// Updates the colors used
+        /// </summary>
         internal void UpdateColours()
         {
             PlayerFrame.BackgroundColor = Theme.GetColour("player-bg");
@@ -116,15 +128,31 @@ namespace BoomRadio.View
             }
         }
 
+        /// <summary>
+        /// Handles swipe-up events
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnPlayerSwipedUp(object sender, SwipedEventArgs e)
         {
             ExpandPlayer();
         }
+
+        /// <summary>
+        /// Handles swipe-down events
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnPlayerSwipedDown(object sender, SwipedEventArgs e)
         {
             CollapsePlayer();
         }
 
+        /// <summary>
+        /// Handles play button clicks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PlayButton_Clicked(object sender, EventArgs e)
         {
             if (MainPage.HasInternet())
@@ -133,12 +161,23 @@ namespace BoomRadio.View
                 MainPage.UpdatePlayerUIs();
             }
         }
+
+        /// <summary>
+        /// Handles pause button clicks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PauseButton_Clicked(object sender, EventArgs e)
         {
             MediaPlayer.Pause();
             MainPage.UpdatePlayerUIs();
         }
 
+        /// <summary>
+        /// Handles "go live" button clicks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LiveButton_Clicked(object sender, EventArgs e)
         {
             if (MainPage.HasInternet())

@@ -13,6 +13,9 @@ using Xamarin.Forms.Xaml;
 
 namespace BoomRadio.View
 {
+    /// <summary>
+    /// View for BOOM Radio's shows
+    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ShowsView : StackLayout, IUpdatableUI
     {
@@ -60,6 +63,11 @@ namespace BoomRadio.View
             }
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="show">Shows collection</param>
+        /// <param name="mainPage">Main (parent) page</param>
         public ShowsView(ShowsCollection show, MainPage mainPage)
 
         {
@@ -69,6 +77,9 @@ namespace BoomRadio.View
             BindingContext = this;
         }
 
+        /// <summary>
+        /// Updates the UI
+        /// </summary>
         public async void UpdateUI()
         {
             // Update colours
@@ -117,6 +128,9 @@ namespace BoomRadio.View
             ShowsLoadingIndicator.IsRunning = false;
         }
 
+        /// <summary>
+        /// Sets the view for horizontal display
+        /// </summary>
         public async void SetHorizontalDisplay()
         {
             while (this.Width == -1)
@@ -126,12 +140,14 @@ namespace BoomRadio.View
             ShowsOrientation = StackOrientation.Horizontal;
             ShowsTextWidth = this.Width / 2;
         }
+
+        /// <summary>
+        /// Sets the view for vertical display
+        /// </summary>
         public void SetVerticalDisplay()
         {
             ShowsOrientation = StackOrientation.Vertical;
             ShowsTextWidth = -1;
         }
-
-
     }
 }

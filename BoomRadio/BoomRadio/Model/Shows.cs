@@ -11,10 +11,11 @@ using System.Threading.Tasks;
 
 namespace BoomRadio.Model
 {
+    /// <summary>
+    /// BOOM Radio show
+    /// </summary>
     public class Shows
     {
-
-
         public int ID { get; set; }
         public string ShowTitle { get; set; }
         public string ShowSchedule { get; set; }
@@ -22,10 +23,14 @@ namespace BoomRadio.Model
         public string ShowImageQueryUrl { get; set; }
         public string ShowImageUrl { get; set; }
 
-
-        private readonly HttpClient client = new HttpClient();
-        public string MediaApiPrefix = "https://boomradio.com.au/wp-json/wp/v2/schedule/";
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="id">Show ID</param>
+        /// <param name="title">Show title</param>
+        /// <param name="time">Show time/scheduke</param>
+        /// <param name="description">Show description</param>
+        /// <param name="imageURL">Image URL</param>
         public Shows(int id, string title, string time, string description, string imageURL)
         {
             ID = id;
@@ -35,7 +40,11 @@ namespace BoomRadio.Model
             ShowImageQueryUrl = imageURL;
         }
 
-
+        /// <summary>
+        /// Extracts text content from a HTML snippet, stripping any tags and decoding HTML entities
+        /// </summary>
+        /// <param name="html">HTML snippet</param>
+        /// <returns></returns>
         public string TextFromHTML(string html)
         {
             Regex stripFormattingRegex = new Regex(@"<[^>]*(>|$)", RegexOptions.Multiline);
@@ -55,11 +64,6 @@ namespace BoomRadio.Model
             {
                 ShowImageUrl = url;
             }
-        }
-
-        public static implicit operator ObservableCollection<object>(Shows v)
-        {
-            throw new NotImplementedException();
         }
     }
 }

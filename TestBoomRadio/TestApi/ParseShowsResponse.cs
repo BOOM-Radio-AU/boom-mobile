@@ -7,11 +7,17 @@ using System.Text;
 
 namespace TestBoomRadio.TestApi
 {
+    /// <summary>
+    /// Tests parsing Shows API responses
+    /// </summary>
     [TestClass]
     public class ParseShowsResponse
     {
         readonly Api api = new Api();
 
+        /// <summary>
+        /// Test parsing a normal response
+        /// </summary>
         [TestMethod]
         public void TestNormalResponse()
         {
@@ -25,6 +31,9 @@ namespace TestBoomRadio.TestApi
             Assert.AreEqual(shows[0].ShowTitle, "The Warm Up");
         }
 
+        /// <summary>
+        /// Test parsing an empty response
+        /// </summary>
         [TestMethod]
         public void TestEmptyResponse()
         {
@@ -33,6 +42,10 @@ namespace TestBoomRadio.TestApi
             Assert.AreEqual(articles.Count, 0);
         }
 
+
+        /// <summary>
+        /// Test parsing a response that is invalid JSON 
+        /// </summary>
         [TestMethod]
         public void TestInvalidResponse()
         {

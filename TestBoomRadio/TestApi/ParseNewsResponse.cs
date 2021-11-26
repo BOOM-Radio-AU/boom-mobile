@@ -7,11 +7,17 @@ using System.Text;
 
 namespace TestBoomRadio.TestApi
 {
+    /// <summary>
+    /// Tests parsing News API responses 
+    /// </summary>
     [TestClass]
     public class ParseNewsResponse
     {
         readonly Api api = new Api();
 
+        /// <summary>
+        /// Test parsing a normal response
+        /// </summary>
         [TestMethod]
         public void TestNormalResponse()
         {
@@ -26,6 +32,9 @@ namespace TestBoomRadio.TestApi
             Assert.AreEqual(articles[0].Excerpt, "By Jevan Collins Ted Lasso is a strange character that was so popular in the US, by being the face of NBC Sports Ad campaign…");
         }
 
+        /// <summary>
+        /// Test parsing an empty response
+        /// </summary>
         [TestMethod]
         public void TestEmptyResponse()
         {
@@ -34,6 +43,9 @@ namespace TestBoomRadio.TestApi
             Assert.AreEqual(articles.Count, 0);
         }
 
+        /// <summary>
+        /// Test parsing a response that is invalid JSON 
+        /// </summary>
         [TestMethod]
         public void TestInvalidResponse()
         {

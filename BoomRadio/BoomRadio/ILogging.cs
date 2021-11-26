@@ -4,6 +4,9 @@ using System.Text;
 
 namespace BoomRadio
 {
+    /// <summary>
+    /// Logs messages
+    /// </summary>
     public interface ILogging
     {
         /// <summary>

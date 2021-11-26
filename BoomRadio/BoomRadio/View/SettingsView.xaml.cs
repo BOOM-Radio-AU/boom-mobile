@@ -6,11 +6,18 @@ using System.Threading.Tasks;
 
 namespace BoomRadio.View
 {
+    /// <summary>
+    /// View for controlling app settings
+    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SettingsView : StackLayout, IUpdatableUI
     {
         MainPage MainPage;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="mainPage">Main (parent) page</param>
         public SettingsView(MainPage mainPage)
         {
             InitializeComponent();
@@ -87,6 +94,9 @@ namespace BoomRadio.View
         /// <param name="e"></param>
         private void AutoplaySwitch_Toggled(object sender, ToggledEventArgs e) => Preferences.Set(Theme.AutoplayKey, e.Value);
 
+        /// <summary>
+        /// Sets the view for horizontal display
+        /// </summary>
         public async void SetHorizontalDisplay()
         {
             while (this.Width == -1)
@@ -96,6 +106,9 @@ namespace BoomRadio.View
             ContainerGrid.Margin = new Thickness(this.Width / 8, 5);
         }
 
+        /// <summary>
+        /// Sets the view for verticla display
+        /// </summary>
         public void SetVerticalDisplay()
         {
             ContainerGrid.Margin = new Thickness(5);

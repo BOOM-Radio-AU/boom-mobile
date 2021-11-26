@@ -11,11 +11,20 @@ using Xamarin.Forms.Xaml;
 
 namespace BoomRadio.View
 {
+    /// <summary>
+    /// View for the collection of news stories, displayed as snippets
+    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NewsView : StackLayout, IUpdatableUI
     {
         public NewsCollection News;
         MainPage MainPage;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="news">News stories collection</param>
+        /// <param name="mainPage">Main (parent) page</param>
         public NewsView(NewsCollection news, MainPage mainPage)
         {
             InitializeComponent();
@@ -23,6 +32,9 @@ namespace BoomRadio.View
             MainPage = mainPage;
         }
 
+        /// <summary>
+        /// Updates the UI
+        /// </summary>
         public async void UpdateUI()
         {
             HeadingBox.UpdateColours();
@@ -62,6 +74,9 @@ namespace BoomRadio.View
             NewsLoadingIndicator.IsRunning = false;
         }
 
+        /// <summary>
+        /// Sets the view for horizontal display
+        /// </summary>
         public async void SetHorizontalDisplay()
         {
             while (this.Width == -1)
@@ -71,6 +86,9 @@ namespace BoomRadio.View
             NewsStacklayout.Margin = new Thickness(this.Width / 8, 5);
         }
 
+        /// <summary>
+        /// Sets the view for vertical display
+        /// </summary>
         public void SetVerticalDisplay()
         {
             NewsStacklayout.Margin = new Thickness(5);

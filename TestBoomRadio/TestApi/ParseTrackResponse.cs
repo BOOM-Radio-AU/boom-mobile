@@ -4,11 +4,17 @@ using System;
 
 namespace TestBoomRadio.TestApi
 {
+    /// <summary>
+    /// Test parsing track API responses
+    /// </summary>
     [TestClass]
     public class ParseTrackResponse
     {
         readonly Api api = new Api();
 
+        /// <summary>
+        /// Test parsing a normla response, which contains track details
+        /// </summary>
         [TestMethod]
         public void TestResponseWithTrackDetails()
         {
@@ -21,6 +27,9 @@ namespace TestBoomRadio.TestApi
             Assert.AreEqual(expectedTrack, parsedTrack);
         }
 
+        /// <summary>
+        /// Test parsing a normal response, that is missing the track details 
+        /// </summary>
         [TestMethod]
         public void TestResponseWithoutTrackDetails()
         {
@@ -33,6 +42,9 @@ namespace TestBoomRadio.TestApi
             Assert.AreEqual(expectedTrack, parsedTrack);
         }
 
+        /// <summary>
+        /// Test parsing a response where the track artist and title are identical
+        /// </summary>
         [TestMethod]
         public void TestResponseWithDuplicatedTrackDetails()
         {
@@ -45,6 +57,9 @@ namespace TestBoomRadio.TestApi
             Assert.AreEqual(expectedTrack, parsedTrack);
         }
 
+        /// <summary>
+        /// Test parsing a response that is invalid JSON 
+        /// </summary>
         [TestMethod]
         public void TestInvalidResponse()
         {
