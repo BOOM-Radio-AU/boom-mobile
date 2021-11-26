@@ -10,6 +10,9 @@ using Xamarin.Forms.Xaml;
 
 namespace BoomRadio.View
 {
+    /// <summary>
+    /// View for the home page
+    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HomeView : StackLayout, IUpdatableUI
     {
@@ -17,7 +20,11 @@ namespace BoomRadio.View
         MainPage MainPage;
         MediaPlayer MediaPlayer { get; set; }
         
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="mediaPlayer">Media player</param>
+        /// <param name="mainPage">Main (parent) page</param>
         public HomeView(MediaPlayer mediaPlayer, MainPage mainPage)
         {
             InitializeComponent();
@@ -64,6 +71,11 @@ namespace BoomRadio.View
             VisitWebsiteButton.TextColor = Color.White;
         }
 
+        /// <summary>
+        /// Handles play button clicks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PlayButton_Clicked(object sender, EventArgs e)
         {
             if (MainPage.HasInternet())
@@ -73,12 +85,22 @@ namespace BoomRadio.View
             }
         }
 
+        /// <summary>
+        /// Handles pause button clicks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PauseButton_Clicked(object sender, EventArgs e)
         {
             MediaPlayer.Pause();
             MainPage.UpdatePlayerUIs();
         }
 
+        /// <summary>
+        /// Handles "go live" button clicks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LiveButton_Clicked(object sender, EventArgs e)
         {
             if (MainPage.HasInternet())
@@ -88,18 +110,30 @@ namespace BoomRadio.View
             }
         }
 
+        /// <summary>
+        /// Sets the view for horizontal display
+        /// </summary>
         public void SetHorizontalDisplay()
         {
             Grid.SetRow(InnerStackLayout, 0);
             Grid.SetColumn(InnerStackLayout, 1);
         }
+
+        /// <summary>
+        /// Sets the view for vertical display
+        /// </summary>
         public void SetVerticalDisplay()
         {
             Grid.SetRow(InnerStackLayout, 1);
             Grid.SetColumn(InnerStackLayout, 0);
 
         }
-
+        
+        /// <summary>
+        /// Handles "Visit website" button clicks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void VisitWebsiteButton_Clicked(object sender, EventArgs e) => Launcher.OpenAsync("https://www.boomradio.com.au/");
 
     }

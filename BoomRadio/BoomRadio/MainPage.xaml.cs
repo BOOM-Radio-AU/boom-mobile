@@ -14,6 +14,9 @@ using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 
 namespace BoomRadio
 {
+    /// <summary>
+    /// Main and only page for the app. Views are loaded into the content area when navigating.
+    /// </summary>
     public partial class MainPage : ContentPage
     {
 
@@ -27,6 +30,10 @@ namespace BoomRadio
         SponsorsCollection Sponsor = new SponsorsCollection();
         IStatusBarStyler statusBarStyler;
         bool orientationIsHorizontal = false;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public MainPage()
         {
             InitializeComponent();
@@ -72,6 +79,9 @@ namespace BoomRadio
             UpdatePlayerColours();
         }
 
+        /// <summary>
+        /// Sets up the page when it appears - calculates the safe area offset to use, if needed
+        /// </summary>
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -88,6 +98,9 @@ namespace BoomRadio
             Padding = safeinsets;
         }
 
+        /// <summary>
+        /// Update's the media player view's colours
+        /// </summary>
         internal void UpdatePlayerColours()
         {
             MediaPlayerView.UpdateColours();
@@ -98,7 +111,7 @@ namespace BoomRadio
         /// (unless supressed)
         /// </summary>
         /// <param name="supressPopup">Set to true to supress showing the popup</param>
-        /// <returns></returns>
+        /// <returns>Internet connection is available</returns>
         public bool HasInternet(bool supressPopup = false)
         {
             // Check for internet
@@ -119,12 +132,21 @@ namespace BoomRadio
             return false;
         }
 
-
+        /// <summary>
+        /// Display an alert popup
+        /// </summary>
+        /// <param name="title">Alert title</param>
+        /// <param name="message">Alert message</param>
+        /// <param name="cancel">Text for the button to dismiss the laert</param>
+        /// <returns></returns>
         public async Task DisplayAlertAsync(string title, string message, string cancel)
         {
             await DisplayAlert(title, message, cancel);
         }
 
+        /// <summary>
+        /// Updates all the UIs related to media playback 
+        /// </summary>
         public void UpdatePlayerUIs()
         {
             if (!UpdateTrackTimerRunning && MediaPlayer.IsLive)
@@ -225,6 +247,9 @@ namespace BoomRadio
             });
         }
 
+        /// <summary>
+        /// Updates the page UI
+        /// </summary>
         public void UpdateUI()
         {
             // Update bottom bar/tabs
@@ -261,21 +286,39 @@ namespace BoomRadio
             }
         }
 
+        /// <summary>
+        /// Handles home tab clicks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HomeTab_Clicked(object sender, EventArgs e)
         {
             Navigate("home");
         }
 
+        /// <summary>
+        /// Handles shows tab clicks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShowsTab_Clicked(object sender, EventArgs e)
         {
             Navigate("shows");
         }
 
+        /// <summary>
+        /// Handles news tab clicks
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NewsTab_Clicked(object sender, EventArgs e)
         {
             Navigate("news");
         }
 
+        /// <summary>
+        /// Slides open the menu, if not already open
+        /// </summary>
         private void OpenMenu()
         {
             if (!MenuShown)
@@ -286,6 +329,10 @@ namespace BoomRadio
                 MenuFrame.HasShadow = true;
             }
         }
+
+        /// <summary>
+        /// Slides closed the menu, if not already closed
+        /// </summary>
         private void CloseMenu()
         {
             if (MenuShown)
@@ -297,11 +344,21 @@ namespace BoomRadio
             }
         }
 
+        /// <summary>
+        /// Handles left-swipes on the menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Menu_Swiped_Left(object sender, SwipedEventArgs e)
         {
             CloseMenu();
         }
 
+        /// <summary>
+        /// Handles taps on the menu icon
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuIcon_Tapped(object sender, EventArgs e)
         {
             if (MenuShown)
@@ -314,21 +371,41 @@ namespace BoomRadio
             }
         }
 
+        /// <summary>
+        /// Handles clicks on the About menu item
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AboutMenuItem_Clicked(object sender, EventArgs e)
         {
             Navigate("about");
         }
 
+        /// <summary>
+        /// Handles clicks on the Contact menu item
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ContactMenuItem_Clicked(object sender, EventArgs e)
         {
             Navigate("contact");
         }
 
+        /// <summary>
+        /// Handles clicks on the Settings menu item
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SettingsMenuItem_Clicked(object sender, EventArgs e)
         {
             Navigate("settings");
         }
 
+        /// <summary>
+        /// Handles changes to page size, i.e. orientation changes
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
         protected override void OnSizeAllocated(double width, double height)
         {
             base.OnSizeAllocated(width, height); //must be called
@@ -378,6 +455,11 @@ namespace BoomRadio
             }
         }
 
+        /// <summary>
+        /// Handles taps on the play/pause tab (shown in horizontal view)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PlayPauseTab_Tapped(object sender, EventArgs e)
         {
             if (MediaPlayer.IsPlaying)
@@ -391,6 +473,11 @@ namespace BoomRadio
             UpdatePlayerUIs();
         }
 
+        /// <summary>
+        /// Handles taps outside the menu, when it is opened 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
             CloseMenu();

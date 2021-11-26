@@ -20,6 +20,7 @@ namespace BoomRadio.iOS
         bool isPrepared;
         string dataSource = "http://pollux.shoutca.st:8132/stream";
 
+        /// <inheritdoc/>
         public void Play()
         {
             AVAudioSession.SharedInstance().SetCategory(AVAudioSessionCategory.Playback);
@@ -31,17 +32,21 @@ namespace BoomRadio.iOS
             isPrepared = true;
             player.Play();
         }
+
+        /// <inheritdoc/>
         public void Pause()
         {
             player.Pause();
         }
 
+        /// <inheritdoc/>
         public void Stop()
         {
             player.Dispose();
             isPrepared = false;
         }
 
+        /// <inheritdoc/>
         public void PlayFromUri(string uri)
         {
             if (isPrepared || player != null)

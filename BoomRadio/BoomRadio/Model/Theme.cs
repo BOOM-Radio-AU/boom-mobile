@@ -6,6 +6,9 @@ using Xamarin.Forms;
 
 namespace BoomRadio.Model
 {
+    /// <summary>
+    /// Themes to use in the app, based on current user preferences
+    /// </summary>
     public static class Theme
     {
         private static Dictionary<string, Color> lightModeColors = new Dictionary<string, Color>();
@@ -18,6 +21,9 @@ namespace BoomRadio.Model
         public static string DeviceDarkModeKey { get; } = "deviceDarkMode";
         public static string AutoplayKey { get; } = "autoplay";
 
+        /// <summary>
+        /// Static contstructor
+        /// </summary>
         static Theme()
         {
             // Initialise colours for each mode

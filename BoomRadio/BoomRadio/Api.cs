@@ -11,6 +11,9 @@ using Xamarin.Forms;
 
 namespace BoomRadio
 {
+    /// <summary>
+    /// Handles fetching and parsing content from BOOM Radio's APIs
+    /// </summary>
     public class Api : UnitTestable
     {
         bool useTestServer = false;
@@ -22,6 +25,9 @@ namespace BoomRadio
         private Dictionary<Service, string> Url;
 
         static Api instance;
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Api()
         {
             if (useTestServer)
@@ -56,6 +62,9 @@ namespace BoomRadio
             }
         }
 
+        /// <summary>
+        /// Static constructor, for singleton
+        /// </summary>
         static Api()
         {
             instance = new Api();
@@ -286,11 +295,21 @@ namespace BoomRadio
             return responseObj.Value<string>("source_url");
         }
 
+        /// <summary>
+        /// Gets an image url from a media ID
+        /// </summary>
+        /// <param name="mediaId">ID of media</param>
+        /// <returns>Image url</returns>
         public static async Task<string> GetImageUrlAsync(string mediaId)
         {
             return await Api.GetImageFromQueryAsync(instance.Url[Service.Media] + mediaId);
         }
 
+        /// <summary>
+        /// Gets an image url from a media api query url
+        /// </summary>
+        /// <param name="queryUrl">media api query url</param>
+        /// <returns>Image url</returns>
         public static async Task<string> GetImageFromQueryAsync(string queryUrl)
         {
             try
@@ -369,6 +388,11 @@ namespace BoomRadio
             }
         }
 
+        /// <summary>
+        /// Parses the sponsors from the <see cref="Service.Sponsor"/> API response
+        /// </summary>
+        /// <param name="response">API response</param>
+        /// <returns>Sponsors</returns>
         private List<Sponsors> ParseSponsorsResponse(string response)
         {
             List<Sponsors> sponsorList = new List<Sponsors>();
@@ -408,6 +432,10 @@ namespace BoomRadio
 
         }
 
+        /// <summary>
+        /// Fetches sponsors from the API
+        /// </summary>
+        /// <returns>Sponsors</returns>
         public static async Task<List<Sponsors>> GetSponsorsAsync()
         {
             try
@@ -422,7 +450,5 @@ namespace BoomRadio
                 return new List<Sponsors>();
             }
         }
-
-
     }
 }

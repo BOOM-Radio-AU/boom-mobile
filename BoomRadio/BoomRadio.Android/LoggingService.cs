@@ -9,6 +9,9 @@ using Xamarin.Forms;
 [assembly: Dependency(typeof(LoggingService))]
 namespace BoomRadio.Droid
 {
+    /// <summary>
+    /// Logs messages
+    /// </summary>
     public class LoggingService : ILogging
     {
         /// <inheritdoc/>

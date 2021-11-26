@@ -19,8 +19,11 @@ namespace BoomRadio.iOS
     {
         public StatusBarStylerService() { }
         private bool isDarkTheme;
+
+        /// <inheritdoc/>
         public bool IsDarkTheme() => isDarkTheme;
 
+        /// <inheritdoc/>
         public void SetDarkTheme()
         {
             isDarkTheme = true;
@@ -31,6 +34,7 @@ namespace BoomRadio.iOS
             });
         }
 
+        /// <inheritdoc/>
         public void SetLightTheme()
         {
             isDarkTheme = false;
@@ -41,6 +45,10 @@ namespace BoomRadio.iOS
             });
         }
 
+        /// <summary>
+        /// Gets the current view controller
+        /// </summary>
+        /// <returns>current view controller</returns>
         UIViewController GetCurrentViewController()
         {
             var window = UIApplication.SharedApplication.KeyWindow;

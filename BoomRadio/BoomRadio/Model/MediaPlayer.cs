@@ -8,6 +8,9 @@ using Microsoft.AppCenter.Analytics;
 
 namespace BoomRadio.Model
 {
+    /// <summary>
+    /// Media player for streaming, playing, pausing the live stream
+    /// </summary>
     public class MediaPlayer
     {
         readonly Track defaultTrack = new Track();
@@ -21,8 +24,9 @@ namespace BoomRadio.Model
         public string Title { get; private set; }
         public string CoverURI { get; private set; }
 
-        
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public MediaPlayer()
         {
             NativePlayer = DependencyService.Get<IStreaming>();
@@ -48,11 +52,22 @@ namespace BoomRadio.Model
             IsLive = true;
         }
 
+        /// <summary>
+        /// Checks if it is possible to go live, i.e. not already playing live and either playing or paused
+        /// </summary>
+        /// <returns>Can go live</returns>
         public bool CanGoLive()
         {
             return !IsLive && (IsPaused || IsPlaying);
         }
 
+        /// <summary>
+        /// Plays a podcast
+        /// </summary>
+        /// <param name="artist">Podcast artist</param>
+        /// <param name="trackTitle">Podcast title</param>
+        /// <param name="audioUrl">Podcast media url</param>
+        /// <param name="imageUrl">Cover art ur</param>
         public void PlayPodcast(string artist, string trackTitle, string audioUrl, string imageUrl)
         {
             Artist = artist;
@@ -85,6 +100,9 @@ namespace BoomRadio.Model
             }
         }
 
+        /// <summary>
+        /// Pauses the player
+        /// </summary>
         public void Pause()
         {
             NativePlayer.Pause();
@@ -93,14 +111,18 @@ namespace BoomRadio.Model
             IsLive = false;
         }
 
+        /// <summary>
+        /// Sets the track information to show there is no connection
+        /// </summary>
         public void SetNotConnected()
         {
-            //NativePlayer.Stop();
             Artist = "No connection";
             Title = "";
-            //CoverURI = "";
         }
 
+        /// <summary>
+        /// Updates the live track information from the API
+        /// </summary>
         public async Task UpdateLiveTrackInfo()
         {
             if (IsLive && IsPlaying)

@@ -5,6 +5,9 @@ using Xamarin.Forms;
 
 namespace BoomRadio.Components
 {
+    /// <summary>
+    /// Collapsbale box for a section describing BOOM Radio
+    /// </summary>
     public partial class AboutFrame : Frame
     {
 
@@ -20,8 +23,10 @@ namespace BoomRadio.Components
             }
         }
 
-
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="article">Article for a section describing BOOM Radio</param>
         public AboutFrame(NewsArticle article)
         {
             InitializeComponent();
@@ -33,7 +38,9 @@ namespace BoomRadio.Components
 
         }
 
-
+        /// <summary>
+        /// Updates the colors used
+        /// </summary>
         public void UpdateColours()
         {
             this.BackgroundColor = Theme.GetColour("background");
@@ -44,6 +51,9 @@ namespace BoomRadio.Components
             ButtonLabel.TextColor = Theme.GetColour("accent");
         }
 
+        /// <summary>
+        /// Updates the box content
+        /// </summary>
         public async void UpdateBox()
         {
 
@@ -98,9 +108,12 @@ namespace BoomRadio.Components
             }
          );
         }
-
         
-
+        /// <summary>
+        /// Handles clicks on the chevron button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ButtonLabel_Clicked(System.Object sender, System.EventArgs e)
         {
             if (IsExpanded)

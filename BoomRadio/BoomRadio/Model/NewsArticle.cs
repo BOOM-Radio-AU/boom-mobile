@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace BoomRadio.Model
 {
+    /// <summary>
+    /// A news article or similar post 
+    /// </summary>
     public class NewsArticle
     {
         public int ID { get; private set; }
@@ -37,7 +40,16 @@ namespace BoomRadio.Model
             return text.Trim();
         }
 
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="id">Article ID</param>
+        /// <param name="title">Article title</param>
+        /// <param name="content">Article content</param>
+        /// <param name="excerpt">Short excerpt</param>
+        /// <param name="published">Publication date or information</param>
+        /// <param name="modified">Modification date or information</param>
+        /// <param name="mediaId">ID of feratured media to fetch from the media API</param>
         public NewsArticle(int id, string title, string content, string excerpt, string published, string modified, string mediaId)
         {
             ID = id;
@@ -80,6 +92,7 @@ namespace BoomRadio.Model
             return new Queue<string>(imagesRegex.Split(ContentHTML));
             
         }
+
         /// <summary>
         /// Parses the content for image source urls
         /// </summary>

@@ -29,6 +29,6 @@
     <Label Text="Message" Margin="0,10,10,2" TextColor="Black"/>
     <Editor x:Name="MessageEditor" HorizontalOptions="FillAndExpand" AutoSize="TextChanges" BackgroundColor="White" TextChanged="ContactForm_TextChanged"/>
 
-    <Button x:Name="SubmitButton" Text="Submit" Clicked="SubmitButton_Clicked"/>
+    <Button x:Name="SubmitButton" Text="Submit" Clicked="SubmitButton_Clicked" BorderColor="White" BorderWidth="1"/>
 
 </StackLayout>

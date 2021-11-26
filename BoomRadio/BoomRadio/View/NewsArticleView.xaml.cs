@@ -15,6 +15,11 @@ namespace BoomRadio.View
     {
         public NewsArticle Article { get; set; }
         MainPage MainPage;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="mainPage">Main (parent) page</param>
         public NewsArticleView(MainPage mainPage)
         {
             InitializeComponent();
@@ -125,13 +130,15 @@ namespace BoomRadio.View
             MainPage.Navigate("news");
         }
 
+        /// <summary>
+        /// Resizes all images. Needed for when the view changes between vertical and horizontal
+        /// </summary>
         private void ResizeAllImages()
         {
             if (Article?.ImageUrl != null)
             {
                 NewsImage.WidthRequest = -1;
                 NewsImage.HeightRequest = -1;
-                //await Task.Delay(20);
                 ResizeImage(NewsImage);
             }
             foreach (var item in ContentStackLayout.Children)
@@ -141,12 +148,14 @@ namespace BoomRadio.View
                 {
                     img.WidthRequest = -1;
                     img.HeightRequest = -1;
-                    //await Task.Delay(20);
                     ResizeImage(img);
                 }
             }
         }
 
+        /// <summary>
+        /// Sets the view for horizontal display
+        /// </summary>
         public async void SetHorizontalDisplay()
         {
             while (this.Width == -1)
@@ -157,6 +166,9 @@ namespace BoomRadio.View
             ResizeAllImages();
         }
 
+        /// <summary>
+        /// Sets the veiw for vertical display
+        /// </summary>
         public void SetVerticalDisplay()
         {
             Margin = new Thickness(10, 0, 10, 10);

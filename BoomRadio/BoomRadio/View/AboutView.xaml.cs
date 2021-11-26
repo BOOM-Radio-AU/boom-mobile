@@ -13,6 +13,9 @@ using BoomRadio.Components;
 
 namespace BoomRadio.View
 {
+    /// <summary>
+    /// View for information about BOOM Radio
+    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AboutView : StackLayout , IUpdatableUI
     {
@@ -53,16 +56,21 @@ namespace BoomRadio.View
             }
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="Sponsor">BOOM RAdio's sponsors</param>
         public AboutView(SponsorsCollection Sponsor)
         {
             InitializeComponent();
             SponsC = Sponsor;
             BindingContext = this;
             collec.service = Api.Service.About;
-
         }
 
-
+        /// <summary>
+        /// Updates the UI
+        /// </summary>
         public async void UpdateUI()
         {
             // Update colours
@@ -70,9 +78,6 @@ namespace BoomRadio.View
             BgColour = Theme.GetColour("background");
             AboutHeadingBox.UpdateColours();
             SponsorsHeadingBox.UpdateColours();
-
-            //BUG HERE SOMEWHERE IDK HOW TO FIX IT COME BACK LATER
-            //BOXES DONT OPEN WHEN PAGE IS RELOADED/CANT SCROLL PAGE
 
             await collec.UpdateAsync();
 
@@ -121,6 +126,9 @@ namespace BoomRadio.View
             SponsorsLoading.IsRunning = false;
         }
 
+        /// <summary>
+        /// Sets the view for horizontal display
+        /// </summary>
         public async void SetHorizontalDisplay()
         {
             while (this.Width == -1)
@@ -131,6 +139,9 @@ namespace BoomRadio.View
             SponsorImageHeight = 150;
         }
 
+        /// <summary>
+        /// Sets the view for vertical display
+        /// </summary>
         public async void SetVerticalDisplay()
         {
             await Task.Delay(10);

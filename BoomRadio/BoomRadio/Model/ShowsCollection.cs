@@ -8,11 +8,17 @@ using Xamarin.Forms;
 
 namespace BoomRadio.Model
 {
+    /// <summary>
+    /// Collection of <see cref="Shows"/>
+    /// </summary>
     public class ShowsCollection
     {
         public List<Shows> shows;
         private DateTime lastUpdated;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ShowsCollection()
         {
             shows = new List<Shows>();
@@ -44,7 +50,10 @@ namespace BoomRadio.Model
             shows = freshShows;
         }
 
-
+        /// <summary>
+        /// Updates the collection, if neccesary 
+        /// </summary>
+        /// <returns></returns>
         public async Task<bool> UpdateAsync()
         {
             // Don't update if already updated recently

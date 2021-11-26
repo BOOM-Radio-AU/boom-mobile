@@ -8,18 +8,28 @@ using Xamarin.Forms;
 
 namespace BoomRadio.Model
 {
+    /// <summary>
+    /// Collection of <see cref="Sponsors"/>
+    /// </summary>
     public class SponsorsCollection
     {
         public List<Sponsors> sponsors;
         private DateTime lastUpdated;
 
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public SponsorsCollection()
         {
             sponsors = new List<Sponsors>();
         }
 
-
+        /// <summary>
+        /// Merges a new list of sponsors with the current list of sponsors, reusing
+        /// existing sponsors where possible. This prevents needlessly repeating media api
+        /// querires.
+        /// </summary>
+        /// <param name="shows">List of shows</param>
         public void MergeSponsors(List<Sponsors> newSponsors)
         {
             List<Sponsors> freshSponsors = new List<Sponsors>();
@@ -40,7 +50,10 @@ namespace BoomRadio.Model
             sponsors = freshSponsors;
         }
 
-
+        /// <summary>
+        /// Updates the collection fro the API, if needed
+        /// </summary>
+        /// <returns>Collection was updated</returns>
         public async Task<bool> UpdateAsync()
         {
             // Don't update if already updated recently

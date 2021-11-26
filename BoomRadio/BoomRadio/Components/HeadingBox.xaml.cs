@@ -10,6 +10,9 @@ using Xamarin.Forms.Xaml;
 
 namespace BoomRadio.Components
 {
+    /// <summary>
+    /// A box for a heading within the app views
+    /// </summary>
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HeadingBox : Frame
     {
@@ -66,6 +69,9 @@ namespace BoomRadio.Components
             }
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public HeadingBox()
         {
             InitializeComponent();
@@ -73,10 +79,13 @@ namespace BoomRadio.Components
             UpdateColours();
         }
 
+        /// <summary>
+        /// Updates the colors used
+        /// </summary>
         public void UpdateColours()
         {
             BorderColour = Theme.GetColour("accent");
-            BackgroundColour = Theme.GetColour("background");//.MultiplyAlpha(0.9);
+            BackgroundColour = Theme.GetColour("background");
             TextColour = Theme.GetColour("accent");
             
         }

@@ -14,8 +14,11 @@ namespace BoomRadio.Droid
     public class StatusBarStylerService : IStatusBarStyler
     {
         private bool isDarkTheme;
+
+        /// <inheritdoc/>
         public bool IsDarkTheme() => isDarkTheme;
 
+        /// <inheritdoc/>
         public void SetDarkTheme()
         {
             isDarkTheme = true;
@@ -34,6 +37,7 @@ namespace BoomRadio.Droid
             }
         }
 
+        /// <inheritdoc/>
         public void SetLightTheme()
         {
             isDarkTheme = false;
@@ -52,9 +56,12 @@ namespace BoomRadio.Droid
             }
         }
 
+        /// <summary>
+        /// Gets the current window object
+        /// </summary>
+        /// <returns>current window</returns>
         private Window GetCurrentWindow()
         {
-            // var window = CrossCurrentActivity.Current.Activity.Window;
             var window = Platform.CurrentActivity.Window;
 
             // clear FLAG_TRANSLUCENT_STATUS flag:

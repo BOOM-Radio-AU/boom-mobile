@@ -8,12 +8,18 @@ using Xamarin.Forms;
 
 namespace BoomRadio.Model
 {
+    /// <summary>
+    /// A collection of <see cref="NewsArticle"/>
+    /// </summary>
     public class NewsCollection
     {
         public List<NewsArticle> articles;
         private DateTime lastUpdated;
         public Api.Service service { get; set; } = Api.Service.News;
         
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public NewsCollection()
         {
             articles = new List<NewsArticle>();

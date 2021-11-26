@@ -37,6 +37,9 @@ namespace BoomRadio.Components
             GetImageAsync();
         }
 
+        /// <summary>
+        /// Updates the colours used
+        /// </summary>
         public void UpdateColours()
         {
             this.BackgroundColor = Theme.GetColour("background");

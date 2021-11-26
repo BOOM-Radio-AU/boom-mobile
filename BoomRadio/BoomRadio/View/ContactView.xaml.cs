@@ -16,6 +16,9 @@ namespace BoomRadio.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ContactView : StackLayout, IUpdatableUI
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ContactView()
         {
             InitializeComponent();
@@ -28,6 +31,8 @@ namespace BoomRadio.View
         public void UpdateUI()
         {
             SubmitButton.IsEnabled = FormISValid();
+            SubmitButton.BackgroundColor = Theme.GetColour("accent");
+            SubmitButton.TextColor = Color.White;
             SubjectEntry.BackgroundColor = Theme.GetColour("background");
             SubjectEntry.TextColor = Theme.GetColour("text");
             MessageEditor.BackgroundColor = Theme.GetColour("background");
@@ -114,6 +119,9 @@ namespace BoomRadio.View
         /// <param name="e"></param>
         private void twitterButton_Clicked(object sender, EventArgs e) => Launcher.OpenAsync("https://twitter.com/boomradioau");
 
+        /// <summary>
+        /// Sets the view for horizontal display
+        /// </summary>
         public async void SetHorizontalDisplay()
         {
             while (this.Width == -1)
@@ -126,6 +134,9 @@ namespace BoomRadio.View
             twitterButton.FontSize = 32;
         }
 
+        /// <summary>
+        /// Sets the view for vertical display
+        /// </summary>
         public void SetVerticalDisplay()
         {
             this.Margin = new Thickness(10);

@@ -11,6 +11,9 @@ using System.Text;
 
 namespace BoomRadio.Droid
 {
+    /// <summary>
+    /// Activity for the splash screen shown when the app opens
+    /// </summary>
     [Activity(Label = "BOOM Radio", Theme = "@style/SplashTheme", Icon = "@mipmap/ic_launcher", MainLauncher = true, NoHistory = true)]
     public class SplashActivity : Activity
     {
