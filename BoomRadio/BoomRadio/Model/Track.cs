@@ -17,6 +17,10 @@ namespace BoomRadio
         public string Title { get; set; } = "Not Just Noise";
         public string ImageUri { get; set; } = "https://cdn-radiotime-logos.tunein.com/s195836q.png";
 
+        public static string defaultArtist { get; } = "BOOM Radio";
+        public static string defaultTitle { get; } = "Not Just Noise";
+        public static string defaultImageUri { get; } = "https://cdn-radiotime-logos.tunein.com/s195836q.png";
+
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
