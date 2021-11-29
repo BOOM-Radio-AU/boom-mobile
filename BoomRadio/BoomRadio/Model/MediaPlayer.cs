@@ -127,7 +127,7 @@ namespace BoomRadio.Model
         {
             if (IsLive && IsPlaying)
             {
-                Track liveStreamTrack = await Api.GetLiveStreamTrackAsync();
+                Track liveStreamTrack = await Api.GetLiveStreamTrackAsync(new Track() { Artist = Artist, Title = Title, ImageUri = CoverURI });
                 Artist = liveStreamTrack.Artist;
                 Title = liveStreamTrack.Title;
                 CoverURI = liveStreamTrack.ImageUri;

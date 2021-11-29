@@ -197,7 +197,7 @@ namespace BoomRadio
         /// <param name="responseString">API response</param>
         /// <exception cref="Exception">JSON parsing errors</exception>
         /// <returns>Track information</returns>
-        private async Task<Track> ParseTrackResponse(string responseString)
+        private async Task<Track> ParseTrackResponse(string responseString, Track currentTrack)
         {
             string artist;
             string title;
@@ -213,6 +213,7 @@ namespace BoomRadio
                 // Un-encode ampersands
                 artist = match.Groups["artist"].Value.Replace("&amp;", "&");
                 title = match.Groups["title"].Value.Replace("&amp;", "&");
+
                 // Set title to empty if it duplicates artist (sometimes happens for adverts)
                 if (title == artist)
                 {
@@ -222,6 +223,11 @@ namespace BoomRadio
                 }
                 else
                 {
+                    // If the artist and title are unchanged, just return the current track
+                    if (artist == currentTrack.Artist && title == currentTrack.Title)
+                    {
+                        return currentTrack;
+                    }
                     // Lookup the cover image by artists and title (leaving ampersands encoded)
                     imageUrl = await GetCoverArtAsync(match.Groups["artist"].Value, match.Groups["title"].Value);
                 }
@@ -240,12 +246,12 @@ namespace BoomRadio
         /// Fetches the live stream tack information from the API
         /// </summary>
         /// <returns>Live stream track</returns>
-        public static async Task<Track> GetLiveStreamTrackAsync()
+        public static async Task<Track> GetLiveStreamTrackAsync(Track currentTrack)
         {
             try
             {
                 string response = await instance.FetchAsync(Service.LiveTrack);
-                return await instance.ParseTrackResponse(response);
+                return await instance.ParseTrackResponse(response, currentTrack);
             }
             catch (Exception ex)
             {
