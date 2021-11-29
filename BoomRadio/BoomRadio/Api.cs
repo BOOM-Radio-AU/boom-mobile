@@ -21,7 +21,7 @@ namespace BoomRadio
 
         private string websiteApiBaseUrl;
         private readonly HttpClient client = new HttpClient();
-        public enum Service { LiveTrack, News, Media, Shows, Sponsor, About };
+        public enum Service { LiveTrack, Album, CoverArt, News, Media, Shows, Sponsor, About };
         private Dictionary<Service, string> Url;
 
         static Api instance;
@@ -41,7 +41,9 @@ namespace BoomRadio
             if (use2021Website)
             {
                 Url = new Dictionary<Service, string>() {
-                    {Service.LiveTrack, "https://feed.tunein.com/profiles/s195836/nowPlaying"},
+                    {Service.LiveTrack, "http://pollux.shoutca.st:8132/7.html"},
+                    {Service.Album, "https://musicbrainz.org/ws/2/recording?fmt=json&limit=1&query="},
+                    {Service.CoverArt, "https://coverartarchive.org/release/"},
                     {Service.News, websiteApiBaseUrl+"wp/v2/trends" },
                     {Service.Media, websiteApiBaseUrl + "wp/v2/media/" },
                     {Service.Shows, websiteApiBaseUrl + "wp/v2/programs" },
@@ -52,7 +54,9 @@ namespace BoomRadio
             else
             {
                 Url = new Dictionary<Service, string>() {
-                    {Service.LiveTrack, "https://feed.tunein.com/profiles/s195836/nowPlaying"},
+                    {Service.LiveTrack, "http://pollux.shoutca.st:8132/7.html"},
+                    {Service.Album, "https://musicbrainz.org/ws/2/recording?fmt=json&limit=1&query="},
+                    {Service.CoverArt, "https://coverartarchive.org/release/"},
                     {Service.News, websiteApiBaseUrl + "wp/v2/news" },
                     {Service.Media, websiteApiBaseUrl + "wp/v2/media/" },
                     {Service.Shows, websiteApiBaseUrl + "wp/v2/schedule" },
@@ -101,37 +105,117 @@ namespace BoomRadio
         }
 
         /// <summary>
+        /// Gets the url for cover art of a song (or if not found, the default cover art url)
+        /// </summary>
+        /// <param name="artist">Song artist</param>
+        /// <param name="title">Song track</param>
+        /// <returns>Cover art image url</returns>
+        private async Task<string> GetCoverArtAsync(string artist, string title)
+        {
+            // First get the albums' ids, if available
+            List<string> ids = new List<string>();
+            try
+            {
+                string query = Uri.EscapeDataString($"\"{artist}\" AND \"{title}\"");
+                string albumResponse = await FetchAsync(Url[Service.Album] + query);
+                JObject responseObj = JsonConvert.DeserializeObject<JObject>(albumResponse);
+                // Check that the response contains a result
+                if (responseObj.Value<int>("count") < 1)
+                {
+                    return Track.defaultImageUri;
+                }
+                JObject recording = responseObj.Value<JArray>("recordings")[0] as JObject;
+                JArray releases = recording.Value<JArray>("releases");
+                foreach (JObject release in releases)
+                {
+                    ids.Add(release.Value<string>("id"));
+
+                }
+            } catch (Exception ex)
+            {
+                return Track.defaultImageUri;
+            }
+
+            // Then get the cover art
+            try
+            {
+                string coverResponse = "";
+                // Sometimes an id doesn't have any artwork, and the url gives a 'not found' exception,
+                // so loop through all available ids until a valid response is found 
+                foreach (string id in ids) {
+                    try
+                    {
+                        coverResponse = await FetchAsync(Url[Service.CoverArt] + id);
+                    }
+                    catch {
+                        Console.WriteLine("%%% No response for id: " + id);
+                    }
+                }
+                // If there were no valid responses, use the default image
+                if (coverResponse == "")
+                {
+                    return Track.defaultImageUri;
+                }
+                
+                JObject coverResponseObj = JsonConvert.DeserializeObject<JObject>(coverResponse);
+                JObject images = coverResponseObj.Value<JArray>("images")[0] as JObject;
+                // Use a small thumbnail image if possible
+                if (images != null && images.ContainsKey("thumbnails"))
+                {
+                    JObject thumbnails = images.Value<JObject>("thumbnails");
+                    if (thumbnails.ContainsKey("small"))
+                    {
+                        return thumbnails.Value<string>("small");
+                    }
+                    else if (thumbnails.ContainsKey("250"))
+                    {
+                        return thumbnails.Value<string>("250");
+                    }
+                }
+                // Otherwise use the full-sized image from the 'image' key, if present
+                else if (images != null && images.ContainsKey("image"))
+                {
+                    return images.Value<string>("image");
+                }
+            }
+            catch (Exception ex)
+            {
+                return Track.defaultImageUri;
+            }
+            return Track.defaultImageUri;
+        }
+
+        /// <summary>
         /// Parses the the track from the <see cref="Service.LiveTrack"/> API response
         /// </summary>
         /// <param name="responseString">API response</param>
         /// <exception cref="Exception">JSON parsing errors</exception>
         /// <returns>Track information</returns>
-        private Track ParseTrackResponse(string responseString)
+        private async Task<Track> ParseTrackResponse(string responseString)
         {
             string artist;
             string title;
             string imageUrl;
 
-            // Parse relevant data out of the json response string
-            JObject response = JsonConvert.DeserializeObject<JObject>(responseString);
-            JObject track = response.Value<JObject>("Secondary");
-            if (track == null)
-            {
-                track = response.Value<JObject>("Primary");
-            }
-            string info = track.Value<string>("Title");
+            // Parse relevant data out of the response string, which is something like:
+            // "<html><head></head><body>10,1,27,9999,8,128,Hope D - Miscommunicate</body></html>"
+            string[] responseParts = responseString.Split(',');
+            string info = responseParts[responseParts.Length - 1].Replace("</body></html>", "").Replace("&amp;","&");
+            // The artist and title, if present, will be separated by a dash character
             if (info.Contains(" - "))
             {
                 string[] parts = info.Split(new string[] { " - " }, StringSplitOptions.None);
                 artist = parts[0];
-                title = parts[1] == parts[0] ? "" : parts[1];
+                title = parts[1] == parts[0] ? "" : parts[1]; // Set title to empty if it duplicates artist (sometimes happens for adverts)
+                imageUrl = await GetCoverArtAsync(artist, title);
             }
             else
             {
-                artist = info;
-                title = track.Value<string>("Subtitle");
+                artist = Track.defaultArtist;
+                title = Track.defaultTitle;
+                imageUrl = Track.defaultImageUri;
             }
-            imageUrl = track.Value<string>("Image").Replace("http://", "https://");
+            imageUrl = imageUrl.Replace("http://", "https://");
             return new Track() { Artist = artist, Title = title, ImageUri = imageUrl };
         }
 
@@ -144,7 +228,7 @@ namespace BoomRadio
             try
             {
                 string response = await instance.FetchAsync(Service.LiveTrack);
-                return instance.ParseTrackResponse(response);
+                return await instance.ParseTrackResponse(response);
             }
             catch (Exception ex)
             {
