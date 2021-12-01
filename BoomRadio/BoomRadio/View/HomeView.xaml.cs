@@ -1,4 +1,5 @@
-﻿using BoomRadio.Model;
+﻿using BoomRadio.Components;
+using BoomRadio.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +19,10 @@ namespace BoomRadio.View
     {
         string coverImageUri;
         MainPage MainPage;
+        DateTime contestsLastFetched = DateTime.MinValue;
+
         MediaPlayer MediaPlayer { get; set; }
-        
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -69,6 +72,19 @@ namespace BoomRadio.View
             EventsLabel.TextColor = Theme.GetColour("text");
             VisitWebsiteButton.BackgroundColor = Theme.GetColour("accent");
             VisitWebsiteButton.TextColor = Color.White;
+
+            // If contests not yet fetched, or not fetched recently, update from api
+            if (contestsLastFetched == null || DateTime.Now - contestsLastFetched > TimeSpan.FromMinutes(10))
+            {
+                Task.Run(UpdateContestsAsync);
+            }
+            else // just update the colours
+            {
+                foreach (var contestItem in ContestsStackLayout.Children)
+                {
+                    (contestItem as ContestFrame)?.UpdateColours();
+                }
+            }
         }
 
         /// <summary>
@@ -128,7 +144,7 @@ namespace BoomRadio.View
             Grid.SetColumn(InnerStackLayout, 0);
 
         }
-        
+
         /// <summary>
         /// Handles "Visit website" button clicks
         /// </summary>
@@ -136,5 +152,26 @@ namespace BoomRadio.View
         /// <param name="e"></param>
         private void VisitWebsiteButton_Clicked(object sender, EventArgs e) => Launcher.OpenAsync("https://www.boomradio.com.au/");
 
+        /// <summary>
+        /// Updates the contests from the api, asynchronously
+        /// </summary>
+        /// <returns></returns>
+        private async Task UpdateContestsAsync()
+        {
+            contestsLastFetched = DateTime.Now;
+            List<Contest> contests = await Api.GetContestsAsync();
+            if (contests.Count == 0) return;
+
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                ContestsStackLayout.Children.Clear();
+                foreach (Contest contest in contests)
+                {
+                    ContestFrame item = new ContestFrame(contest, MainPage);
+
+                    ContestsStackLayout.Children.Add(item);
+                }
+            });
+        }
     }
 }
