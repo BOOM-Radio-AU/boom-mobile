@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -114,9 +115,14 @@ namespace BoomRadio
         {
             // First get the albums' ids, if available
             List<string> ids = new List<string>();
+
+            // Remove "ft. <otherArtist>" from the artist/title, which may impact search results
+            Regex featuringRegex = new Regex(@" ft\.? .*$");
+            string searchArtist = featuringRegex.Replace(artist, "");
+            string searchTitle = featuringRegex.Replace(title, "");
             try
             {
-                string query = Uri.EscapeDataString($"\"{artist}\" AND \"{title}\"");
+                string query = Uri.EscapeDataString($"\"{searchArtist}\" AND \"{searchTitle}\"");
                 string albumResponse = await FetchAsync(Url[Service.Album] + query);
                 JObject responseObj = JsonConvert.DeserializeObject<JObject>(albumResponse);
                 // Check that the response contains a result
@@ -191,7 +197,7 @@ namespace BoomRadio
         /// <param name="responseString">API response</param>
         /// <exception cref="Exception">JSON parsing errors</exception>
         /// <returns>Track information</returns>
-        private async Task<Track> ParseTrackResponse(string responseString)
+        private async Task<Track> ParseTrackResponse(string responseString, Track currentTrack)
         {
             string artist;
             string title;
@@ -199,15 +205,32 @@ namespace BoomRadio
 
             // Parse relevant data out of the response string, which is something like:
             // "<html><head></head><body>10,1,27,9999,8,128,Hope D - Miscommunicate</body></html>"
-            string[] responseParts = responseString.Split(',');
-            string info = responseParts[responseParts.Length - 1].Replace("</body></html>", "").Replace("&amp;","&");
-            // The artist and title, if present, will be separated by a dash character
-            if (info.Contains(" - "))
+            // The artist and title, if present, will appear after the sixth comma and be separated by a dash character
+            Regex infoRegex = new Regex(@"(?:\d*,){6}(?<artist>[^-]*) - (?<title>.*)(?:</body></html>)");
+            var match = infoRegex.Match(responseString);
+            if (match.Success)
             {
-                string[] parts = info.Split(new string[] { " - " }, StringSplitOptions.None);
-                artist = parts[0];
-                title = parts[1] == parts[0] ? "" : parts[1]; // Set title to empty if it duplicates artist (sometimes happens for adverts)
-                imageUrl = await GetCoverArtAsync(artist, title);
+                // Un-encode ampersands
+                artist = match.Groups["artist"].Value.Replace("&amp;", "&");
+                title = match.Groups["title"].Value.Replace("&amp;", "&");
+
+                // Set title to empty if it duplicates artist (sometimes happens for adverts)
+                if (title == artist)
+                {
+                    title = "";
+                    // Also use the default image
+                    imageUrl = Track.defaultImageUri;
+                }
+                else
+                {
+                    // If the artist and title are unchanged, just return the current track
+                    if (artist == currentTrack.Artist && title == currentTrack.Title)
+                    {
+                        return currentTrack;
+                    }
+                    // Lookup the cover image by artists and title (leaving ampersands encoded)
+                    imageUrl = await GetCoverArtAsync(match.Groups["artist"].Value, match.Groups["title"].Value);
+                }
             }
             else
             {
@@ -223,12 +246,12 @@ namespace BoomRadio
         /// Fetches the live stream tack information from the API
         /// </summary>
         /// <returns>Live stream track</returns>
-        public static async Task<Track> GetLiveStreamTrackAsync()
+        public static async Task<Track> GetLiveStreamTrackAsync(Track currentTrack)
         {
             try
             {
                 string response = await instance.FetchAsync(Service.LiveTrack);
-                return await instance.ParseTrackResponse(response);
+                return await instance.ParseTrackResponse(response, currentTrack);
             }
             catch (Exception ex)
             {
