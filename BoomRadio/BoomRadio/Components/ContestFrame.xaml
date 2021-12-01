@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Frame xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BoomRadio.Components.ContestFrame"
+       Padding="8" Margin="20,5">
+    <Frame.Content>
+        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+            <Image x:Name="ContestImage" WidthRequest="100" Aspect="AspectFill"/>
+            <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
+                <Label x:Name="TitleLabel" Text="Title goes here" HorizontalTextAlignment="Center"
+                       TextType="Html" FontSize="16" FontFamily="MET-B"
+                    VerticalOptions="StartAndExpand" 
+                    HorizontalOptions="CenterAndExpand" />
+                <Button x:Name="LinkButton" Text="View details" FontSize="15" FontFamily="MET-R" TextColor="White"
+                    VerticalOptions="StartAndExpand" 
+                    HorizontalOptions="Center"
+                        Clicked="LinkButton_Clicked"/>
+            </StackLayout>
+        </StackLayout>
+    </Frame.Content>
+</Frame>

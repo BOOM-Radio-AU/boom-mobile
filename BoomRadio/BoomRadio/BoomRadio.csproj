@@ -80,4 +80,9 @@
     <None Remove="Resources\Images\" />
     <None Remove="Xamarin.CommunityToolkit" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Components\ContestFrame.xaml.cs">
+      <DependentUpon>ContestFrame.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

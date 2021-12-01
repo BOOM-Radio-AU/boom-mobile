@@ -11,6 +11,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Frame x:Name="PlayerFrame" HasShadow="True" MinimumWidthRequest="100" MinimumHeightRequest="50" Padding="2">
             <Frame x:Name="PlayerFrameInner"  Padding="0" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Margin="2">
@@ -52,6 +53,8 @@
             <Label x:Name="EventsLabel" FontSize="16" FontFamily="MET-R" Text="BOOM Radio hosts tons of events and competitions that you wont want to miss. To keep updated on new events and competitions, head on over to our website at boomradio.com.au."/>
             <Button x:Name="VisitWebsiteButton" Text="Visit Website" HorizontalOptions="FillAndExpand" Clicked="VisitWebsiteButton_Clicked" FontSize="17" Margin="10,5" FontAttributes="Bold" FontFamily="MET-B"/>
         </StackLayout>
+        <StackLayout x:Name="ContestsStackLayout" Grid.Row="4" Margin="0,5,0,0"/>
+
     </Grid>
 
 

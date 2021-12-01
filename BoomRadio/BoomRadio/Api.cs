@@ -16,12 +16,12 @@ namespace BoomRadio
     /// </summary>
     public class Api : UnitTestable
     {
-        bool useTestServer = false;
-        bool use2021Website = false;
+        bool useTestServer = true;
+        bool use2021Website = true;
 
         private string websiteApiBaseUrl;
         private readonly HttpClient client = new HttpClient();
-        public enum Service { LiveTrack, Album, CoverArt, News, Media, Shows, Sponsor, About };
+        public enum Service { LiveTrack, Album, CoverArt, News, Media, Shows, Sponsor, About, Contests };
         private Dictionary<Service, string> Url;
 
         static Api instance;
@@ -48,7 +48,8 @@ namespace BoomRadio
                     {Service.Media, websiteApiBaseUrl + "wp/v2/media/" },
                     {Service.Shows, websiteApiBaseUrl + "wp/v2/programs" },
                     {Service.Sponsor, websiteApiBaseUrl + "wp/v2/sponsors" },
-                    {Service.About, websiteApiBaseUrl + "wp/v2/about" }
+                    {Service.About, websiteApiBaseUrl + "wp/v2/about" },
+                    {Service.Contests, websiteApiBaseUrl + "wp/v2/contests" },
                 };
             }
             else
@@ -532,6 +533,64 @@ namespace BoomRadio
                 DependencyService.Get<ILogging>().Error("Api.GetSponsorsAsync", ex);
                 Console.WriteLine("[API] Sponsors error: " + ex.Message);
                 return new List<Sponsors>();
+            }
+        }
+
+
+        /// <summary>
+        /// Parses the sponsors from the <see cref="Service.Contests"/> API response
+        /// </summary>
+        /// <param name="response">API response</param>
+        /// <returns>Contests</returns>
+        private List<Contest> ParseContestsResponse(string response)
+        {
+            List<Contest> contests = new List<Contest>();
+            JArray responseItems = JsonConvert.DeserializeObject<JArray>(response);
+            foreach (JToken item in responseItems)
+            {
+                try
+                {
+                    // Parse values from JSON
+                    int id = item.Value<int>("id");
+                    string title = item.Value<JObject>("title").Value<string>("rendered");
+                    string link = item.Value<string>("link");
+                    string mediaId = item.Value<int>("featured_media").ToString();
+                    if (mediaId == "0")
+                    {
+                        mediaId = null;
+                    }
+                    Contest contest = new Contest(id, title, link, mediaId);
+                    contests.Add(contest);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error parsing articles\n" + e.Message);
+                }
+            }
+            return contests;
+        }
+
+        /// <summary>
+        /// Fetches contests from the API
+        /// </summary>
+        /// <returns>Contests</returns>
+        public static async Task<List<Contest>> GetContestsAsync()
+        {
+            if (!instance.use2021Website)
+            {
+                // Old website doesn't have api for contests
+                return new List<Contest>();
+            }
+            try
+            {
+                string response = await instance.FetchAsync(Service.Contests);
+                return instance.ParseContestsResponse(response);
+            }
+            catch (Exception ex)
+            {
+                DependencyService.Get<ILogging>().Error("Api.GetContestsAsync", ex);
+                Console.WriteLine("[API] Contests error: " + ex.Message);
+                return new List<Contest>();
             }
         }
     }
