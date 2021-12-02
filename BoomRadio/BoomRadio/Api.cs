@@ -17,9 +17,7 @@ namespace BoomRadio
     /// </summary>
     public class Api : UnitTestable
     {
-        bool useTestServer = true;
-
-        private string websiteApiBaseUrl;
+        private string websiteApiBaseUrl = "https://boomradio.com.au/wp-json/";
         private readonly HttpClient client = new HttpClient();
         public enum Service { LiveTrack, Album, CoverArt, News, Media, Shows, Sponsor, About, Contests };
         private Dictionary<Service, string> Url;
@@ -30,15 +28,6 @@ namespace BoomRadio
         /// </summary>
         public Api()
         {
-            if (useTestServer)
-            {
-                websiteApiBaseUrl = "https://staging.boomradio.com.au/wp-json/";
-            }
-            else
-            {
-                websiteApiBaseUrl = "https://boomradio.com.au/wp-json/";
-            }
-
             Url = new Dictionary<Service, string>() {
                 {Service.LiveTrack, "http://pollux.shoutca.st:8132/7.html"},
                 {Service.Album, "https://musicbrainz.org/ws/2/recording?fmt=json&limit=1&query="},
