@@ -18,7 +18,6 @@ namespace BoomRadio
     public class Api : UnitTestable
     {
         bool useTestServer = true;
-        bool use2021Website = true;
 
         private string websiteApiBaseUrl;
         private readonly HttpClient client = new HttpClient();
@@ -33,39 +32,24 @@ namespace BoomRadio
         {
             if (useTestServer)
             {
-                websiteApiBaseUrl = "https://chapterseventyseven.com/boomradio2/wordpress/wp-json/";
+                websiteApiBaseUrl = "https://staging.boomradio.com.au/wp-json/";
             }
             else
             {
                 websiteApiBaseUrl = "https://boomradio.com.au/wp-json/";
             }
-            if (use2021Website)
-            {
-                Url = new Dictionary<Service, string>() {
-                    {Service.LiveTrack, "http://pollux.shoutca.st:8132/7.html"},
-                    {Service.Album, "https://musicbrainz.org/ws/2/recording?fmt=json&limit=1&query="},
-                    {Service.CoverArt, "https://coverartarchive.org/release/"},
-                    {Service.News, websiteApiBaseUrl+"wp/v2/trends" },
-                    {Service.Media, websiteApiBaseUrl + "wp/v2/media/" },
-                    {Service.Shows, websiteApiBaseUrl + "wp/v2/programs" },
-                    {Service.Sponsor, websiteApiBaseUrl + "wp/v2/sponsors" },
-                    {Service.About, websiteApiBaseUrl + "wp/v2/about" },
-                    {Service.Contests, websiteApiBaseUrl + "wp/v2/contests" },
-                };
-            }
-            else
-            {
-                Url = new Dictionary<Service, string>() {
-                    {Service.LiveTrack, "http://pollux.shoutca.st:8132/7.html"},
-                    {Service.Album, "https://musicbrainz.org/ws/2/recording?fmt=json&limit=1&query="},
-                    {Service.CoverArt, "https://coverartarchive.org/release/"},
-                    {Service.News, websiteApiBaseUrl + "wp/v2/news" },
-                    {Service.Media, websiteApiBaseUrl + "wp/v2/media/" },
-                    {Service.Shows, websiteApiBaseUrl + "wp/v2/schedule" },
-                    {Service.Sponsor, websiteApiBaseUrl + "wp/v2/sponsors" },
-                    {Service.About, websiteApiBaseUrl + "wp/v2/about" }
-                };
-            }
+
+            Url = new Dictionary<Service, string>() {
+                {Service.LiveTrack, "http://pollux.shoutca.st:8132/7.html"},
+                {Service.Album, "https://musicbrainz.org/ws/2/recording?fmt=json&limit=1&query="},
+                {Service.CoverArt, "https://coverartarchive.org/release/"},
+                {Service.News, websiteApiBaseUrl+"wp/v2/trends" },
+                {Service.Media, websiteApiBaseUrl + "wp/v2/media/" },
+                {Service.Shows, websiteApiBaseUrl + "wp/v2/programs" },
+                {Service.Sponsor, websiteApiBaseUrl + "wp/v2/sponsors" },
+                {Service.About, websiteApiBaseUrl + "wp/v2/about" },
+                {Service.Contests, websiteApiBaseUrl + "wp/v2/contests" },
+            };
         }
 
         /// <summary>
@@ -138,7 +122,8 @@ namespace BoomRadio
                     ids.Add(release.Value<string>("id"));
 
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return Track.defaultImageUri;
             }
@@ -149,12 +134,14 @@ namespace BoomRadio
                 string coverResponse = "";
                 // Sometimes an id doesn't have any artwork, and the url gives a 'not found' exception,
                 // so loop through all available ids until a valid response is found 
-                foreach (string id in ids) {
+                foreach (string id in ids)
+                {
                     try
                     {
                         coverResponse = await FetchAsync(Url[Service.CoverArt] + id);
                     }
-                    catch {
+                    catch
+                    {
                         Console.WriteLine("%%% No response for id: " + id);
                     }
                 }
@@ -163,7 +150,7 @@ namespace BoomRadio
                 {
                     return Track.defaultImageUri;
                 }
-                
+
                 JObject coverResponseObj = JsonConvert.DeserializeObject<JObject>(coverResponse);
                 JObject images = coverResponseObj.Value<JArray>("images")[0] as JObject;
                 // Use a small thumbnail image if possible
@@ -513,18 +500,7 @@ namespace BoomRadio
                     // Parse values from JSON
                     int id = item.Value<int>("id");
                     string sponsorName = item.Value<JObject>("title").Value<string>("rendered");
-                    string sponsorDescription = "";
-                    if (use2021Website)
-                    {
-                        // NEW WEBSITE
-                        sponsorDescription = item.Value<JObject>("excerpt").Value<string>("rendered");
-
-                    }
-                    else
-                    {
-                        // OLD WEBSITE
-                        sponsorDescription = item.Value<JObject>("content").Value<string>("rendered");
-                    }
+                    string sponsorDescription = item.Value<JObject>("excerpt").Value<string>("rendered");
                     string imageURL = (item.Value<JObject>("_links").Value<JArray>("wp:featuredmedia")[0] as JObject).Value<string>("href");
 
                     Sponsors sponsor = new Sponsors(id, sponsorName, sponsorDescription, imageURL);
@@ -599,11 +575,6 @@ namespace BoomRadio
         /// <returns>Contests</returns>
         public static async Task<List<Contest>> GetContestsAsync()
         {
-            if (!instance.use2021Website)
-            {
-                // Old website doesn't have api for contests
-                return new List<Contest>();
-            }
             try
             {
                 string response = await instance.FetchAsync(Service.Contests);
