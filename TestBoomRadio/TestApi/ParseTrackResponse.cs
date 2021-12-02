@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BoomRadio;
 using System;
+using System.Threading.Tasks;
 
 namespace TestBoomRadio.TestApi
 {
@@ -13,61 +14,68 @@ namespace TestBoomRadio.TestApi
         readonly Api api = new Api();
 
         /// <summary>
-        /// Test parsing a normla response, which contains track details
+        /// Test parsing a normal response 
         /// </summary>
         [TestMethod]
-        public void TestResponseWithTrackDetails()
+        public async Task TestStandardResponse()
         {
-            string sampleResponse = "{\"Header\":{\"Title\":\"BOOM Radio\",\"Subtitle\":\"Not Just Noise\"},\"Primary\":{\"GuideId\":\"s195836\",\"Image\":\"http://cdn-radiotime-logos.tunein.com/s195836q.png\",\"Title\":\"BOOM Radio\",\"Subtitle\":\"Not Just Noise\"},\"Secondary\":{\"Image\":\"http://example.com/image1.jpg\",\"Title\":\"Foo bar - Baz qux\"},\"Ads\":{\"CanShowAds\":true,\"CanShowPrerollAds\":true,\"CanShowCompanionAds\":false,\"CanShowVideoPrerollAds\":false},\"Echo\":{\"CanEcho\":false,\"EchoCount\":0,\"TargetItemId\":\"s195836\",\"Scope\":\"s195836\",\"Url\":\"\",\"FeedTag\":\"s195836\"},\"Donate\":{\"CanDonate\":false},\"Share\":{\"CanShare\":true,\"ShareUrl\":\"http://tun.in/se72I\"},\"Follow\":{\"Options\":[{\"Title\":\"Favorite Station\",\"GuideId\":\"s195836\",\"IsFollowing\":false,\"Url\":\"http://opml.radiotime.com/favorites.ashx?c=add&id=s195836&itemToken=BgwMAAAAAAAAAAAAAAAB_PwCAAEMAfz8AgAB_PwCAA\"}],\"IsPreset\":false},\"Record\":{\"CanRecord\":false},\"Classification\":{\"ContentType\":\"music\",\"IsEvent\":false,\"IsOnDemand\":false,\"IsFamilyContent\":false,\"IsMatureContent\":false,\"GenreId\":\"g2748\"},\"Link\":{\"WebUrl\":\"http://boomradio.com.au\"},\"Ttl\":900,\"Token\":\"eyJwIjpmYWxzZSwidCI6IjIwMjEtMTAtMzFUMTQ6MzQ6NTEuNDk0MTk3NVoifQ\"}";
+            string sampleResponse = "<html><head></head><body>10,1,27,9999,8,128,FooBar - ABC</body></html>";
 
-            Track parsedTrack = api.CallPrivateMethod<Track>("ParseTrackResponse", sampleResponse);
+            Track parsedTrack = await api.CallPrivateMethod<Task<Track>>("ParseTrackResponse", new object[] { sampleResponse, new Track() });
 
-            Track expectedTrack = new Track() { Artist = "Foo bar", Title = "Baz qux", ImageUri = "https://example.com/image1.jpg" };
+            Track expectedTrack = new Track() { Artist = "FooBar", Title = "ABC", ImageUri = "https://example.com/image0.png" };
 
-            Assert.AreEqual(expectedTrack, parsedTrack);
+            Assert.AreEqual(expectedTrack.Artist, parsedTrack.Artist);
+            Assert.AreEqual(expectedTrack.Title, parsedTrack.Title);
         }
 
         /// <summary>
         /// Test parsing a normal response, that is missing the track details 
         /// </summary>
         [TestMethod]
-        public void TestResponseWithoutTrackDetails()
+        public async Task TestResponseWithCommasInTrackDetails()
         {
-            string sampleResponse = "{\"Header\":{\"Title\":\"BOOM Radio\",\"Subtitle\":\"Not Just Noise\"},\"Primary\":{\"GuideId\":\"s195836\",\"Image\":\"https://example.com/image0.png\",\"Title\":\"Primary\",\"Subtitle\":\"The main deal\"},\"Ads\":{\"CanShowAds\":true,\"CanShowPrerollAds\":true,\"CanShowCompanionAds\":false,\"CanShowVideoPrerollAds\":false},\"Echo\":{\"CanEcho\":false,\"EchoCount\":0,\"TargetItemId\":\"s195836\",\"Scope\":\"s195836\",\"Url\":\"\",\"FeedTag\":\"s195836\"},\"Donate\":{\"CanDonate\":false},\"Share\":{\"CanShare\":true,\"ShareUrl\":\"http://tun.in/se72I\"},\"Follow\":{\"Options\":[{\"Title\":\"Favorite Station\",\"GuideId\":\"s195836\",\"IsFollowing\":false,\"Url\":\"http://opml.radiotime.com/favorites.ashx?c=add&id=s195836&itemToken=BgwMAAAAAAAAAAAAAAAB_PwCAAEMAfz8AgAB_PwCAA\"}],\"IsPreset\":false},\"Record\":{\"CanRecord\":false},\"Classification\":{\"ContentType\":\"music\",\"IsEvent\":false,\"IsOnDemand\":false,\"IsFamilyContent\":false,\"IsMatureContent\":false,\"GenreId\":\"g2748\"},\"Link\":{\"WebUrl\":\"http://boomradio.com.au\"},\"Ttl\":900,\"Token\":\"eyJwIjpmYWxzZSwidCI6IjIwMjEtMTAtMzFUMDA6NDg6MzMuNDI1NjI5OVoifQ\"}";
+            string sampleResponse = "<html><head></head><body>10,1,27,9999,8,128,Foo,Bar - A, B, or C</body></html>";
 
-            Track parsedTrack = api.CallPrivateMethod<Track>("ParseTrackResponse", sampleResponse);
+            Track parsedTrack = await api.CallPrivateMethod<Task<Track>>("ParseTrackResponse", new object[] { sampleResponse, new Track()});
 
-            Track expectedTrack = new Track() { Artist = "Primary", Title = "The main deal", ImageUri = "https://example.com/image0.png" };
+            Track expectedTrack = new Track() { Artist = "Foo,Bar", Title = "A, B, or C", ImageUri = "https://example.com/image0.png" };
 
-            Assert.AreEqual(expectedTrack, parsedTrack);
+            Assert.AreEqual(expectedTrack.Artist, parsedTrack.Artist);
+            Assert.AreEqual(expectedTrack.Title, parsedTrack.Title);
         }
 
         /// <summary>
-        /// Test parsing a response where the track artist and title are identical
+        /// Test parsing a normal response, that is has repeated track details 
         /// </summary>
         [TestMethod]
-        public void TestResponseWithDuplicatedTrackDetails()
+        public async Task TestResponseWithRepeatedDetails()
         {
-            string sampleResponse = "{\"Header\":{\"Title\":\"BOOM Radio\",\"Subtitle\":\"Not Just Noise\"},\"Primary\":{\"GuideId\":\"s195836\",\"Image\":\"http://cdn-radiotime-logos.tunein.com/s195836q.png\",\"Title\":\"BOOM Radio\",\"Subtitle\":\"Not Just Noise\"},\"Secondary\":{\"Image\":\"http://example.com/image1.jpg\",\"Title\":\"Foo bar - Foo bar\"},\"Ads\":{\"CanShowAds\":true,\"CanShowPrerollAds\":true,\"CanShowCompanionAds\":false,\"CanShowVideoPrerollAds\":false},\"Echo\":{\"CanEcho\":false,\"EchoCount\":0,\"TargetItemId\":\"s195836\",\"Scope\":\"s195836\",\"Url\":\"\",\"FeedTag\":\"s195836\"},\"Donate\":{\"CanDonate\":false},\"Share\":{\"CanShare\":true,\"ShareUrl\":\"http://tun.in/se72I\"},\"Follow\":{\"Options\":[{\"Title\":\"Favorite Station\",\"GuideId\":\"s195836\",\"IsFollowing\":false,\"Url\":\"http://opml.radiotime.com/favorites.ashx?c=add&id=s195836&itemToken=BgwMAAAAAAAAAAAAAAAB_PwCAAEMAfz8AgAB_PwCAA\"}],\"IsPreset\":false},\"Record\":{\"CanRecord\":false},\"Classification\":{\"ContentType\":\"music\",\"IsEvent\":false,\"IsOnDemand\":false,\"IsFamilyContent\":false,\"IsMatureContent\":false,\"GenreId\":\"g2748\"},\"Link\":{\"WebUrl\":\"http://boomradio.com.au\"},\"Ttl\":900,\"Token\":\"eyJwIjpmYWxzZSwidCI6IjIwMjEtMTAtMzFUMTQ6MzQ6NTEuNDk0MTk3NVoifQ\"}";
+            string sampleResponse = "<html><head></head><body>10,1,27,9999,8,128,FooBar - FooBar</body></html>";
 
-            Track parsedTrack = api.CallPrivateMethod<Track>("ParseTrackResponse", sampleResponse);
+            Track parsedTrack = await api.CallPrivateMethod<Task<Track>>("ParseTrackResponse", new object[] { sampleResponse, new Track() });
 
-            Track expectedTrack = new Track() { Artist = "Foo bar", Title = "", ImageUri = "https://example.com/image1.jpg" };
+            Track expectedTrack = new Track() { Artist = "FooBar", Title = "", ImageUri = "https://example.com/image0.png" };
 
-            Assert.AreEqual(expectedTrack, parsedTrack);
+            Assert.AreEqual(expectedTrack.Artist, parsedTrack.Artist);
+            Assert.AreEqual(expectedTrack.Title, parsedTrack.Title);
         }
-
+        
         /// <summary>
-        /// Test parsing a response that is invalid JSON 
+        /// Test parsing a response that is missing the track details 
         /// </summary>
         [TestMethod]
-        public void TestInvalidResponse()
+        public async Task TestResponseMissingDetails()
         {
-            string sampleResponse = "{Invalid[Response{";
-            Assert.ThrowsException<Newtonsoft.Json.JsonReaderException>(() =>
-            {
-                api.CallPrivateMethod<Track>("ParseTrackResponse", sampleResponse);
-            });
+            string sampleResponse = "<html><head></head><body>10,1,27,9999,8,128,</body></html>";
+
+            Track parsedTrack = await api.CallPrivateMethod<Task<Track>>("ParseTrackResponse", new object[] { sampleResponse, new Track() });
+
+            Track expectedTrack = new Track();// { Artist = "FooBar", Title = "", ImageUri = "https://example.com/image0.png" };
+
+            Assert.AreEqual(expectedTrack.Artist, parsedTrack.Artist);
+            Assert.AreEqual(expectedTrack.Title, parsedTrack.Title);
         }
+
     }
 }
