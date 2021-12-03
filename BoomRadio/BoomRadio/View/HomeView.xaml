@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <Frame x:Name="PlayerFrame" HasShadow="True" MinimumWidthRequest="100" MinimumHeightRequest="50" Padding="2">
             <Frame x:Name="PlayerFrameInner"  Padding="0" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Margin="2">
-                <Grid x:Name="InnerGrid" Margin="5">
+                <Grid x:Name="InnerGrid" Margin="{OnPlatform Android=8, iOS=15}">
                     <Image x:Name="CoverArtImage" VerticalOptions="CenterAndExpand"
                            Scale="3.5"
                            HeightRequest="50"
