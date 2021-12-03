@@ -25,8 +25,8 @@
                            Margin="0,4,0,0"
                            />
                     <StackLayout x:Name="InnerStackLayout" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Grid.Row="1" >
-                        <Label x:Name="ArtistLabel" Text="Artist" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" Padding="0,5,0,0"/>
-                        <Label x:Name="TrackTitleLabel" Text="Some song" HorizontalOptions="CenterAndExpand"/>
+                        <Label x:Name="ArtistLabel" Text="Artist" TextType="Html" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" Padding="0,5,0,0"/>
+                        <Label x:Name="TrackTitleLabel" Text="Some song" TextType="Html" HorizontalOptions="CenterAndExpand"/>
 
                         <Button x:Name="PlayButton" BackgroundColor="Transparent" TextColor="Orange" IsVisible="True"
                                 FontSize="35" Font="FA-S" Text="Play" VerticalOptions="CenterAndExpand" Clicked="PlayButton_Clicked"

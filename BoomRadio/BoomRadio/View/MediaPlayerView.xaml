@@ -26,8 +26,8 @@
                    Source="https://cdn-radiotime-logos.tunein.com/s195836q.png" Aspect="AspectFit"/>
 
             <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Label x:Name="ArtistLabel" Text="Artist" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" Padding="0,5,0,0"/>
-                <Label x:Name="TrackTitleLabel" Text="Somesong" HorizontalOptions="StartAndExpand"/>
+                <Label x:Name="ArtistLabel" Text="Artist" TextType="Html" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" Padding="0,5,0,0"/>
+                <Label x:Name="TrackTitleLabel" Text="Somesong" TextType="Html" HorizontalOptions="StartAndExpand"/>
             </StackLayout>
 
             <Button x:Name="PlayButton" BackgroundColor="Transparent"
