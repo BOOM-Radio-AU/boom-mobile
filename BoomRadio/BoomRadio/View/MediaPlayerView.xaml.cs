@@ -35,7 +35,29 @@ namespace BoomRadio.View
         public void UpdateUI()
         {
             // Update orientation
-            PlayerStackLayout.Orientation = PlayerExpanded ? StackOrientation.Vertical : StackOrientation.Horizontal;
+            if (PlayerExpanded)
+            {
+                ButtonsStackLayout.Orientation = StackOrientation.Vertical;
+                // Move everthing into the middle column, in separate rows
+                Grid.SetColumn(CoverImage, 1);
+
+                Grid.SetRow(TrackDetailsStack, 1);
+
+                Grid.SetColumn(ButtonsStackLayout, 1);
+                Grid.SetRow(ButtonsStackLayout, 2);
+            }
+            else
+            {
+                ButtonsStackLayout.Orientation = StackOrientation.Horizontal;
+                // Move everything into the top row, in separate columns
+                Grid.SetColumn(CoverImage, 0);
+
+                Grid.SetRow(TrackDetailsStack, 0);
+
+                Grid.SetColumn(ButtonsStackLayout, 2);
+                Grid.SetRow(ButtonsStackLayout, 0);
+            }
+            //PlayerStackLayout.Orientation = PlayerExpanded ? StackOrientation.Vertical : StackOrientation.Horizontal;
 
             // Update track info
             CoverImage.Source = ImageSource.FromUri(new Uri(MediaPlayer.CoverURI));
