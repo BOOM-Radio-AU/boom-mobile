@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <Frame x:Name="PlayerFrame" HasShadow="True" MinimumWidthRequest="100" MinimumHeightRequest="50" Padding="2">
             <Frame x:Name="PlayerFrameInner"  Padding="0" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Margin="2">
-                <Grid x:Name="InnerGrid" Margin="5">
+                <Grid x:Name="InnerGrid" Margin="{OnPlatform Android=8, iOS=15}">
                     <Image x:Name="CoverArtImage" VerticalOptions="CenterAndExpand"
                            Scale="3.5"
                            HeightRequest="50"
@@ -24,9 +24,9 @@
                            Aspect="AspectFit"
                            Margin="0,4,0,0"
                            />
-                    <StackLayout x:Name="InnerStackLayout" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Grid.Row="1" >
-                        <Label x:Name="ArtistLabel" Text="Artist" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" Padding="0,5,0,0"/>
-                        <Label x:Name="TrackTitleLabel" Text="Some song" HorizontalOptions="CenterAndExpand"/>
+                    <StackLayout x:Name="InnerStackLayout" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Grid.Row="1" Margin="{OnPlatform iOS='0,10,0,0', Android=0}" >
+                        <Label x:Name="ArtistLabel" Text="Artist" TextType="Html"  FontSize="16" FontFamily="MET-B" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" Padding="0,5,0,0"/>
+                        <Label x:Name="TrackTitleLabel" Text="Some song" TextType="Html"  FontSize="16" FontFamily="MET-R" HorizontalOptions="CenterAndExpand"/>
 
                         <Button x:Name="PlayButton" BackgroundColor="Transparent" TextColor="Orange" IsVisible="True"
                                 FontSize="35" Font="FA-S" Text="Play" VerticalOptions="CenterAndExpand" Clicked="PlayButton_Clicked"

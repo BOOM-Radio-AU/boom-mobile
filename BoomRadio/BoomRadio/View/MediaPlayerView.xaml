@@ -20,30 +20,47 @@
                 Margin="0"
                 CornerRadius="5"
                 HeightRequest="10" />
-        <StackLayout x:Name="PlayerStackLayout" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+        <Grid x:Name="PlayerGrid" HorizontalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
 
-            <Image x:Name="CoverImage" Margin="10,5" VerticalOptions="CenterAndExpand"
+            <Image x:Name="CoverImage" Grid.Column="0"
+                   Margin="10,5" VerticalOptions="CenterAndExpand"
                    Source="https://cdn-radiotime-logos.tunein.com/s195836q.png" Aspect="AspectFit"/>
 
-            <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Label x:Name="ArtistLabel" Text="Artist" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" Padding="0,5,0,0"/>
-                <Label x:Name="TrackTitleLabel" Text="Somesong" HorizontalOptions="StartAndExpand"/>
+            <StackLayout x:Name="TrackDetailsStack" Grid.Column="1"
+                Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                <Label x:Name="ArtistLabel" Text="Artist" TextType="Html" FontAttributes="Bold" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Padding="0,5,0,0"/>
+                <Label x:Name="TrackTitleLabel" Text="Somesong" TextType="Html" HorizontalOptions="StartAndExpand"/>
             </StackLayout>
 
-            <Button x:Name="PlayButton" BackgroundColor="Transparent"
+            <StackLayout Orientation="Horizontal" x:Name="ButtonsStackLayout" HorizontalOptions="Center" Grid.Row="2" BackgroundColor="Transparent" Margin="10,0" WidthRequest="80">
+                <Button x:Name="PlayButton" Margin="0"
+                    BackgroundColor="Transparent" HorizontalOptions="Center"
                     TextColor="Orange" IsVisible="True" FontSize="30" Font="FA-S" Text="Play" VerticalOptions="CenterAndExpand" Clicked="PlayButton_Clicked"
-                    Margin="0, 0, 60, 0"/>
+                    />
 
-            <Button x:Name="PauseButton" BackgroundColor="Transparent"
-                    TextColor="Orange" IsVisible="True" FontSize="30" Font="FA-S"
+                <Button x:Name="PauseButton" Margin="0"
+                    BackgroundColor="Transparent" HorizontalOptions="FillAndExpand"
+                    TextColor="Orange" IsVisible="False" FontSize="30" Font="FA-S"
                     Text="Pause" VerticalOptions="CenterAndExpand" Clicked="PauseButton_Clicked"
-                    Margin="0, 0, 60, 0"/>
+                    />
 
-            <Button x:Name="LiveButton" BackgroundColor="Transparent"
-                    TextColor="Orange" IsVisible="True" FontSize="30" Font="CG-R"
+                <Button x:Name="LiveButton" Margin="0"
+                    BackgroundColor="Transparent"
+                    TextColor="Orange" IsVisible="False" FontSize="30" Font="CG-R"
                     Text="Go live" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Clicked="LiveButton_Clicked"/>
-            
-        </StackLayout>
+            </StackLayout>
+           
+        </Grid>
     </StackLayout>
 
     <Frame.GestureRecognizers>

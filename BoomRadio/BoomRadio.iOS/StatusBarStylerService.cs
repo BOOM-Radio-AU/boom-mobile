@@ -30,7 +30,7 @@ namespace BoomRadio.iOS
             Device.BeginInvokeOnMainThread(() =>
             {
                 UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.LightContent, false);
-                GetCurrentViewController().SetNeedsStatusBarAppearanceUpdate();
+                GetCurrentViewController()?.SetNeedsStatusBarAppearanceUpdate();
             });
         }
 
@@ -41,7 +41,7 @@ namespace BoomRadio.iOS
             Device.BeginInvokeOnMainThread(() =>
             {
                 UIApplication.SharedApplication.SetStatusBarStyle(UIStatusBarStyle.Default, false);
-                GetCurrentViewController().SetNeedsStatusBarAppearanceUpdate();
+                GetCurrentViewController()?.SetNeedsStatusBarAppearanceUpdate();
             });
         }
 
@@ -52,8 +52,8 @@ namespace BoomRadio.iOS
         UIViewController GetCurrentViewController()
         {
             var window = UIApplication.SharedApplication.KeyWindow;
-            var vc = window.RootViewController;
-            while (vc.PresentedViewController != null)
+            var vc = window?.RootViewController;
+            while (vc?.PresentedViewController != null)
                 vc = vc.PresentedViewController;
             return vc;
         }
