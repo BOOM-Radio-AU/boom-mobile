@@ -30,6 +30,8 @@ namespace BoomRadio
         SponsorsCollection Sponsor = new SponsorsCollection();
         IStatusBarStyler statusBarStyler;
         bool orientationIsHorizontal = false;
+        Thickness safeAreaInsets;
+        bool safeAreaIsFromVerticalOreintation = true;
 
         /// <summary>
         /// Constructor
@@ -65,6 +67,8 @@ namespace BoomRadio
             UpdatePlayerUIs();
             // Handle changes to device theme (dark/light mode)
             Xamarin.Forms.Application.Current.RequestedThemeChanged += RequestedThemeChanged;
+            // Check and apply initial orientation
+            Task.Run(ApplyInitialOrienatationAsync);
         }
 
         /// <summary>
@@ -79,23 +83,97 @@ namespace BoomRadio
             UpdatePlayerColours();
         }
 
+
         /// <summary>
         /// Sets up the page when it appears - calculates the safe area offset to use, if needed
         /// </summary>
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-            var safeinsets = On<iOS>().SafeAreaInsets();
-
-            if (safeinsets.Bottom > 0)
+            safeAreaInsets = On<iOS>().SafeAreaInsets();
+            if (Width > 0 && Height > 0)
             {
-                Thickness Thick = new Thickness(10, 0, 10, 20);
-                BottomBarGrid.Padding = Thick;
+                SetSafeOffsets(Width > Height);
+            }
+        }
+
+        /// <summary>
+        /// Calculates whether the device is initially orientated vertically or horizontally
+        /// (which affects how iOS safe area offsets are reported), and applies that orientation
+        /// </summary>
+        /// <returns></returns>
+        private async Task ApplyInitialOrienatationAsync()
+        {
+            // Wait until width and height are allocated
+            while (Width <=0 || Height <= 0)
+            {
+                await Task.Delay(10);
+            }
+            safeAreaIsFromVerticalOreintation = Width < Height;
+            Device.BeginInvokeOnMainThread(() => OnSizeAllocated(Width, Height));
+        }
+
+        /// <summary>
+        /// Calculates and applies the safe area offset to use, if needed
+        /// </summary>
+        /// <param name="isCurrentlyHorizontal">Orientation is currently horizontal</param>
+        private void SetSafeOffsets(bool isCurrentlyHorizontal)
+        {
+
+            // Calculate a thickness where horizontal and vertical values are switched.
+            // We don't know if the physical device rotation was clockwise or anti-clockwise, so get the
+            // max of the initial top/bottom and left/right values.
+            Thickness rotatedSafeAreaInsets = new Thickness(
+                Math.Max(safeAreaInsets.Top, safeAreaInsets.Bottom),
+                Math.Max(safeAreaInsets.Left, safeAreaInsets.Right)
+            );
+
+            // Instatiate a single all-zero thickness that can be reused where needed
+            Thickness zeroThickness = new Thickness(0);
+
+
+            // The safe area offsets iOS reports depeneds on the initial device orientation. So the actual offsets se need
+            // to use depends both on the current orientation and initial orientation.
+            Thickness safeinsets;
+            if (isCurrentlyHorizontal && safeAreaIsFromVerticalOreintation)
+            {
+                safeinsets = rotatedSafeAreaInsets;
+            }
+            else if (isCurrentlyHorizontal) // and safe area is from horizontal orientation
+            {
+                safeinsets = new Thickness(safeAreaInsets.Left, safeAreaInsets.Top, safeAreaInsets.Right, safeAreaInsets.Bottom);
+            } else if (safeAreaIsFromVerticalOreintation) // and the orientation is currently vertical
+            {
+                safeinsets = new Thickness(0, safeAreaInsets.Top, 0, safeAreaInsets.Bottom);
+            }
+            else // safe area is from horizontal orientation, and the orientation is currently vertical
+            {
+                safeinsets = new Thickness(0, rotatedSafeAreaInsets.Top, 0, rotatedSafeAreaInsets.Bottom); ;
             }
 
-            safeinsets.Bottom = 0;
-            Padding = safeinsets;
+            if (isCurrentlyHorizontal)
+            {
+                // Apply offsets within content area
+                ContentAreaScrollView.Padding = new Thickness(safeinsets.Left, 0, safeinsets.Right, 0);
+                // Revert the offsets needed when vertical
+                BottomBarGrid.Padding = zeroThickness;
+                safeinsets.Bottom = 0;
+                safeinsets.Top = 0;
+                Padding = zeroThickness;
+            }
+            else // Is Vertical
+            {
+                // Add some padding to the bottom bar if needed (accounts for rounded screen corners)
+                if (safeinsets.Bottom > 0)
+                {
+                    BottomBarGrid.Padding = new Thickness(10, 0, 10, 20);
+                }
+                // Apply top-padding to the page to ensure the top bar controls/logo are within the safe area
+                safeinsets.Bottom = 0;
+                Padding = safeinsets;
+                // Revert the offsets needed when horizontal
+                ContentAreaScrollView.Padding = zeroThickness;
+            }
         }
 
         /// <summary>
@@ -453,6 +531,7 @@ namespace BoomRadio
                 NewsTabStack.Margin = new Thickness(0);
                 (Views[CurrentView].Value as IUpdatableUI)?.SetVerticalDisplay();
             }
+            SetSafeOffsets(orientationIsHorizontal);
         }
 
         /// <summary>
