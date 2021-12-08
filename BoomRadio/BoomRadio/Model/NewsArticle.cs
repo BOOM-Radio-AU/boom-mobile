@@ -22,6 +22,8 @@ namespace BoomRadio.Model
         public string Excerpt { get; private set; }
         public string MediaID { get; private set; }
         public string ImageUrl { get; private set; } = null;
+        public string AuthorID { get; private set; } = null;
+        public string Author { get; private set; } = null;
 
         /// <summary>
         /// Extracts text content from a HTML string
@@ -50,7 +52,8 @@ namespace BoomRadio.Model
         /// <param name="published">Publication date or information</param>
         /// <param name="modified">Modification date or information</param>
         /// <param name="mediaId">ID of feratured media to fetch from the media API</param>
-        public NewsArticle(int id, string title, string content, string excerpt, string published, string modified, string mediaId)
+        /// <param name="authorId">ID of author (user) to fetch from the user API</param>
+        public NewsArticle(int id, string title, string content, string excerpt, string published, string modified, string mediaId, string authorId)
         {
             ID = id;
             Title = title;
@@ -65,6 +68,7 @@ namespace BoomRadio.Model
                 DatePublished = dMod;
             }
             MediaID = mediaId;
+            AuthorID = authorId;
         }
 
         /// <summary>
@@ -81,6 +85,22 @@ namespace BoomRadio.Model
                 }
             }
         }
+
+        /// <summary>
+        /// Updates the author name, after getting it from from the API
+        /// </summary>
+        public async Task UpdateAuthorName()
+        {
+            if (AuthorID != null)
+            {
+                string authorName = await Api.GetUserNameAsync(AuthorID);
+                if (authorName != null)
+                {
+                    Author = authorName;
+                }
+            }
+        }
+
 
         /// <summary>
         /// Splits the content html into chunks of text (non-image) content, removing image tags

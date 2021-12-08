@@ -19,8 +19,9 @@ namespace BoomRadio
     {
         private string websiteApiBaseUrl = "https://boomradio.com.au/wp-json/";
         private readonly HttpClient client = new HttpClient();
-        public enum Service { LiveTrack, Album, CoverArt, News, Media, Shows, Sponsor, About, Contests };
+        public enum Service { LiveTrack, Album, CoverArt, News, Media, Shows, Sponsor, About, Contests, Users };
         private Dictionary<Service, string> Url;
+        private Dictionary<string, string> UserNamesCache = new Dictionary<string, string>();
 
         static Api instance;
         /// <summary>
@@ -38,6 +39,7 @@ namespace BoomRadio
                 {Service.Sponsor, websiteApiBaseUrl + "wp/v2/sponsors" },
                 {Service.About, websiteApiBaseUrl + "wp/v2/about" },
                 {Service.Contests, websiteApiBaseUrl + "wp/v2/contests" },
+                {Service.Users, websiteApiBaseUrl + "wp/v2/users/" },
             };
         }
 
@@ -265,8 +267,14 @@ namespace BoomRadio
                     {
                         mediaId = null;
                     }
+                    string authorId = item.Value<int>("author").ToString();
+                    if (authorId == "0")
+                    {
+                        authorId = null;
+                    }
 
-                    NewsArticle article = new NewsArticle(id, title, content, excerpt, published, modified, mediaId);
+                    NewsArticle article = new NewsArticle(id, title, content, excerpt, published, modified, mediaId, authorId);
+
                     newsArticles.Add(article);
                 }
                 catch (Exception ex)
@@ -306,7 +314,7 @@ namespace BoomRadio
                         mediaId = null;
                     }
 
-                    NewsArticle article = new NewsArticle(id, title, content, excerpt, published, modified, mediaId);
+                    NewsArticle article = new NewsArticle(id, title, content, excerpt, published, modified, mediaId, null);
                     aboutArticles.Add(article);
                 }
                 catch (Exception ex)
@@ -328,7 +336,16 @@ namespace BoomRadio
             try
             {
                 string response = await instance.FetchAsync(Service.News);
-                return instance.ParseNewsResponse(response);
+                List<NewsArticle> newsArticles = instance.ParseNewsResponse(response);
+                // Get all the author names
+                foreach (NewsArticle article in newsArticles)
+                {
+                    // There will be only a few (or maybe only one) user accounts posting news,
+                    // so awaiting in the for-loop will allow the UserNamesCache to be populated,
+                    // allowing further lookups from there rather than a network request.
+                    await article.UpdateAuthorName();
+                }
+                return newsArticles;
             }
             catch (Exception ex)
             {
@@ -574,6 +591,48 @@ namespace BoomRadio
                 DependencyService.Get<ILogging>().Error("Api.GetContestsAsync", ex);
                 Console.WriteLine("[API] Contests error: " + ex.Message);
                 return new List<Contest>();
+            }
+        }
+
+        /// <summary>
+        /// Parses the user's name from the <see cref="Service.Users"/> API response
+        /// </summary>
+        /// <param name="response">API response</param>
+        /// <returns>Name of user</returns>
+        private string ParseUserResponseForName(string response)
+        {
+            JObject user = JsonConvert.DeserializeObject<JObject>(response);
+            return user.Value<string>("name");
+        }
+
+        /// <summary>
+        /// Fetches the name of a user from the API
+        /// </summary>
+        /// <param name="authorID">Author ID</param>
+        /// <returns>Author name</returns>
+        public static async Task<string> GetUserNameAsync(string authorID)
+        {
+            // Use previously cached value if available
+            string authorName;
+            if (instance.UserNamesCache.TryGetValue(authorID, out authorName))
+            {
+                return authorName;
+            }
+            // Otherwise get from api
+            try
+            {
+                string response = await instance.FetchAsync(instance.Url[Service.Users] + authorID);
+                authorName = instance.ParseUserResponseForName(response);
+                // Cache the value for next time before returning
+                instance.UserNamesCache.Add(authorID, authorName);
+                return authorName;
+            }
+            catch (Exception ex)
+            {
+                DependencyService.Get<ILogging>().Error("Api.GetUserNameAsync", ex);
+                Console.WriteLine("[API] UserName error: " + ex.Message);
+                // Return a default value, so ther eis some value for the byline
+                return "BOOM Radio Crew";
             }
         }
     }
