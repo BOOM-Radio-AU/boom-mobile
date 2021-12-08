@@ -91,6 +91,19 @@ namespace BoomRadio.View
             // Clear any previous content
             ContentStackLayout.Children.Clear();
             ContentStackLayout.BackgroundColor = Theme.GetColour("background");
+            // Add in a byline, if available
+            if (Article.Author != null)
+            {
+                ContentStackLayout.Children.Add(new Label()
+                {
+                    Text = "By " + Article.Author,
+                    TextType = TextType.Html,
+                    FontSize = 15,
+                    TextColor = Theme.GetColour("text"),
+                    FontFamily = "MET-B"
+                });
+            }
+
             // Iteratively insert a chunk of text and then an image until all content has been inserted.
             while (textChunks.Count + imageUrls.Count > 0)
             {

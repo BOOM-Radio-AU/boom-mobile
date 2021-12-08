@@ -44,6 +44,14 @@ namespace BoomRadio.View
             twitterButton.BackgroundColor = Theme.GetColour("accent");
             twitterButton.TextColor = Color.White;
             HeadingBox.UpdateColours();
+            ContactsGrid.BackgroundColor = Theme.GetColour("background");
+            pdContactLabel.TextColor = Theme.GetColour("text");
+            apdContactLabel.TextColor = Theme.GetColour("text");
+            phoneNumContactLabel.TextColor = Theme.GetColour("text");
+            pdEmailLabel.TextColor = Theme.GetColour("accent");
+            apdEmailLabel.TextColor = Theme.GetColour("accent");
+            phoneNumLinkLabel.TextColor = Theme.GetColour("accent");
+            altPhoneNumLinkLabel.TextColor = Theme.GetColour("accent");
         }
 
         /// <summary>
@@ -144,5 +152,46 @@ namespace BoomRadio.View
             instagramButton.FontSize = 25;
             twitterButton.FontSize = 25;
         }
+
+        /// <summary>
+        /// Handles taps on the program director email address
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void PdEmail_Tapped(object sender, EventArgs e)
+        {
+            await Email.ComposeAsync(string.Empty, string.Empty, "pd@boomradio.com.au");
+        }
+
+        /// <summary>
+        /// Handles taps on the assistant program director email
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void ApdEmail_Tapped(object sender, EventArgs e)
+        {
+            await Email.ComposeAsync(string.Empty, string.Empty, "assistant.pd@boomradio.com.au");
+        }
+
+        /// <summary>
+        /// Handles taps on the first phone number
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void PhoneNum_Tapped(object sender, EventArgs e)
+        {
+            await Launcher.OpenAsync("tel:+61894432236");
+        }
+
+        /// <summary>
+        /// Handles taps on the alternate phone number
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void AltPhoneNum_Tapped(object sender, EventArgs e)
+        {
+            await Launcher.OpenAsync("tel:+61892024816");
+        }
+
     }
 }

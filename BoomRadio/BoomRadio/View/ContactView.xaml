@@ -31,4 +31,45 @@
 
     <Button x:Name="SubmitButton" Text="Submit" Clicked="SubmitButton_Clicked" BorderColor="Gray" BorderWidth="1"/>
 
+
+    <Label Text="Contacts" Margin="0,10,10,2" FontFamily="CG-B" FontSize="18" TextColor="Black"/>
+    <Grid x:Name="ContactsGrid" BackgroundColor="White" Padding="10" Margin="0,0,0,15">
+        <Grid.ColumnDefinitions >
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Label x:Name="pdContactLabel" Grid.Row="0" Grid.Column="0" Text="Program Director:" FontFamily="MET-R" FontSize="15" TextColor="Black"/>
+        <Label x:Name="pdEmailLabel" Grid.Row="0" Grid.Column="1" Text="pd@boomradio.com.au" FontFamily="MET-R" FontSize="15" TextColor="Black">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="PdEmail_Tapped"/>
+            </Label.GestureRecognizers>
+        </Label>
+
+        <Label x:Name="apdContactLabel" Grid.Row="1" Grid.Column="0" Text="Assistant Program Director:" FontFamily="MET-R" FontSize="15" TextColor="Black"/>
+        <Label x:Name="apdEmailLabel" Grid.Row="1" Grid.Column="1" Text="assistant.pd@boomradio.com.au" FontFamily="MET-R" FontSize="15" TextColor="Black">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="ApdEmail_Tapped"/>
+            </Label.GestureRecognizers>
+        </Label>
+
+        <Label x:Name="phoneNumContactLabel" Grid.Row="2" Grid.Column="0" Text="Phone" FontFamily="MET-R" FontSize="15" TextColor="Black"/>
+        <Label x:Name="phoneNumLinkLabel" Grid.Row="2" Grid.Column="1" Text="(08) 9443 2236" FontFamily="MET-R" FontSize="15" TextColor="Black">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="PhoneNum_Tapped"/>
+            </Label.GestureRecognizers>
+        </Label>
+        <Label x:Name="altPhoneNumLinkLabel" Grid.Row="3" Grid.Column="1" Text="(08) 9202 4816" FontFamily="MET-R" FontSize="15" TextColor="Black">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="AltPhoneNum_Tapped"/>
+            </Label.GestureRecognizers>
+        </Label>
+    </Grid>
+
 </StackLayout>
