@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,6 +17,20 @@ namespace BoomRadio.View
         public NewsArticle Article { get; set; }
         MainPage MainPage;
 
+        Label PublisherLabel = new Label()
+        {
+            Text = "Published by BOOM Radio",
+            FontSize = 14,
+            FontFamily = "MET-B"
+        };
+        Label DateLabel = new Label()
+        {
+            TextColor = Theme.GetColour("accent"),
+            FontSize = 14,
+            FontFamily = "MET-R"
+        };
+
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -28,6 +43,12 @@ namespace BoomRadio.View
             {
                 SetHorizontalDisplay();
             }
+            PublisherLabel.GestureRecognizers.Add(
+                new TapGestureRecognizer()
+                {
+                    Command = new Command(_ => Launcher.OpenAsync( Article.Url ?? "https://boomradio.com.au/"))
+                }
+            );
         }
 
         /// <summary>
@@ -103,6 +124,20 @@ namespace BoomRadio.View
                     FontFamily = "MET-B"
                 });
             }
+            // Add publisher info
+            PublisherLabel.TextColor = Theme.GetColour("accent");
+            ContentStackLayout.Children.Add(PublisherLabel);
+            // Add date info
+            if (Article.DatePublished != null )
+            {
+                DateLabel.Text = Article.DatePublished.ToString("dd MMMM yyyy hh:mm tt");
+                if (Article.DateModified > Article.DatePublished)
+                {
+                    DateLabel.Text += "\n(Updated " + Article.DateModified.ToString("dd MMMM yyyy hh:mm tt)");
+                }
+                DateLabel.TextColor = Theme.GetColour("text");
+                ContentStackLayout.Children.Add(DateLabel);
+            }
 
             // Iteratively insert a chunk of text and then an image until all content has been inserted.
             while (textChunks.Count + imageUrls.Count > 0)
@@ -131,6 +166,11 @@ namespace BoomRadio.View
                     ResizeImage(img);
                 }
             }
+
+            // Update footer (contact) box
+            ContactInfoStackLayout.BackgroundColor = Theme.GetColour("background");
+            ContactInfoLabel.TextColor = Theme.GetColour("text");
+            ContactButton.BackgroundColor = Theme.GetColour("accent");
         }
 
         /// <summary>
@@ -186,6 +226,11 @@ namespace BoomRadio.View
         {
             Margin = new Thickness(10, 0, 10, 10);
             ResizeAllImages();
+        }
+
+        private void ContactButton_Clicked(object sender, EventArgs e)
+        {
+            MainPage.Navigate("contact");
         }
     }
 }

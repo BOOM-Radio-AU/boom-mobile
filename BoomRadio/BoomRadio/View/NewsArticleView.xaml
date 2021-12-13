@@ -9,5 +9,9 @@
           <Image x:Name="NewsImage" HorizontalOptions="Center" Aspect="AspectFit"/>
     </Frame>
     <components:HeadingBox x:Name="HeadlineLabel" Text="Headline goes here" FontFamily="MET-B"/>
-    <StackLayout Orientation="Vertical" x:Name="ContentStackLayout" BackgroundColor="White" Padding="8" Margin="0,5,0,20"/>
+    <StackLayout Orientation="Vertical" x:Name="ContentStackLayout" BackgroundColor="White" Padding="8" Margin="0,5,0,5"/>
+    <StackLayout Orientation="Vertical" x:Name="ContactInfoStackLayout" BackgroundColor="White" Padding="5,8" Margin="0,5,0,20" HorizontalOptions="FillAndExpand">
+        <Label x:Name="ContactInfoLabel" Text="Comments, queries or tips?" FontFamily="CG-B" HorizontalOptions="CenterAndExpand"/>
+        <Button x:Name="ContactButton" Text="Contact us" TextColor="White" FontFamily="CG-B" Clicked="ContactButton_Clicked" Padding="10,5" HorizontalOptions="CenterAndExpand"/>
+    </StackLayout>
 </StackLayout>

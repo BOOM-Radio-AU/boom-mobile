@@ -272,8 +272,9 @@ namespace BoomRadio
                     {
                         authorId = null;
                     }
+                    string link = item.Value<string>("link");
 
-                    NewsArticle article = new NewsArticle(id, title, content, excerpt, published, modified, mediaId, authorId);
+                    NewsArticle article = new NewsArticle(id, title, content, excerpt, published, modified, mediaId, authorId, link);
 
                     newsArticles.Add(article);
                 }
@@ -313,8 +314,9 @@ namespace BoomRadio
                     {
                         mediaId = null;
                     }
+                    string link = item.Value<string>("link");
 
-                    NewsArticle article = new NewsArticle(id, title, content, excerpt, published, modified, mediaId, null);
+                    NewsArticle article = new NewsArticle(id, title, content, excerpt, published, modified, mediaId, null, link);
                     aboutArticles.Add(article);
                 }
                 catch (Exception ex)
