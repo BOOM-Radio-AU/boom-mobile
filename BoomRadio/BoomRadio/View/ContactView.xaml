@@ -45,6 +45,10 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <Label x:Name="pdContactLabel" Grid.Row="0" Grid.Column="0" Text="Program Director:" FontFamily="MET-R" FontSize="15" TextColor="Black"/>
@@ -70,6 +74,28 @@
         <Label x:Name="altPhoneNumLinkLabel" Grid.Row="3" Grid.Column="1" Text="(08) 9202 4816" FontFamily="MET-R" FontSize="15" TextColor="Black">
             <Label.GestureRecognizers>
                 <TapGestureRecognizer Tapped="AltPhoneNum_Tapped"/>
+            </Label.GestureRecognizers>
+        </Label>
+
+        <Label x:Name="nmtIntroLabel" Grid.Row="4" Grid.ColumnSpan="2" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"
+               Text="BOOM Radio is North Metropolitan TAFE's student-run, not-for-profit online radio station"
+               FontFamily="MET-R" FontSize="15" TextColor="Black" Margin="0,15,0,0"/>
+        <Label x:Name="nmtUrlLabel" Grid.Row="5" Grid.ColumnSpan="2" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"
+               Text="northmetrotafe.wa.edu.au" FontFamily="MET-R" FontSize="15" TextColor="Black">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="NmtUrl_Tapped"/>
+            </Label.GestureRecognizers>
+        </Label>
+        <Label x:Name="nmtEmailLabel" Grid.Row="6" Grid.ColumnSpan="2" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"
+               Text="enquiry@nmtafe.wa.edu.au" FontFamily="MET-R" FontSize="15" TextColor="Black">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="NmtEmail_Tapped"/>
+            </Label.GestureRecognizers>
+        </Label>
+        <Label x:Name="nmtPhoneLabel" Grid.Row="7" Grid.ColumnSpan="2" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"
+               Text="Phone: 1300 300 822" FontFamily="MET-R" FontSize="15" TextColor="Black">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Tapped="NmtPhone_Tapped"/>
             </Label.GestureRecognizers>
         </Label>
     </Grid>
