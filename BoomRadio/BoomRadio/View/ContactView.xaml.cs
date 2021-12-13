@@ -54,6 +54,10 @@ namespace BoomRadio.View
             apdEmailLabel.TextColor = Theme.GetColour("accent");
             phoneNumLinkLabel.TextColor = Theme.GetColour("accent");
             altPhoneNumLinkLabel.TextColor = Theme.GetColour("accent");
+            nmtIntroLabel.TextColor = Theme.GetColour("text");
+            nmtUrlLabel.TextColor = Theme.GetColour("accent");
+            nmtEmailLabel.TextColor = Theme.GetColour("accent");
+            nmtPhoneLabel.TextColor = Theme.GetColour("accent");
 
             // Collapses the "email us" form if it is empty (and not focused), and shows the button instead
             if (SubjectEntry.Text == string.Empty && MessageEditor.Text == string.Empty 
@@ -212,6 +216,36 @@ namespace BoomRadio.View
         {
             ShowEmailFormButton.IsVisible = false;
             EmailFormStacklayout.IsVisible = true;
+        }
+
+        /// <summary>
+        /// Handles taps on North Metro Tafe's website url 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void NmtUrl_Tapped(object sender, EventArgs e)
+        {
+            await Launcher.OpenAsync("https://www.northmetrotafe.wa.edu.au/");
+        }
+
+        /// <summary>
+        /// Handles taps on North Metro Tafe's email 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void NmtEmail_Tapped(object sender, EventArgs e)
+        {
+            await Email.ComposeAsync(string.Empty, string.Empty, "enquiry@nmtafe.wa.edu.au");
+        }
+
+        /// <summary>
+        /// Handles taps on North Metro Tafe's phone number
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void NmtPhone_Tapped(object sender, EventArgs e)
+        {
+            await Launcher.OpenAsync("tel:+611300300822");
         }
     }
 }
