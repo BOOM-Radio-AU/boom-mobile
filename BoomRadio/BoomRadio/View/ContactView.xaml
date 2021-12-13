@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:components="clr-namespace:BoomRadio.Components"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:components="clr-namespace:BoomRadio.Components" xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="BoomRadio.View.ContactView"
              Margin="10">
 
@@ -22,15 +22,17 @@
         <Button x:Name="twitterButton" Grid.Column="2" Text="twitter" FontFamily="FA-B" FontSize="25" Padding="10" HorizontalOptions="Fill" Clicked="twitterButton_Clicked" />
     </Grid>
 
-    <Label Text="Email Us" Margin="0,15,10,0" FontFamily="CG-B" FontSize="18" TextColor="Black"/>
-    <Label Text="Subject" Margin="0,0,10,2" TextColor="Black"/>
-    <Entry x:Name="SubjectEntry" HorizontalOptions="FillAndExpand" MaxLength="200" BackgroundColor="White" TextChanged="ContactForm_TextChanged"/>
+    <Button x:Name="ShowEmailFormButton" Text="Email us" FontFamily="CG-B" FontSize="18" Clicked="ShowEmailFormButton_Clicked" HorizontalOptions="FillAndExpand" Margin="0,25,0,10"/>
+    <StackLayout Orientation="Vertical" x:Name="EmailFormStacklayout" IsVisible="False">
+        <Label Text="Email Us" Margin="0,15,10,0" FontFamily="CG-B" FontSize="18" TextColor="Black" HorizontalOptions="FillAndExpand"/>
+        <Label Text="Subject" Margin="0,0,10,2" TextColor="Black"/>
+        <Entry x:Name="SubjectEntry" HorizontalOptions="FillAndExpand" MaxLength="200" BackgroundColor="White" TextChanged="ContactForm_TextChanged"/>
 
-    <Label Text="Message" Margin="0,10,10,2" TextColor="Black"/>
-    <Editor x:Name="MessageEditor" HorizontalOptions="FillAndExpand" AutoSize="TextChanges" BackgroundColor="White" TextChanged="ContactForm_TextChanged"/>
+        <Label Text="Message" Margin="0,10,10,2" TextColor="Black"/>
+        <Editor x:Name="MessageEditor" HorizontalOptions="FillAndExpand" AutoSize="TextChanges" BackgroundColor="White" TextChanged="ContactForm_TextChanged"/>
 
-    <Button x:Name="SubmitButton" Text="Submit" Clicked="SubmitButton_Clicked" BorderColor="Gray" BorderWidth="1"/>
-
+        <Button x:Name="SubmitButton" Text="Submit" Clicked="SubmitButton_Clicked" BorderColor="Gray" BorderWidth="1"/>
+    </StackLayout>
 
     <Label Text="Contacts" Margin="0,10,10,2" FontFamily="CG-B" FontSize="18" TextColor="Black"/>
     <Grid x:Name="ContactsGrid" BackgroundColor="White" Padding="10" Margin="0,0,0,15">

@@ -43,6 +43,8 @@ namespace BoomRadio.View
             instagramButton.TextColor = Color.White;
             twitterButton.BackgroundColor = Theme.GetColour("accent");
             twitterButton.TextColor = Color.White;
+            ShowEmailFormButton.BackgroundColor = Theme.GetColour("accent");
+            ShowEmailFormButton.TextColor = Color.White;
             HeadingBox.UpdateColours();
             ContactsGrid.BackgroundColor = Theme.GetColour("background");
             pdContactLabel.TextColor = Theme.GetColour("text");
@@ -52,6 +54,14 @@ namespace BoomRadio.View
             apdEmailLabel.TextColor = Theme.GetColour("accent");
             phoneNumLinkLabel.TextColor = Theme.GetColour("accent");
             altPhoneNumLinkLabel.TextColor = Theme.GetColour("accent");
+
+            // Collapses the "email us" form if it is empty (and not focused), and shows the button instead
+            if (SubjectEntry.Text == string.Empty && MessageEditor.Text == string.Empty 
+                && !SubjectEntry.IsFocused && !MessageEditor.IsFocused)
+            {
+                ShowEmailFormButton.IsVisible = true;
+                EmailFormStacklayout.IsVisible = false;
+            }
         }
 
         /// <summary>
@@ -193,5 +203,15 @@ namespace BoomRadio.View
             await Launcher.OpenAsync("tel:+61892024816");
         }
 
+        /// <summary>
+        /// Shows the "email us" form, and hides the button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ShowEmailFormButton_Clicked(object sender, EventArgs e)
+        {
+            ShowEmailFormButton.IsVisible = false;
+            EmailFormStacklayout.IsVisible = true;
+        }
     }
 }
